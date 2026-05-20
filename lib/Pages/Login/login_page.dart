@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
+import 'package:trust_hire_app/Pages/Login/forget_password_page.dart';
+import 'package:trust_hire_app/Pages/profile_page.dart';
+import 'package:trust_hire_app/Pages/scam_detection_page.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
+import 'package:trust_hire_app/Utilities/Customs/custom_themes/custom_text_field.dart';
 import 'package:trust_hire_app/common/styles/spacing_styles.dart';
 
 import '../../Utilities/Constants/image_strings.dart';
@@ -25,16 +29,34 @@ class _LoginPageState extends State<LoginPage> {
   final authService = AuthService();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _isLoading = false;
 
   void login() async {
     final email = _emailController.text;
     final password = _passwordController.text;
 
+
     try{
+      setState(() => _isLoading = true);
+
       await authService.signInWithEmailAndPassword(email, password);
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(
+          content: Text("Login Successful"),
+          backgroundColor: Colors.green,
+        ));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => ProfilePage()));
+      }
     } catch(e){
       if(mounted){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: $e")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: $e"),backgroundColor: TColors.error,));
+      }
+    }finally{
+      if(mounted){
+        setState(() => _isLoading = false);
       }
     }
   }
@@ -53,7 +75,11 @@ class _LoginPageState extends State<LoginPage> {
             const TLoginHeader(),
 
             //Form
-            const TForm(),
+            TForm(
+              emailController: _emailController,
+              passwordController: _passwordController,
+              onLogin: login,
+            ),
 
             //Divider
             TDivider(dividerText: Ttexts.orSignInWith.capitalize! ),
@@ -73,12 +99,22 @@ class _LoginPageState extends State<LoginPage> {
 
 
 class TForm extends StatelessWidget {
+
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final VoidCallback onLogin;
+
+
   const TForm({
     super.key,
+    required this.emailController,
+    required this.passwordController,
+    required this.onLogin,
   });
 
-  TextEditingController? get _emailController => null;
-  TextEditingController? get _passwordController => null;
+
+
+
 
 
 
@@ -91,7 +127,7 @@ class TForm extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
-              controller: _emailController,
+              controller: emailController,
                 decoration: InputDecoration(
                     prefixIcon : Icon(Icons.email_outlined),
                     labelText: Ttexts.email,
@@ -103,7 +139,7 @@ class TForm extends StatelessWidget {
             const SizedBox( height: Tsize.spaceBtwinputfield,),
 
             TextFormField(
-              controller: _passwordController,
+              controller: passwordController,
                 decoration: InputDecoration(
                     prefixIcon : Icon(Iconsax.password_check), labelText: Ttexts.password,  suffixIcon: Icon(Iconsax.eye_slash),
                     border: OutlineInputBorder(
@@ -122,7 +158,10 @@ class TForm extends StatelessWidget {
                     ),),
                   ],
                 ),
-                TextButton(onPressed: (){},
+                TextButton(onPressed: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ForgetPasswordPage()));
+                },
                     child: const Text(Ttexts.forgetPassword, style: TextStyle(
                         fontSize: Tsize.Fontxs,
                         fontWeight: FontWeight.w600,
@@ -135,7 +174,7 @@ class TForm extends StatelessWidget {
 
             SizedBox(width: double.infinity, child: ElevatedButton(
                 onPressed: (){
-
+                  onLogin();
                 },
                 child: Text(Ttexts.login))),
             const SizedBox(height:  Tsize.spaceBtwItems,),

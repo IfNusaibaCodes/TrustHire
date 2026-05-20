@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:trust_hire_app/Pages/job_feed.dart';
+import 'package:trust_hire_app/Pages/Job%20Feed/job_feed.dart';
 import 'package:trust_hire_app/Pages/Login/login_page.dart';
 import 'package:trust_hire_app/Pages/onboarding_page.dart';
 import 'package:trust_hire_app/Pages/SignUp/signup_page.dart';
-import 'package:trust_hire_app/Utilities/theme/theme.dart';
 
 import 'Pages/scam_detection_page.dart';
 
@@ -26,11 +26,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: SignUpPage(),
+      home: JobFeedPage(),
 
-      themeMode: ThemeMode.system,
-      theme: TAppTheme.lightTheme,
-      darkTheme: TAppTheme.darkTheme,
     );
   }
 }

@@ -14,16 +14,19 @@ class AuthService {
   }
 
   Future<AuthResponse> signUpWithEmailAndPassword(
-      String fName, String lName, String email, String password) async {
+      String first_name, String last_name, String email, String password) async {
     return await _supabase.auth.signUp(
         email: email,
         password: password,
         data: {
-          'F_name': fName,
-          'L_name': lName,
+          'first_name': first_name,
+          'last_name': last_name
         }
+
     );
-  }
+
+}
+
   Future<void> signOut() async {
     return await _supabase.auth.signOut();
   }
@@ -33,10 +36,15 @@ class AuthService {
     final user = session?.user;
     return user?.email;
   }
-  String? getCurrentName() {
+  String? getCurrentFName() {
     final session = _supabase.auth.currentSession;
     final user = session?.user;
-    return user?.userMetadata?['F_name L_name'];
+    return user?.userMetadata?['first_name'];
+  }
+  String? getCurrentLName() {
+    final session = _supabase.auth.currentSession;
+    final user = session?.user;
+    return user?.userMetadata?['last_name'];
   }
 
 }

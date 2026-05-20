@@ -24,11 +24,14 @@ dependencies:
   iconsax: ^0.0.8
   cupertino_icons: ^1.0.8
   http: ^1.6.0
+  intl: ^0.18.1
+  logger: ^2.0.1
   cached_network_image: ^3.4.1
   url_launcher: ^6.3.2
 
   #STATE MANAGEMENT
   get: ^4.6.5
+  get_storage: ^2.1.1
 
   #OTHERS
   google_fonts: ^8.1.0

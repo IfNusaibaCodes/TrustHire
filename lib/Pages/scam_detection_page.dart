@@ -303,7 +303,7 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
                             SizedBox(height: 6),
 
                             Text(
-                              "Learn common red flags in our Lab",
+                              "Learn Common red flags in our Lab",
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black54,
