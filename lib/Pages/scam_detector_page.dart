@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-
 class ScamDetectorPage extends StatefulWidget {
   const ScamDetectorPage({super.key});
-
   @override
   State<ScamDetectorPage> createState() =>
       _ScamDetectorPageState();
 }
-
 class _ScamDetectorPageState
     extends State<ScamDetectorPage> {
-
-  // ── Color Palette ──────────────────────────
   static const Color bgPage      = Color(0xFFF8FAFC);
   static const Color bgCard      = Color(0xFFFFFFFF);
   static const Color accentGold  = Color(0xFFF59E0B);
@@ -21,27 +16,20 @@ class _ScamDetectorPageState
   static const Color textPrimary = Color(0xFF0F172A);
   static const Color textMuted   = Color(0xFF64748B);
   static const Color cardBorder  = Color(0xFFE2E8F0);
-  // ───────────────────────────────────────────
-
   TextEditingController textController =
   TextEditingController();
-
   String resultText = "";
   String riskLevel = "";
   List<String> detectedIssues = [];
   List<String> positiveSigns = [];
   bool isLoading = false;
-
   void analyzeScam() async {
     setState(() { isLoading = true; });
-
     await Future.delayed(const Duration(seconds: 2));
-
     String text = textController.text.toLowerCase();
     detectedIssues.clear();
     positiveSigns.clear();
     int score = 100;
-
     if (text.contains("urgent")) {
       detectedIssues.add("Urgent hiring pressure");
       score -= 20;
@@ -64,7 +52,6 @@ class _ScamDetectorPageState
     if (text.contains("experience")) {
       positiveSigns.add("Proper job description");
     }
-
     if (score >= 70) {
       riskLevel = "Low Risk";
     } else if (score >= 40) {
@@ -72,17 +59,14 @@ class _ScamDetectorPageState
     } else {
       riskLevel = "High Risk";
     }
-
     resultText = "$score% Safe";
     setState(() { isLoading = false; });
   }
-
   Color get riskColor {
     if (riskLevel == "High Risk") return accentRed;
     if (riskLevel == "Medium Risk") return accentOrange;
     return accentGreen;
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,8 +94,6 @@ class _ScamDetectorPageState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            // ── Header ──
             const Text(
               "Check Job Safety",
               style: TextStyle(
@@ -128,10 +110,7 @@ class _ScamDetectorPageState
                 color: textMuted,
               ),
             ),
-
             const SizedBox(height: 24),
-
-            // ── Job Description Card ──
             _sectionCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +145,6 @@ class _ScamDetectorPageState
                     ),
                   ),
                   const SizedBox(height: 12),
-                  // Upload screenshot button
                   SizedBox(
                     width: double.infinity,
                     height: 46,
@@ -191,10 +169,7 @@ class _ScamDetectorPageState
                 ],
               ),
             ),
-
             const SizedBox(height: 14),
-
-            // ── URL Card ──
             _sectionCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,10 +201,7 @@ class _ScamDetectorPageState
                 ],
               ),
             ),
-
             const SizedBox(height: 24),
-
-            // ── Analyze Button ──
             SizedBox(
               width: double.infinity,
               height: 56,
@@ -253,10 +225,7 @@ class _ScamDetectorPageState
                 ),
               ),
             ),
-
             const SizedBox(height: 28),
-
-            // ── Loading ──
             if (isLoading)
               Center(
                 child: Column(
@@ -276,11 +245,7 @@ class _ScamDetectorPageState
                   ],
                 ),
               ),
-
-            // ── Results ──
             if (resultText.isNotEmpty && !isLoading) ...[
-
-              // Result summary card
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(22),
@@ -335,10 +300,7 @@ class _ScamDetectorPageState
                   ],
                 ),
               ),
-
               const SizedBox(height: 18),
-
-              // Detected Issues card
               if (detectedIssues.isNotEmpty)
                 _sectionCard(
                   child: Column(
@@ -358,10 +320,7 @@ class _ScamDetectorPageState
                     ],
                   ),
                 ),
-
               const SizedBox(height: 14),
-
-              // Positive Signs card
               if (positiveSigns.isNotEmpty)
                 _sectionCard(
                   child: Column(
@@ -381,17 +340,13 @@ class _ScamDetectorPageState
                     ],
                   ),
                 ),
-
               const SizedBox(height: 20),
             ],
-
           ],
         ),
       ),
     );
   }
-
-  // ── Reusable white card wrapper ──
   Widget _sectionCard({required Widget child}) {
     return Container(
       width: double.infinity,
@@ -411,8 +366,6 @@ class _ScamDetectorPageState
       child: child,
     );
   }
-
-  // ── Section label with icon ──
   Widget _sectionLabel(IconData icon, String label) {
     return Row(
       children: [
@@ -429,8 +382,6 @@ class _ScamDetectorPageState
       ],
     );
   }
-
-  // ── Result tile (issues / positive signs) ──
   Widget _resultTile({
     required IconData icon,
     required Color iconColor,
