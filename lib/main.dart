@@ -8,6 +8,7 @@ import 'package:trust_hire_app/Pages/onboarding_page.dart';
 import 'package:trust_hire_app/Pages/SignUp/signup_page.dart';
 
 import 'Pages/scam_detection_page.dart';
+import 'Pages/burnout_check_page.dart';
 
 void main() async{
   await Supabase.initialize(
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: JobFeedPage(),
+      home: BurnoutPage(),
 
     );
   }
