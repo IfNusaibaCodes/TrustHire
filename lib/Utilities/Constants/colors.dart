@@ -5,7 +5,7 @@ class TColors {
 
   //App Basic Colors
   static const Color primaryColor = Colors.black;
-  static const Color secondaryColor = Color(0xFFFFFFC5);
+  static const Color secondaryColor = Colors.white;
   static const Color accent = Color(0xFF7DA0CA);
 
 

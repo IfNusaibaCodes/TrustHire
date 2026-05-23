@@ -11,6 +11,11 @@ class Ttexts{
   static const String OnBoardingSubTitle3 = "Stay Protected Throughout Your Career Journey";
 
 
+  static const String AppName = "TrustHire";
+
+
+
+
   // -- Authentication Form Text
 
   static const String firstName = "First Name";
@@ -39,8 +44,8 @@ class Ttexts{
 // -- Authentication Headings Text
 
 
-  static const String loginTitle = "Discover Limitless Opportunities and Unmatched Convenience.";
-  static const String SignUpTitle = "Let's create your account";
+  static const String loginTitle = "Discover Limitless Opportunities.";
+  static const String SignUpTitle = "Let's create your account!";
 
   static const String forgetPasswordTitle = "Forget password?";
   static const String forgetPasswordSubTitle = "Don't worry sometimes people can forget too, enter your email and we will send you a password reset link.";

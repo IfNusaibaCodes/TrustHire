@@ -4,8 +4,8 @@ import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import '../../Constants/size.dart';
 import '../../Constants/text_strings.dart';
 
-class CustomTextField {
-  CustomTextField._();
+class TTextField {
+  TTextField._();
 
   static final InputDecorationTheme inputDecoration = InputDecorationTheme(
     errorMaxLines: 3,
