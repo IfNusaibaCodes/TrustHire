@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import 'package:trust_hire_app/common/styles/spacing_styles.dart';
@@ -56,26 +57,31 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
+
+    final size = MediaQuery.of(context).size;
+    final height = size.height;
+    final width = size.width;
+
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: (){
-              Navigator.pop(context);
-            }, icon: Icon(Icons.arrow_back_ios_new),color: Colors.black, iconSize: Tsize.Iconmd,),
-
+      automaticallyImplyLeading: false,
+      leading: BackButton(
+        onPressed: (){
+          Navigator.pop(context);
+        }
       ),
-
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    ),
       body: SingleChildScrollView(
-        child: Padding(padding: TSpacingStyle.paddingWithAppBarHeight,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
+              SizedBox(
+                height: height*0.001,
+              ),
 
               //Logo, Title, SubTitle
               const TSignUpHeader(),
@@ -101,8 +107,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ],
 
           ),),
-      ),
-    );
+      );
   }
 }
 
@@ -131,14 +136,13 @@ class TForm extends StatelessWidget {
     return Form(
       child:
       Padding(
-        padding: const EdgeInsets.symmetric(vertical: Tsize.spaceBtwSections),
+        padding: const EdgeInsets.all(15),
         child: Column(
           children: [
             TextFormField(
-
               controller: fNameController,
                 decoration: InputDecoration(
-                    prefixIcon : Icon(Icons.person),
+                    prefixIcon : Icon(Icons.person_outline_rounded),
                     labelText: Ttexts.firstName,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20))
@@ -149,7 +153,7 @@ class TForm extends StatelessWidget {
             TextFormField(
                 controller: lNameController,
                 decoration: InputDecoration(
-                    prefixIcon : Icon(Icons.person),
+                    prefixIcon : Icon(Icons.person_outline_rounded),
                     labelText: Ttexts.lastName,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20))
@@ -160,7 +164,7 @@ class TForm extends StatelessWidget {
             TextFormField(
                 controller: emailController,
                 decoration: InputDecoration(
-                    prefixIcon : Icon(Icons.email_outlined),
+                    prefixIcon : Icon(Icons.mail_outline_rounded),
                     labelText: Ttexts.email,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20))
@@ -173,7 +177,7 @@ class TForm extends StatelessWidget {
               obscureText: true,
                 controller: passwordController,
                 decoration: InputDecoration(
-                    prefixIcon : Icon(Iconsax.password_check), labelText: Ttexts.password,  suffixIcon: Icon(Iconsax.eye_slash),
+                    prefixIcon : Icon(Icons.lock_outline_rounded), labelText: Ttexts.password,  suffixIcon: Icon(Iconsax.eye_slash),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20))
                 )
@@ -183,31 +187,14 @@ class TForm extends StatelessWidget {
                 obscureText: true,
                 controller: confirmPasswordController,
                 decoration: InputDecoration(
-                    prefixIcon : Icon(Iconsax.password_check), labelText: Ttexts.password,  suffixIcon: Icon(Iconsax.eye_slash),
+                    prefixIcon : Icon(Iconsax.password_check), labelText: "Confirm password",  suffixIcon: Icon(Iconsax.eye_slash),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20))
                 )
             ),
-            const SizedBox( height: Tsize.spaceBtwinputfield/2 ,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Checkbox(value: true, onChanged: (value){}),
-                    const Text(Ttexts.rememberMe, style: TextStyle(
-                        fontSize: Tsize.Fontxs
-                    ),),
-                  ],
-                ),
+            const SizedBox( height: Tsize.spaceBtwinputfield),
 
-              ],
-            ),
-            const SizedBox(height:  Tsize.spaceBtwSections,),
-
-            const SizedBox(height:  Tsize.spaceBtwItems,),
-
-            SizedBox(width: double.infinity, child: OutlinedButton(
+            SizedBox(width: double.infinity, child: ElevatedButton(
                 onPressed: (){
                   onSignup();
                 },
@@ -226,30 +213,36 @@ class TSignUpHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            CircleAvatar(
-              radius: 45,
-              backgroundColor: Colors.white,
-              child: CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage(Timages.appLogo),
+
+    final size = MediaQuery.of(context).size;
+    final height = size.height;
+    final width = size.width;
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 35,
+                backgroundColor: Colors.white,
+                child: CircleAvatar(
+                  radius: 35,
+                  backgroundImage: AssetImage(Timages.appLogo),
+                ),
               ),
-            ),
-            const SizedBox( width:  Tsize.spaceBtwItems,),
+              SizedBox( width: width*0.01),
+              Text(Ttexts.AppName, style: Theme.of(context).textTheme.headlineLarge,),
+            ],
+          ),
+          const SizedBox( height: Tsize.sm,),
+          Center(child: Text(Ttexts.SignUpTitle, style: Theme.of(context).textTheme.bodyLarge,)),
 
-            Text(Ttexts.signUp, style: Theme.of(context).textTheme.headlineLarge,),
-          ],
-
-        ),
-
-        const SizedBox( height: Tsize.md,),
-        Text(Ttexts.SignUpTitle, style: Theme.of(context).textTheme.bodyLarge,),
-
-      ],
+        ],
+      ),
     );
   }
 }

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/Pages/Login/forget_password_page.dart';
 import 'package:trust_hire_app/Pages/profile_page.dart';
 import 'package:trust_hire_app/Pages/scam_detection_page.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
-import 'package:trust_hire_app/Utilities/Customs/custom_themes/custom_text_field.dart';
 import 'package:trust_hire_app/common/styles/spacing_styles.dart';
 
 import '../../Utilities/Constants/image_strings.dart';
@@ -26,10 +27,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
+
   final authService = AuthService();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
+  bool _obscurePassword = true;
 
   void login() async {
     final email = _emailController.text;
@@ -65,14 +68,23 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final size = MediaQuery.of(context).size;
+    final height = size.height;
+    final width = size.width;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(padding: TSpacingStyle.paddingWithAppBarHeight,
         child: Column(
           children: [
 
+            SizedBox( height: height*0.03,),
+
             //Logo, Title, SubTitle
             const TLoginHeader(),
+
+            SizedBox( height: height*0.03,),
 
             //Form
             TForm(
@@ -80,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
               passwordController: _passwordController,
               onLogin: login,
             ),
+            SizedBox( height: height*0.01,),
 
             //Divider
             TDivider(dividerText: Ttexts.orSignInWith.capitalize! ),
@@ -112,24 +125,18 @@ class TForm extends StatelessWidget {
     required this.onLogin,
   });
 
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Form(
       child:
       Padding(
-        padding: const EdgeInsets.symmetric(vertical: Tsize.spaceBtwSections),
+        padding: const EdgeInsets.all(12),
         child: Column(
           children: [
             TextFormField(
               controller: emailController,
                 decoration: InputDecoration(
-                    prefixIcon : Icon(Icons.email_outlined),
+                    prefixIcon : Icon(Icons.mail_outline_rounded),
                     labelText: Ttexts.email,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20))
@@ -147,28 +154,24 @@ class TForm extends StatelessWidget {
                 )
             ),
             const SizedBox( height: Tsize.spaceBtwinputfield/2 ,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Checkbox(value: true, onChanged: (value){}),
-                    const Text(Ttexts.rememberMe, style: TextStyle(
-                        fontSize: Tsize.Fontxs
-                    ),),
-                  ],
-                ),
-                TextButton(onPressed: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ForgetPasswordPage()));
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ForgetPasswordPage()),
+                  );
                 },
-                    child: const Text(Ttexts.forgetPassword, style: TextStyle(
-                        fontSize: Tsize.Fontxs,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black
-
-                    ))),
-              ],
+                child: Text(
+                  'Forgot Password?',
+                  style: GoogleFonts.inter(
+                    color:  Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height:  Tsize.spaceBtwSections,),
 
@@ -200,29 +203,36 @@ class TLoginHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            CircleAvatar(
-              radius: 45,
-              backgroundColor: Colors.white,
-              child: CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage(Timages.appLogo),
+
+    final size = MediaQuery.of(context).size;
+    final height = size.height;
+    final width = size.width;
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 35,
+                backgroundColor: Colors.white,
+                child: CircleAvatar(
+                  radius: 35,
+                  backgroundImage: AssetImage(Timages.appLogo),
+                ),
               ),
-            ),
-            const SizedBox( width:  Tsize.spaceBtwItems,),
+              SizedBox( width: width*0.01),
+              Text(Ttexts.AppName, style: Theme.of(context).textTheme.headlineLarge,),
+            ],
+          ),
+          const SizedBox( height: Tsize.sm,),
+          Center(child: Text(Ttexts.loginTitle, style: Theme.of(context).textTheme.bodyLarge,)),
 
-            Text(Ttexts.login, style: Theme.of(context).textTheme.headlineLarge,),
-          ],
-
-        ),
-        const SizedBox( height: Tsize.md,),
-        Text(Ttexts.loginTitle, style: Theme.of(context).textTheme.bodyLarge,),
-
-      ],
+        ],
+      ),
     );
   }
 }

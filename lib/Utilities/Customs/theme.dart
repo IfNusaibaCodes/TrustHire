@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'Themes/appbar_theme.dart';
+import 'Themes/checkbox_theme.dart';
+import 'Themes/elevated_button_theme.dart';
+import 'Themes/outlined_button_theme.dart';
+import 'Themes/text_theme.dart';
+import 'Themes/text_field_theme.dart';
 
-
-import 'custom_themes/custom_appbar.dart';
-import 'custom_themes/custom_checkbox.dart';
-import 'custom_themes/custom_elevated_button.dart';
-import 'custom_themes/custom_outlined_button.dart';
-import 'custom_themes/custom_text.dart';
 
 class TCustomApp{
   TCustomApp._();
 
-  static ThemeData lightTheme = ThemeData(
+  static ThemeData customTheme = ThemeData(
     useMaterial3: true,
     fontFamily: 'Poppins',
     brightness: Brightness.light,
@@ -21,8 +21,7 @@ class TCustomApp{
     outlinedButtonTheme: TOutlinedButton.lightOutlinedButtonTheme,
     checkboxTheme: TCheckbox.lightCheckboxTheme,
     appBarTheme: TAppBar.lightAppBarTheme,
-
-
+    inputDecorationTheme: TTextField.inputDecoration
       );
 
 

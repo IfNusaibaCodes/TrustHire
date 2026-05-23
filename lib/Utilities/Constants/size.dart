@@ -29,12 +29,13 @@ class Tsize{
   static const double ButtonElevation = 4.0;
 
   //AppBar Height
-  static const double appBarHeight= 56.0;
+  static const double appBarHeight= 54.0;
 
   //Image size
   static const double imageThumbSize= 80.0;
 
   //Default Spacing between sections
+  static const double defaultSpacesm= 20.0;
   static const double defaultSpace= 24.0;
   static const double spaceBtwItems= 16.0;
   static const double spaceBtwSections= 32.0;
