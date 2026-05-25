@@ -11,6 +11,8 @@ import 'package:trust_hire_app/Utilities/Customs/theme.dart';
 import 'Pages/Job Feed/job_feed_page.dart';
 import 'Pages/scam_detection_page.dart';
 import 'Pages/burnout_check_page.dart';
+import 'Pages/planner_page.dart';
+import 'Pages/profile_page.dart';
 
 void main() async{
   await Supabase.initialize(
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
 
-      home: RecentJobFeedPage(),
+      home: PlannerPage(),
 
       theme: TCustomApp.customTheme,
 
