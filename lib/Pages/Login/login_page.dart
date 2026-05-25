@@ -13,6 +13,7 @@ import 'package:trust_hire_app/common/styles/spacing_styles.dart';
 
 import '../../Utilities/Constants/image_strings.dart';
 import '../../Utilities/Constants/size.dart';
+import '../../Utilities/Validation/validation.dart';
 import '../../common/widgets_login_signup/form_divider.dart';
 import '../../common/widgets_login_signup/social_buttons.dart';
 import '../SignUp/signup_page.dart';
@@ -31,12 +32,22 @@ class _LoginPageState extends State<LoginPage> {
   final authService = AuthService();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _obscurePassword = true;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   void login() async {
     final email = _emailController.text;
     final password = _passwordController.text;
+
+    if(!_formKey.currentState!.validate()) return;
 
 
     try{
@@ -88,6 +99,7 @@ class _LoginPageState extends State<LoginPage> {
 
             //Form
             TForm(
+              formKey: _formKey,
               emailController: _emailController,
               passwordController: _passwordController,
               onLogin: login,
@@ -112,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
 
 
 class TForm extends StatelessWidget {
-
+  final GlobalKey<FormState> formKey;
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final VoidCallback onLogin;
@@ -120,6 +132,7 @@ class TForm extends StatelessWidget {
 
   const TForm({
     super.key,
+    required this.formKey,
     required this.emailController,
     required this.passwordController,
     required this.onLogin,
@@ -128,6 +141,7 @@ class TForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: formKey,
       child:
       Padding(
         padding: const EdgeInsets.all(12),
@@ -135,6 +149,7 @@ class TForm extends StatelessWidget {
           children: [
             TextFormField(
               controller: emailController,
+                validator: (value) => TValidator.validateEmail(value),
                 decoration: InputDecoration(
                     prefixIcon : Icon(Icons.mail_outline_rounded),
                     labelText: Ttexts.email,
@@ -147,6 +162,7 @@ class TForm extends StatelessWidget {
 
             TextFormField(
               controller: passwordController,
+                validator: (value) => TValidator.validatePassword(value),
                 decoration: InputDecoration(
                     prefixIcon : Icon(Iconsax.password_check), labelText: Ttexts.password,  suffixIcon: Icon(Iconsax.eye_slash),
                     border: OutlineInputBorder(

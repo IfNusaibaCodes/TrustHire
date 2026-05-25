@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
+import 'package:trust_hire_app/Utilities/Validation/validation.dart';
 import 'package:trust_hire_app/common/styles/spacing_styles.dart';
 
 import '../../Authentication/Services/auth_service.dart';
@@ -27,6 +28,17 @@ class _SignUpPageState extends State<SignUpPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _fNameController.dispose();
+    _lNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   void signup() async {
     final fName = _fNameController.text;
@@ -35,8 +47,11 @@ class _SignUpPageState extends State<SignUpPage> {
     final password = _passwordController.text;
     final confirmPassword = _confirmPasswordController.text;
 
+    if(!_formKey.currentState!.validate()) return;
+
     if(password != confirmPassword){
-      ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text("Password don't match!")));
+      ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text("Password don't match!"),
+      backgroundColor: Colors.red,));
       return;
     }
 
@@ -52,7 +67,8 @@ class _SignUpPageState extends State<SignUpPage> {
       }
     } catch(e){
       if(mounted){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: $e")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: ${e.toString()}"),
+          backgroundColor: Colors.red,));
       }
     }
   }
@@ -88,6 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
               //Form
               TForm(
+                formKey: _formKey,
                 fNameController: _fNameController,
                 lNameController: _lNameController,
                 emailController: _emailController,
@@ -113,7 +130,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
 
 class TForm extends StatelessWidget {
-
+  final GlobalKey<FormState> formKey;
   final TextEditingController fNameController;
   final TextEditingController lNameController;
   final TextEditingController emailController;
@@ -123,6 +140,7 @@ class TForm extends StatelessWidget {
 
   const TForm({
     super.key,
+    required this.formKey,
     required this.fNameController,
     required this.lNameController,
     required this.emailController,
@@ -134,6 +152,7 @@ class TForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: formKey,
       child:
       Padding(
         padding: const EdgeInsets.all(15),
@@ -141,6 +160,7 @@ class TForm extends StatelessWidget {
           children: [
             TextFormField(
               controller: fNameController,
+                validator: (value) => TValidator.validateEmptyText('First Name', value),
                 decoration: InputDecoration(
                     prefixIcon : Icon(Icons.person_outline_rounded),
                     labelText: Ttexts.firstName,
@@ -152,6 +172,7 @@ class TForm extends StatelessWidget {
             const SizedBox( height: Tsize.spaceBtwinputfield,),
             TextFormField(
                 controller: lNameController,
+                validator: (value) => TValidator.validateEmptyText('Last Name', value),
                 decoration: InputDecoration(
                     prefixIcon : Icon(Icons.person_outline_rounded),
                     labelText: Ttexts.lastName,
@@ -163,6 +184,7 @@ class TForm extends StatelessWidget {
             const SizedBox( height: Tsize.spaceBtwinputfield,),
             TextFormField(
                 controller: emailController,
+                validator: (value) => TValidator.validateEmail(value),
                 decoration: InputDecoration(
                     prefixIcon : Icon(Icons.mail_outline_rounded),
                     labelText: Ttexts.email,
@@ -176,6 +198,7 @@ class TForm extends StatelessWidget {
             TextFormField(
               obscureText: true,
                 controller: passwordController,
+                validator: (value) => TValidator.validatePassword(value),
                 decoration: InputDecoration(
                     prefixIcon : Icon(Icons.lock_outline_rounded), labelText: Ttexts.password,  suffixIcon: Icon(Iconsax.eye_slash),
                     border: OutlineInputBorder(

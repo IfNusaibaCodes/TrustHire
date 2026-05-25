@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: RecentJobFeedPage(),
+      home: SignUpPage(),
 
       theme: TCustomApp.customTheme,
 
