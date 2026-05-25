@@ -11,5 +11,9 @@ class Timages{
   static const String facebook = "assets/images/LogoImages/facebooklLogo.png";
   static const String appLogo = "assets/images/LogoImages/AppLogo.png";
 
+  //--Guide Images--
+  static const String remoteWorkGuide = "assets/images/GuideImages/remote_work_guide.png";
+
+
 
 }
