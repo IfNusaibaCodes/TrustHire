@@ -31,7 +31,7 @@ class JobFeedPage extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                               Text("Find Your Safe Career",
+                              Text("Find Your Safe Career",
                                 style: GoogleFonts.interTight(
                                   fontSize: Tsize.Fontxlg,
                                   fontWeight: FontWeight.bold,
@@ -62,7 +62,7 @@ class JobFeedPage extends StatelessWidget {
                   height: Tsize.spaceBtwSections,
                 ),
                 Expanded(
-                  flex: 1,
+                    flex: 1,
                     child: SingleChildScrollView(
                       primary: false,
                       child: Column(
@@ -71,7 +71,7 @@ class JobFeedPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Padding(
-                              padding: EdgeInsets.all(24),
+                            padding: EdgeInsets.all(24),
                             child: Container(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -89,16 +89,16 @@ class JobFeedPage extends StatelessWidget {
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Text("Recommended for you",style: GoogleFonts.jetBrainsMono(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: Tsize.Fontsm,
-                                            color: Colors.black
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: Tsize.Fontsm,
+                                              color: Colors.black
                                           ),),
                                           SizedBox(width: Tsize.defaultSpace,),
                                           // testing button
                                           CustomButton(onTap: (){
                                             Navigator.push(context,
                                                 MaterialPageRoute(builder: (context) => RecentJobFeedPage()));
-                                            },
+                                          },
                                               buttonText: "see recent test button"),
                                           SizedBox(width: Tsize.defaultSpace,),
                                           TextButton(onPressed: (){
@@ -136,4 +136,3 @@ class JobFeedPage extends StatelessWidget {
 
   }
 }
-

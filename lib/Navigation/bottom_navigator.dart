@@ -15,7 +15,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   int selectedIndex = 0;
   var pageData = [
-    JobFeedPage(),
+    //JobFeedPage(),
     ProfilePage(),
 
 
