@@ -8,10 +8,11 @@ import 'package:trust_hire_app/Pages/onboarding_page.dart';
 import 'package:trust_hire_app/Pages/SignUp/signup_page.dart';
 import 'package:trust_hire_app/Utilities/Customs/theme.dart';
 
-import 'package:trust_hire_app/Pages/remote_work_guide_page.dart';
-import 'Pages/Guide/remote_work_guide_page_dart.dart';
 import 'Pages/Job Feed/job_feed_page.dart';
 import 'Pages/scam_detection_page.dart';
+import 'Pages/burnout_check_page.dart';
+import 'Pages/planner_page.dart';
+import 'Pages/profile_page.dart';
 
 void main() async{
   await Supabase.initialize(
@@ -28,10 +29,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: RemoteWorkGuidePage(),
-
       theme: TCustomApp.customTheme,
-
+      initialRoute: '/jobs',
+      getPages: [
+        GetPage(name: '/jobs', page: () => RecentJobFeedPage()),
+        GetPage(name: '/burnout', page: () => BurnoutPage()),
+        GetPage(name: '/planner', page: () => PlannerPage()),
+        GetPage(name: '/profile', page: () => ProfilePage()),
+      ],
     );
   }
 }
