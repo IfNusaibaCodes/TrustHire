@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Pages/Job%20Feed/recent_job_feed.dart';
 import 'package:trust_hire_app/Pages/Login/login_page.dart';
@@ -8,11 +7,14 @@ import 'package:trust_hire_app/Pages/onboarding_page.dart';
 import 'package:trust_hire_app/Pages/SignUp/signup_page.dart';
 import 'package:trust_hire_app/Utilities/Customs/theme.dart';
 
+import 'Pages/Admin/admin_panel_page.dart';
+import 'Pages/Guide/remote_work_guide_page_dart.dart';
 import 'Pages/Job Feed/job_feed_page.dart';
 import 'Pages/scam_detection_page.dart';
 import 'Pages/burnout_check_page.dart';
 import 'Pages/planner_page.dart';
 import 'Pages/profile_page.dart';
+import 'Pages/remote_work_guide_page.dart';
 
 void main() async{
   await Supabase.initialize(
@@ -30,12 +32,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: TCustomApp.customTheme,
-      initialRoute: '/jobs',
+      initialRoute: '/admin',
       getPages: [
         GetPage(name: '/jobs', page: () => RecentJobFeedPage()),
         GetPage(name: '/burnout', page: () => BurnoutPage()),
         GetPage(name: '/planner', page: () => PlannerPage()),
         GetPage(name: '/profile', page: () => ProfilePage()),
+        GetPage(name: '/remote', page: () => RemoteWorkGuidePage()),
+        GetPage(name: '/admin', page: () => AdminPanelPage())
       ],
     );
   }
