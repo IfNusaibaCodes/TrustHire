@@ -59,80 +59,65 @@ class _PostJobTabState extends State<PostJobTab> {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isSubmitting = true);
 
-    try {
-      final inputUrl = _appUrlCtrl.text.trim();
+    // ── TODO(backend): Supabase call এখানে আসবে ──────────────────────────
+    // Backend ready হলে নিচের commented code uncomment করুন
+    // এবং উপরের mock block টা সরিয়ে দিন
+    //
+    // final existing = await Supabase.instance.client
+    //     .from('jobs')
+    //     .select('id')
+    //     .eq('application_url', _appUrlCtrl.text.trim())
+    //     .maybeSingle();
+    //
+    // final job = <String, dynamic>{
+    //   'title':            _titleCtrl.text.trim(),
+    //   'company':          _companyCtrl.text.trim(),
+    //   'location':         _locationCtrl.text.trim(),
+    //   'city':             _cityCtrl.text.trim(),
+    //   'country':          _country,
+    //   'has_remote':       _isRemote,
+    //   'experience_level': _expLevel,
+    //   'job_type':         _jobType,
+    //   'salary':           _salaryCtrl.text.trim(),
+    //   'currency':         _currency,
+    //   'application_url':  _appUrlCtrl.text.trim(),
+    //   'description_md':   _descCtrl.text.trim(),
+    //   'published':        DateTime.now().toIso8601String(),
+    // };
+    //
+    // await Supabase.instance.client.from('jobs').insert(job);
+    // ── TODO(backend) END ─────────────────────────────────────────────────
 
-      // Frontend duplicate URL check
-      final existing = await Supabase.instance.client
-          .from('jobs')
-          .select('id')
-          .eq('application_url', inputUrl)
-          .maybeSingle();
+    // Mock: Frontend test এর জন্য — Supabase ছাড়াই success দেখাবে
+    await Future.delayed(const Duration(milliseconds: 600)); // loading দেখানোর জন্য
 
-      if (existing != null) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('A job with this Application URL already exists!'),
-              backgroundColor: Color(0xFFD97706),
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        }
-        setState(() => _isSubmitting = false);
-        return;
-      }
+    final mockJob = <String, dynamic>{
+      'title':            _titleCtrl.text.trim(),
+      'company':          _companyCtrl.text.trim(),
+      'location':         _locationCtrl.text.trim(),
+      'city':             _cityCtrl.text.trim(),
+      'country':          _country,
+      'has_remote':       _isRemote,
+      'experience_level': _expLevel,
+      'job_type':         _jobType,
+      'salary':           '${_salaryCtrl.text.trim()} $_currency'.trim(),
+      'currency':         _currency,
+      'application_url':  _appUrlCtrl.text.trim(),
+      'description_md':   _descCtrl.text.trim(),
+      'published':        DateTime.now().toIso8601String(),
+    };
 
-      final salary = _salaryCtrl.text.trim();
-      final salaryDisplay = salary.isEmpty
-          ? ''
-          : (_currency.isEmpty ? salary : '$salary $_currency');
-
-      final job = <String, dynamic>{
-        'title':            _titleCtrl.text.trim(),
-        'company':          _companyCtrl.text.trim(),
-        'location':         _locationCtrl.text.trim(),
-        'city':             _cityCtrl.text.trim(),
-        'country':          _country,
-        'has_remote':       _isRemote,
-        'experience_level': _expLevel,
-        'job_type':         _jobType,
-        'salary':           salaryDisplay,
-        'currency':         _currency,
-        'application_url':  inputUrl,
-        'description_md':   _descCtrl.text.trim(),
-        'published':        DateTime.now().toIso8601String(),
-      };
-
-      await Supabase.instance.client.from('jobs').insert(job);
-
-      widget.onSuccess(job);
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('✅ Job posted successfully! (Frontend test mode)'),
+          backgroundColor: Color(0xFF006C4B),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      widget.onSuccess(mockJob);
       _clearForm();
-
-    } on PostgrestException catch (e) {
-      if (e.code == '23505') {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('A job with this Application URL already exists!'),
-              backgroundColor: Color(0xFFD97706),
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        }
-      } else {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Error: ${e.message}'),
-              backgroundColor: Colors.red,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
-        }
-      }
-    } finally {
-      if (mounted) setState(() => _isSubmitting = false);
+      setState(() => _isSubmitting = false);
     }
   }
 
@@ -209,13 +194,10 @@ class _PostJobTabState extends State<PostJobTab> {
                   validator: (v) => (v == null || v.isEmpty) ? 'Company name required' : null),
               const SizedBox(height: 14),
               _field(controller: _appUrlCtrl, label: 'Application URL *',
-                  hint: 'https://company.com/apply', icon: Icons.link_rounded,
+                  hint: 'https://company.com/apply  or  email  or  phone',
+                  icon: Icons.link_rounded,
                   keyboardType: TextInputType.url,
-                  validator: (v) {
-                    if (v == null || v.isEmpty) return 'Application URL required';
-                    if (!v.startsWith('http')) return 'Must start with http:// or https://';
-                    return null;
-                  }),
+                  validator: (v) => (v == null || v.isEmpty) ? 'Application URL required' : null),
             ]),
 
             const SizedBox(height: 16),
@@ -480,3 +462,4 @@ class _PostJobTabState extends State<PostJobTab> {
     ]);
   }
 }
+

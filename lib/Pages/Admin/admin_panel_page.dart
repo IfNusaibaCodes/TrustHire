@@ -4,6 +4,13 @@ import 'package:trust_hire_app/Pages/landing_page.dart';
 import 'job_list_tab.dart';
 import 'post_job_tab.dart';
 
+// ─── ADMIN PANEL PAGE ─────────────────────────────────────────────────────────
+// Entry point for admin section.
+// Split into 4 files:
+//   admin_panel_page.dart      ← this file (AppBar + TabController)
+//   post_job_tab.dart          ← Tab 1: form to post a new job
+//   job_list_tab.dart          ← Tab 2: list of all posted jobs
+//   select_or_type_field.dart  ← reusable dropdown/text toggle widget
 
 class AdminPanelPage extends StatefulWidget {
   const AdminPanelPage({super.key});
