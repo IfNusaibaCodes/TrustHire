@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:trust_hire_app/Pages/Guide/work_guide_page.dart';
 import 'package:trust_hire_app/Pages/Job%20Feed/recent_job_feed.dart';
 import 'package:trust_hire_app/Pages/Login/login_page.dart';
 import 'package:trust_hire_app/Pages/onboarding_page.dart';
@@ -11,6 +10,9 @@ import 'package:trust_hire_app/Utilities/Customs/theme.dart';
 
 import 'Pages/Job Feed/job_feed_page.dart';
 import 'Pages/scam_detection_page.dart';
+import 'Pages/burnout_check_page.dart';
+import 'Pages/Planner/planner_page.dart';
+import 'Pages/profile_page.dart';
 
 void main() async{
   await Supabase.initialize(
@@ -27,9 +29,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: RemoteWorkGuidePage(),
+
+      home: PlannerPage(),
 
       theme: TCustomApp.customTheme,
+
 
     );
   }
