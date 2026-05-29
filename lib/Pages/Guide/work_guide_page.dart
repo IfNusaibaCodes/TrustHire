@@ -229,18 +229,28 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
                     onTap: () async {
                       //final uid = authService.getCurrentUid();
                       final section = GuideSections.all[index];
-
                       final newValue = !(isRead);
-
-                      await GuideProgressService().toggle(
-                       // uid: uid,
-                        sectionKey: section.key,
-                        isRead: newValue,
-                      );
 
                       setState(() {
                         _isReadMap[section.key] = newValue;
                       });
+
+                      try {
+                        // 4. Fire the updated boolean to your database service
+                        await GuideProgressService().toggle(
+                          sectionKey: section.key,
+                          isRead: newValue,
+                        );
+                      } catch (e) {
+                        // Fallback: If network fails, revert the checkmark state back
+                        setState(() {
+                          _isReadMap[section.key] = isRead;
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Could not save progress: $e")),
+                        );
+                      }
+
                     },
                     /////
                     child: Container(

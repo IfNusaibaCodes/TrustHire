@@ -17,7 +17,7 @@ class GuideProgressService {
   Future<Map<String, bool>> fetchProgress() async {
     final uid = _getRequiredUid();
     final data = await client
-        .from('user_guide_progress')                                             //from auth service anba
+        .from('user_guide_progress')
         .select()
         .eq('user_id', uid);
 
@@ -41,6 +41,8 @@ class GuideProgressService {
       'section_key': sectionKey,
       'is_read': isRead,
       'updated_at': DateTime.now().toIso8601String(),
-    });
+    },
+      onConflict: 'user_id,section_key',   // updated line. work na korle katidis
+    );
   }
 }
