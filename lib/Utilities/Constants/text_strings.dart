@@ -1,3 +1,4 @@
+
 class Ttexts{
 
 
@@ -54,7 +55,9 @@ class Ttexts{
   static const String confirmEmail = "Verify your email address!";
 
 
-
-
+// -- Guide Page Texts
+  static const String guidePageTitle = "Remote Work Guide";
+  static const String guidePageSubTitle = "Master the skills of the modern digital\nnomad with our empathetic guide to\nglobal remote opportunities";
+  static const String guideSetupTips = "SETUP TIPS";
 
 }

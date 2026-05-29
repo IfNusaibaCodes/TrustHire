@@ -59,10 +59,18 @@ flutter:
     - assets/images/LogoImages/facebooklLogo.png
     - assets/images/LogoImages/googleLogo.png
     - assets/images/LogoImages/AppLogo.png
+    - assets/images/burnedout_images/balance.png.png
+    - assets/images/burnedout_images/exhausted.png.png
+    - assets/images/burnedout_images/motivation.png.png
+    - assets/images/burnedout_images/overall.png.png
+    - assets/images/burnedout_images/sleep.png.png
+    - assets/images/burnedout_images/team.png.png
+    - assets/images/GuideImages/remote_work_guide.png
 
 
 
-#--------LOCAL ASSETS-------
+
+  #--------LOCAL ASSETS-------
 
   fonts:
     - family: Poppins
