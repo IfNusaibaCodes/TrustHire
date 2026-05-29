@@ -53,14 +53,14 @@ class JobModel {
     this.descriptionMd,
   });
 
-  /// Creates a [JobModel] from a Supabase row map.
   factory JobModel.fromMap(Map<String, dynamic> map) {
-    // Support both flat slash-key style ("company/id") and nested map style.
+
     final Map<String, dynamic>? company = map['company'] as Map<String, dynamic>?;
     final List<dynamic>? types  = map['types']  as List<dynamic>?;
     final List<dynamic>? cities = map['cities'] as List<dynamic>?;
 
-    // Safely extract typed sub-maps from lists.
+
+
     final Map<String, dynamic>? type0 =
     (types != null && types.isNotEmpty) ? types[0] as Map<String, dynamic>? : null;
     final Map<String, dynamic>? type1 =
@@ -101,7 +101,7 @@ class JobModel {
     );
   }
 
-  /// Converts this model back to a map suitable for Supabase inserts/updates.
+
   Map<String, dynamic> toMap() {
     final map = <String, dynamic>{'id': id};
     if (extId != null)               map['ext_id']                  = extId;

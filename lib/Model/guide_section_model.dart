@@ -2,12 +2,14 @@
 import 'package:flutter/material.dart';
 
 class GuideSectionModel {
+  final String key;
   final String title;
   final IconData icon;
   final Color color;
   final List<String> points;
 
   const GuideSectionModel({
+    required this.key,
     required this.title,
     required this.icon,
     required this.color,
@@ -18,12 +20,14 @@ class GuideSectionModel {
 class GuideSections {
   static const List<GuideSectionModel> all = [
     GuideSectionModel(
+      key: 'how_to_work_online',
       title: 'How to Work Online',
       icon: Icons.laptop_mac_outlined,
       color: Color(0xFF1A56DB),
       points: [],
     ),
     GuideSectionModel(
+      key: 'freelancing_basics',
       title: 'Freelancing Basics',
       icon: Icons.work_outline,
       color: Color(0xFF16A34A),
@@ -37,6 +41,7 @@ class GuideSections {
       ],
     ),
     GuideSectionModel(
+      key: 'payment_methods',
       title: 'Payment Methods',
       icon: Icons.credit_card_outlined,
       color: Color(0xFF7C3AED),
@@ -50,6 +55,7 @@ class GuideSections {
       ],
     ),
     GuideSectionModel(
+      key: 'time_management',
       title: 'Time Management',
       icon: Icons.access_time_outlined,
       color: Color(0xFFD97706),      
@@ -63,6 +69,7 @@ class GuideSections {
       ],
     ),
     GuideSectionModel(
+      key: 'security_protocols',
       title: 'Security Protocols',
       icon: Icons.security_outlined,
       color: Color(0xFFDC2626),

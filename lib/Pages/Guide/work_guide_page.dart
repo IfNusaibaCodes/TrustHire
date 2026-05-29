@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/Model/guide_section_model.dart';
+import 'package:trust_hire_app/Pages/Guide/work_guide_db.dart';
 import 'package:trust_hire_app/Utilities/Constants/image_strings.dart';
 import 'package:trust_hire_app/Utilities/Constants/size.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
@@ -13,10 +15,29 @@ class RemoteWorkGuidePage extends StatefulWidget {
 
 class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
 
-  final List<bool> _isRead     = [true, true, true, false, false];
-  final List<bool> _isExpanded = [true, false, false, false, false];
+  final authService = AuthService();
 
-  int get _completedCount => _isRead.where((v) => v).length;
+  Map<String, bool> _isReadMap = {};
+  //final List<bool> _isRead     = [true, true, true, false, false];
+  final List<bool> _isExpanded = [false, false, false, false, false];
+
+  int get _completedCount => _isReadMap.values.where((v) => v == true).length;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProgress();
+  }
+
+  Future<void> _loadProgress() async {
+    final data = await GuideProgressService().fetchProgress();
+
+    setState(() {
+      _isReadMap = data;
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +93,7 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
             color: Colors.blueAccent,
           ),
         ),
-
         const Spacer(),
-
-        const Icon(Icons.search, color: Color(0xFF1A56DB), size: 26),
       ],
     );
   }
@@ -152,7 +170,7 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
   // ─── SECTION CARD ─────────────────────────────────────────────────────────────
   Widget _buildSectionCard(int index) {
     final section = GuideSections.all[index];
-    final isRead  = _isRead[index];
+    final isRead  = _isReadMap[section.key] ?? false;
     final isOpen  = _isExpanded[index];
 
     return Padding(
@@ -208,7 +226,23 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
 
                   // Read / Mark as Read button
                   GestureDetector(
-                    onTap: () => setState(() => _isRead[index] = !_isRead[index]),
+                    onTap: () async {
+                      //final uid = authService.getCurrentUid();
+                      final section = GuideSections.all[index];
+
+                      final newValue = !(isRead);
+
+                      await GuideProgressService().toggle(
+                       // uid: uid,
+                        sectionKey: section.key,
+                        isRead: newValue,
+                      );
+
+                      setState(() {
+                        _isReadMap[section.key] = newValue;
+                      });
+                    },
+                    /////
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(

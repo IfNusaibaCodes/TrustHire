@@ -7,24 +7,26 @@ class GuideSections {
   static const List<GuideSectionModel> all = [
 
     GuideSectionModel(
+      key: '',
 
       title: 'How to Work Online',
 
       icon: Icons.laptop_mac_outlined,
 
-      color: Color(0xFF1A56DB),       // ✅ নীল
+      color: Color(0xFF1A56DB),
 
       points: [],
 
     ),
 
     GuideSectionModel(
+      key: '',
 
       title: 'Freelancing Basics',
 
       icon: Icons.work_outline,
 
-      color: Color(0xFF16A34A),       // ✅ সবুজ — আগে ভুল করে নীল ছিল
+      color: Color(0xFF16A34A),
 
       points: [
 
@@ -44,13 +46,15 @@ class GuideSections {
 
     ),
 
+
     GuideSectionModel(
+      key: '',
 
       title: 'Payment Methods',
 
       icon: Icons.credit_card_outlined,
 
-      color: Color(0xFF7C3AED),       // ✅ বেগুনি — আগে ভুল করে নীল ছিল
+      color: Color(0xFF7C3AED),
 
       points: [
 
@@ -71,12 +75,13 @@ class GuideSections {
     ),
 
     GuideSectionModel(
+      key: '',
 
       title: 'Time Management',
 
       icon: Icons.access_time_outlined,
 
-      color: Color(0xFFD97706),       // ✅ কমলা — আগে ভুল করে নীল ছিল
+      color: Color(0xFFD97706),
 
       points: [
 
@@ -97,12 +102,13 @@ class GuideSections {
     ),
 
     GuideSectionModel(
+      key: '',
 
       title: 'Security Protocols',
 
       icon: Icons.security_outlined,
 
-      color: Color(0xFFDC2626),       // ✅ লাল — আগে ভুল করে নীল ছিল
+      color: Color(0xFFDC2626),
 
       points: [
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:trust_hire_app/Pages/Guide/work_guide_page.dart';
 import 'package:trust_hire_app/Pages/Job%20Feed/recent_job_feed.dart';
 import 'package:trust_hire_app/Pages/Login/login_page.dart';
 import 'package:trust_hire_app/Pages/onboarding_page.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: JobFeedPage(),
+      home: RemoteWorkGuidePage(),
 
       theme: TCustomApp.customTheme,
 

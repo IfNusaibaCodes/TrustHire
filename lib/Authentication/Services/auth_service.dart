@@ -46,5 +46,10 @@ class AuthService {
     final user = session?.user;
     return user?.userMetadata?['last_name'];
   }
+  String? getCurrentUid() {
+    final session = _supabase.auth.currentSession;
+    final user = session?.user;
+    return user?.id;
+  }
 
 }
