@@ -14,8 +14,7 @@
 
 import 'package:flutter/material.dart';
 import '../../Model/burnout_model.dart';
-import '../models/burnout_model.dart';
-import '../repositories/burnout_repository.dart';
+
 import '.burnout_repository.dart';
 
 class BurnoutPage extends StatefulWidget {
