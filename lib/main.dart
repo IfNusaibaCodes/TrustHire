@@ -8,6 +8,7 @@ import 'package:trust_hire_app/Pages/onboarding_page.dart';
 import 'package:trust_hire_app/Pages/SignUp/signup_page.dart';
 import 'package:trust_hire_app/Utilities/Customs/theme.dart';
 
+import 'Pages/Guide/remote_work_guide_page_dart.dart';
 import 'Pages/Job Feed/job_feed_page.dart';
 import 'Pages/scam_detection_page.dart';
 import 'Pages/burnout_check_page.dart';
@@ -30,12 +31,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: TCustomApp.customTheme,
-      initialRoute: '/jobs',
+      initialRoute: '/remote',
       getPages: [
         GetPage(name: '/jobs', page: () => RecentJobFeedPage()),
         GetPage(name: '/burnout', page: () => BurnoutPage()),
         GetPage(name: '/planner', page: () => PlannerPage()),
         GetPage(name: '/profile', page: () => ProfilePage()),
+        GetPage(name: '/remote', page: () => RemoteWorkGuidePage())
       ],
     );
   }
