@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../Pages/Login/login_page.dart';
-import '../../Pages/profile_page.dart';
+import 'package:trust_hire_app/profile/profile_page.dart';
 
 
 class AuthGate extends StatelessWidget {

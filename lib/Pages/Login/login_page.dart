@@ -5,7 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/Pages/Login/forget_password_page.dart';
-import 'package:trust_hire_app/Pages/profile_page.dart';
+import 'package:trust_hire_app/profile/profile_page.dart';
 import 'package:trust_hire_app/Pages/scam_detection_page.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';

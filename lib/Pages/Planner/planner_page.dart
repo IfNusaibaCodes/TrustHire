@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'planner_controller.dart';
@@ -183,7 +181,7 @@ class PlannerPage extends StatelessWidget {
   // ════════════════════════════════════════════════════════════
   @override
   Widget build(BuildContext context) {
-    final c = Get.put(PlannerController());
+    final c = Get.find<PlannerController>();
 
     return Scaffold(
       backgroundColor: bgColor,
