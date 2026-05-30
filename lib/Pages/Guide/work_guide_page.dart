@@ -18,7 +18,6 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
   final authService = AuthService();
 
   Map<String, bool> _isReadMap = {};
-  //final List<bool> _isRead     = [true, true, true, false, false];
   final List<bool> _isExpanded = [false, false, false, false, false];
 
   int get _completedCount => _isReadMap.values.where((v) => v == true).length;
@@ -30,7 +29,7 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
   }
 
   Future<void> _loadProgress() async {
-    final data = await GuideProgressService().fetchProgress();
+    final data = await WorkGuideDatabase().fetchProgress();
 
     setState(() {
       _isReadMap = data;
@@ -237,7 +236,7 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
 
                       try {
                         // 4. Fire the updated boolean to your database service
-                        await GuideProgressService().toggle(
+                        await WorkGuideDatabase().toggle(
                           sectionKey: section.key,
                           isRead: newValue,
                         );

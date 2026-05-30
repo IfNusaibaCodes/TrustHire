@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:trust_hire_app/Pages/Burnout/burnout_check_page.dart';
 import 'package:trust_hire_app/Pages/Job%20Feed/recent_job_feed.dart';
 import 'package:trust_hire_app/Pages/Login/login_page.dart';
 import 'package:trust_hire_app/Pages/onboarding_page.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
 
-      home: PlannerPage(),
+      home: BurnoutPage(),
 
       theme: TCustomApp.customTheme,
 

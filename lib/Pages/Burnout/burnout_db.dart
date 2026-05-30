@@ -1,40 +1,21 @@
-// ============================================================
-//  FILE: lib/repositories/burnout_repository.dart
-// ============================================================
-//  Burnout Check — Database / Supabase Layer
-//
-//  ── SUPABASE TABLE (run once in SQL Editor) ───────────────
-//  create table burnout_checks (
-//    id               uuid default gen_random_uuid() primary key,
-//    user_id          uuid references auth.users(id),
-//    answer           text not null,
-//    question_number  int not null,
-//    question_text    text not null,
-//    created_at       timestamp default now()
-//  );
-//
-//  ── DEPENDENCY ────────────────────────────────────────────
-//  pubspec.yaml: supabase_flutter: ^2.0.0
-//  main.dart:    Supabase.initialize(url: '...', anonKey: '...')
-// ============================================================
-
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../Authentication/Services/auth_service.dart';
 import '../../Model/burnout_model.dart';
-import '../models/burnout_model.dart';
 
 class BurnoutRepository {
-  BurnoutRepository({SupabaseClient? client})
-      : _client = client ?? Supabase.instance.client;
+  final client = Supabase.instance.client;
+  final authService = AuthService();
 
-  final SupabaseClient _client;
+  String _getRequiredUid() {
+    final uid = authService.getCurrentUid();
+    if (uid == null) {
+      throw Exception("User is not logged in.");
+    }
+    return uid;
+  }
 
-  // ── Current user id (fallback for local testing) ─────────
-  String get _userId =>
-      _client.auth.currentUser?.id ?? 'test-user-123';
 
-  // ── INSERT: save all answers in one batch call ────────────
-  /// Builds a list of [BurnoutRecord] from the answers map
-  /// (pageIndex → optionIndex) and inserts them all at once.
+  //insert
   Future<void> saveAnswers({
     required List<BurnoutQuestion> questions,
     required Map<int, int> selectedAnswers,
@@ -42,12 +23,13 @@ class BurnoutRepository {
     final rows = <Map<String, dynamic>>[];
 
     for (int i = 0; i < questions.length; i++) {
+      final uid = _getRequiredUid();
       final q = questions[i];
       final int optIndex = selectedAnswers[i]!;
       final String answer = q.options[optIndex].label;
 
       final record = BurnoutRecord(
-        userId: _userId,
+        userId: uid,
         questionNumber: q.questionNumber,
         questionText: q.question,
         answer: answer,
@@ -56,15 +38,16 @@ class BurnoutRepository {
       rows.add(record.toJson());
     }
 
-    await _client.from('burnout_checks').insert(rows);
+    await client.from('burnout_checks').insert(rows);
   }
 
   // ── FETCH: load all past check-ins for the current user ──
   Future<List<BurnoutRecord>> fetchHistory() async {
-    final response = await _client
+    final uid = _getRequiredUid();
+    final response = await client
         .from('burnout_checks')
         .select()
-        .eq('user_id', _userId)
+        .eq('user_id', uid)
         .order('created_at', ascending: false);
 
     return (response as List<dynamic>)
@@ -74,13 +57,14 @@ class BurnoutRepository {
 
   // ── FETCH: check-ins for a specific date ─────────────────
   Future<List<BurnoutRecord>> fetchByDate(DateTime date) async {
+    final uid = _getRequiredUid();
     final from = DateTime(date.year, date.month, date.day);
     final to   = from.add(const Duration(days: 1));
 
-    final response = await _client
+    final response = await client
         .from('burnout_checks')
         .select()
-        .eq('user_id', _userId)
+        .eq('user_id', uid)
         .gte('created_at', from.toIso8601String())
         .lt('created_at', to.toIso8601String())
         .order('question_number');
@@ -92,9 +76,10 @@ class BurnoutRepository {
 
   // ── DELETE: remove a check-in by id ──────────────────────
   Future<void> deleteRecord(String id) async {
-    await _client
+    final uid = _getRequiredUid();
+    await client
         .from('burnout_checks')
         .delete()
-        .eq('id', id);
+        .eq('id', uid);
   }
 }

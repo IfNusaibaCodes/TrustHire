@@ -1,10 +1,3 @@
-// ============================================================
-//  FILE: lib/models/burnout_model.dart
-// ============================================================
-//  Burnout Check — Data Model
-//  Pure Dart, no Flutter/Supabase dependency.
-// ============================================================
-
 import 'package:flutter/material.dart';
 
 // ── ANSWER OPTION ────────────────────────────────────────────

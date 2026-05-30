@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 
-class GuideProgressService {
+class WorkGuideDatabase {
   final client = Supabase.instance.client;
   final authService = AuthService();
 
@@ -42,7 +42,7 @@ class GuideProgressService {
       'is_read': isRead,
       'updated_at': DateTime.now().toIso8601String(),
     },
-      onConflict: 'user_id,section_key',   // updated line. work na korle katidis
+      onConflict: 'user_id,section_key',
     );
   }
 }

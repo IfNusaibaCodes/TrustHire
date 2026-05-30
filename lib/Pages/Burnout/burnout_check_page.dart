@@ -15,7 +15,7 @@
 import 'package:flutter/material.dart';
 import '../../Model/burnout_model.dart';
 
-import '.burnout_repository.dart';
+import 'burnout_db.dart';
 
 class BurnoutPage extends StatefulWidget {
   const BurnoutPage({super.key});
@@ -107,9 +107,10 @@ class _BurnoutPageState extends State<BurnoutPage> {
               padding: const EdgeInsets.fromLTRB(20, 14, 20, 0),
               child: Row(
                 children: [
-                  _CircleButton(
-                    icon: Icons.arrow_back_ios_new_rounded,
-                    onTap: () => Navigator.pop(context),
+                  BackButton(
+                      onPressed: (){
+                        Navigator.pop(context);
+                      }
                   ),
                   const SizedBox(width: 14),
                   const Expanded(
@@ -647,37 +648,6 @@ class _ConsistencyBadge extends StatelessWidget {
                 color: Colors.amber, size: 32),
           ),
         ],
-      ),
-    );
-  }
-}
-
-// ── Circle back button ────────────────────────────────────────
-class _CircleButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onTap;
-  const _CircleButton({required this.icon, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(14),
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.06),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: const Icon(Icons.arrow_back_ios_new_rounded,
-            size: 16, color: Color(0xFF1E1B4B)),
       ),
     );
   }
