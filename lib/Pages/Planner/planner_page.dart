@@ -181,7 +181,7 @@ class PlannerPage extends StatelessWidget {
   // ════════════════════════════════════════════════════════════
   @override
   Widget build(BuildContext context) {
-    final c = Get.put(PlannerController());
+    final c = Get.find<PlannerController>();
 
     return Scaffold(
       backgroundColor: bgColor,
