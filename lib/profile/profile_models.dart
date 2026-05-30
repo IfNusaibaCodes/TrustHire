@@ -1,5 +1,5 @@
-
 class ProfileModel {
+  final String?  id;
   final String? phone;
   final String? location;
   final String? university;
@@ -9,6 +9,7 @@ class ProfileModel {
   final bool universityIdVerified;
 
   ProfileModel({
+    this.id,
     this.phone,
     this.location,
     this.university,
@@ -19,6 +20,7 @@ class ProfileModel {
   });
 
   factory ProfileModel.fromMap(Map<String, dynamic> map) => ProfileModel(
+    id: map['id'],
     phone: map['phone'],
     location: map['location'],
     university: map['university'],
@@ -29,6 +31,7 @@ class ProfileModel {
   );
 
   Map<String, dynamic> toMap() => {
+    'id' : id,
     'phone': phone,
     'location': location,
     'university': university,
@@ -48,22 +51,25 @@ class ProfileModel {
 
 class SkillModel {
   final String id;
+  final String userId;
   final String name;
 
-  SkillModel({required this.id, required this.name});
+  SkillModel({required this.id,required this.userId, required this.name});
 
   factory SkillModel.fromMap(Map<String, dynamic> map) => SkillModel(
     id: map['id'],
+    userId: map['userId'],
     name: map['name'],
   );
 
-  Map<String, dynamic> toMap() => {'id': id, 'name': name};
+  Map<String, dynamic> toMap() => {'id': id,'userId':userId, 'name': name};
 }
 
 // ─────────────────────────────────────────────────────────────
 
 class ExperienceModel {
   final String id;
+  final String  userId;
   final String title;
   final String company;
   final String? startDate;
@@ -72,6 +78,7 @@ class ExperienceModel {
 
   ExperienceModel({
     required this.id,
+    required this.userId,
     required this.title,
     required this.company,
     this.startDate,
@@ -81,6 +88,7 @@ class ExperienceModel {
 
   factory ExperienceModel.fromMap(Map<String, dynamic> map) => ExperienceModel(
     id: map['id'],
+    userId: map['userId'],
     title: map['title'],
     company: map['company'],
     startDate: map['start_date'],
@@ -90,6 +98,7 @@ class ExperienceModel {
 
   Map<String, dynamic> toMap() => {
     'id': id,
+    'userId' : userId,
     'title': title,
     'company': company,
     'start_date': startDate,
@@ -101,17 +110,20 @@ class ExperienceModel {
 // ─────────────────────────────────────────────────────────────
 
 class ProfileStats {
+  final String? userId;
   final int appliedCount;
   final int profileViews;
   final int savedCount;
 
   ProfileStats({
+    this.userId,
     this.appliedCount = 0,
     this.profileViews = 0,
     this.savedCount = 0,
   });
 
   factory ProfileStats.fromMap(Map<String, dynamic> map) => ProfileStats(
+    userId: map['userId'],
     appliedCount: map['applied_count'] ?? 0,
     profileViews: map['profile_views'] ?? 0,
     savedCount: map['saved_count'] ?? 0,

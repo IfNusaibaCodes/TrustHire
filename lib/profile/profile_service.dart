@@ -1,4 +1,4 @@
-
+/*
 import 'package:trust_hire_app/profile/profile_models.dart';
 
 
@@ -83,3 +83,5 @@ class ProfileService {
     await Future.delayed(const Duration(milliseconds: 100));
   }
 }
+
+ */

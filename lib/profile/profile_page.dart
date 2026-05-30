@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/Pages/landing_page.dart';
+import 'package:trust_hire_app/profile/profile_database.dart';
 import 'package:trust_hire_app/profile/profile_models.dart';
 import 'package:trust_hire_app/profile/profile_service.dart';
 import 'package:trust_hire_app/profile/profile_widgets.dart';
@@ -15,7 +16,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
 
   final _authService = AuthService();
-  final _service     = ProfileService();
+  final _service     = ProfileDatabase();
 
   bool                  isLoading   = true;
   ProfileModel          profile     = ProfileModel();
@@ -79,12 +80,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _loadAll() async {
     setState(() => isLoading = true);
-    final uid = _uid;
+
     final results = await Future.wait([
-      _service.loadProfile(uid),
-      _service.loadSkills(uid),
-      _service.loadExperiences(uid),
-      _service.loadStats(uid),
+      _service.loadProfile(),
+      _service.loadSkills(),
+      _service.loadExperiences(),
+      _service.loadStats(),
     ]);
     if (mounted) {
       setState(() {
@@ -98,14 +99,14 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _updateProfile(Map<String, dynamic> updates) async {
-    await _service.updateProfile(_uid, updates);
+    await _service.updateProfile(updates);
     setState(() => profile = profile.copyWith(updates));
     _showSnack('Profile updated ✅');
   }
 
   Future<void> _addSkill(String name) async {
     if (name.trim().isEmpty) return;
-    final skill = await _service.addSkill(_uid, name);
+    final skill = await _service.addSkill(name);
     setState(() => skills.add(skill));
     _showSnack('Skill added ✅');
   }
@@ -117,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _addExperience(Map<String, dynamic> data) async {
-    final exp = await _service.addExperience(_uid, data);
+    final exp = await _service.addExperience(data);
     setState(() => experiences.insert(0, exp));
     _showSnack('Experience added ✅');
   }
@@ -157,7 +158,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            profileField('Phone',        phoneCtrl,    '+880 17xx-xxxxxx'),
+            profileField('Phone',        phoneCtrl,    '+880 1xxx-xxxxxx'),
             profileField('Location',     locationCtrl, 'City, Bangladesh'),
             profileField('University',   uniCtrl,      'e.g. SUST, BUET'),
             profileField('Year / Batch', yearCtrl,     'e.g. 3rd Year'),

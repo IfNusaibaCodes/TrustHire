@@ -1,24 +1,38 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/profile/profile_models.dart';
 
 class ProfileDatabase {
-  final _db = Supabase.instance.client;
+  final client = Supabase.instance.client;
+  final authService = AuthService();
 
-  Future<ProfileModel> loadProfile(String uid) async {
-    final response = await _db
+  String _getRequiredUid() {
+    final uid = authService.getCurrentUid();
+    if (uid == null) {
+      throw Exception("User is not logged in.");
+    }
+    return uid;
+  }
+
+  Future<ProfileModel> loadProfile() async {
+    final uid = _getRequiredUid();
+
+    final response = await client
         .from('profiles')
         .select()
         .eq('id', uid)
         .maybeSingle();
+
     if (response == null) {
-      await _db.from('profiles').insert({'id': uid});
+      await client.from('profiles').insert({'id': uid});
       return ProfileModel();
     }
     return ProfileModel.fromMap(response);
   }
 
-  Future<List<SkillModel>> loadSkills(String uid) async {
-    final response = await _db
+  Future<List<SkillModel>> loadSkills() async {
+    final uid = _getRequiredUid();
+    final response = await client
         .from('skills')
         .select()
         .eq('user_id', uid)
@@ -26,8 +40,9 @@ class ProfileDatabase {
     return (response as List).map((e) => SkillModel.fromMap(e)).toList();
   }
 
-  Future<List<ExperienceModel>> loadExperiences(String uid) async {
-    final response = await _db
+  Future<List<ExperienceModel>> loadExperiences() async {
+    final uid = _getRequiredUid();
+    final response = await client
         .from('experiences')
         .select()
         .eq('user_id', uid)
@@ -35,28 +50,32 @@ class ProfileDatabase {
     return (response as List).map((e) => ExperienceModel.fromMap(e)).toList();
   }
 
-  Future<ProfileStats> loadStats(String uid) async {
-    final response = await _db
+  Future<ProfileStats> loadStats() async {
+    final uid = _getRequiredUid();
+    final response = await client
         .from('profile_stats')
         .select()
         .eq('user_id', uid)
         .maybeSingle();
     if (response == null) {
-      await _db.from('profile_stats').insert({'user_id': uid});
+      await client.from('profile_stats').insert({'user_id': uid});
       return ProfileStats();
     }
     return ProfileStats.fromMap(response);
   }
 
-  Future<void> updateProfile(String uid, Map<String, dynamic> updates) async {
-    await _db.from('profiles').update({
+  Future<void> updateProfile(Map<String, dynamic> updates) async {
+    final uid = _getRequiredUid();
+
+    await client.from('profiles').update({
       ...updates,
       'updated_at': DateTime.now().toIso8601String(),
     }).eq('id', uid);
   }
 
-  Future<SkillModel> addSkill(String uid, String name) async {
-    final response = await _db
+  Future<SkillModel> addSkill(String name) async {
+    final uid = _getRequiredUid();
+    final response = await client
         .from('skills')
         .insert({'user_id': uid, 'name': name.trim()})
         .select()
@@ -65,11 +84,12 @@ class ProfileDatabase {
   }
 
   Future<void> deleteSkill(String skillId) async {
-    await _db.from('skills').delete().eq('id', skillId);
+    await client.from('skills').delete().eq('id', skillId);
   }
 
-  Future<ExperienceModel> addExperience(String uid, Map<String, dynamic> data) async {
-    final response = await _db.from('experiences').insert({
+  Future<ExperienceModel> addExperience(Map<String, dynamic> data) async {
+    final uid = _getRequiredUid();
+    final response = await client.from('experiences').insert({
       'user_id':    uid,
       'title':      data['title'],
       'company':    data['company'],
@@ -81,6 +101,6 @@ class ProfileDatabase {
   }
 
   Future<void> deleteExperience(String expId) async {
-    await _db.from('experiences').delete().eq('id', expId);
+    await client.from('experiences').delete().eq('id', expId);
   }
 }
