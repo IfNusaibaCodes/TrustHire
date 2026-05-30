@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:trust_hire_app/Pages/Job%20Feed/job_feed_page.dart';
-import 'package:trust_hire_app/Pages/Job%20Feed/recent_job_feed.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import '../Pages/profile_page.dart';
+import 'package:trust_hire_app/Pages/Job%20Feed/job_feed_page.dart';
+import 'package:trust_hire_app/profile/profile_page.dart';
+import 'package:trust_hire_app/Pages/Planner/planner_page.dart';
+import 'package:trust_hire_app/Pages/Planner/planner_controller.dart';
+
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
 
@@ -12,14 +15,19 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
 
-
   int selectedIndex = 0;
-  var pageData = [
+
+  final pageData = [
     JobFeedPage(),
+    PlannerPage(),
     ProfilePage(),
-
-
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    Get.put(PlannerController());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +35,20 @@ class _BottomNavBarState extends State<BottomNavBar> {
       body: Center(
         child: pageData[selectedIndex],
       ),
-
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
-        items:[
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today_sharp), label: 'Jobs'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month_outlined), label: 'Planner'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.work_outline),   label: 'Jobs'),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: 'Planner'),
+          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
         ],
         currentIndex: selectedIndex,
-        onTap: (setValue){
+        onTap: (setValue) {
           setState(() {
-            selectedIndex= setValue;
+            selectedIndex = setValue;
           });
         },
       ),
-
     );
   }
-
 }

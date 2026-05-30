@@ -1,23 +1,17 @@
-
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'planner_model.dart';
 import 'planner_database.dart';
 
 class PlannerController extends GetxController {
 
-  final PlannerDatabase _db = PlannerDatabase();
+  final PlannerDatabase _db          = PlannerDatabase();
+  final AuthService     _authService = AuthService();
 
-  var tasks = <TaskModel>[
-    TaskModel(id: '1', title: 'Apply to 2 jobs',
-        priority: 'High Priority', isDone: false, date: ''),
-    TaskModel(id: '2', title: 'Learn a new skill',
-        priority: 'Growth',        isDone: true,  date: ''),
-    TaskModel(id: '3', title: 'Practice mock interview',
-        priority: 'Ready',         isDone: false, date: ''),
-  ].obs;
+  String get _uid => _authService.getCurrentUid() ?? '';
 
+  var tasks      = <TaskModel>[].obs;
   var isLoading  = false.obs;
   var streakDays = 5.obs;
   var filter     = 'All'.obs;
@@ -50,6 +44,13 @@ class PlannerController extends GetxController {
 
   void setFilter(String f) => filter.value = f;
 
+  @override
+  void onInit() {
+    super.onInit();
+    loadTasks();
+    loadStreak();
+  }
+
   Future<void> loadTasks() async {
     isLoading.value = true;
     tasks.value = await _db.loadTasks(todayDate);
@@ -57,7 +58,7 @@ class PlannerController extends GetxController {
   }
 
   Future<void> loadStreak() async {
-    streakDays.value = await _db.loadStreak('');
+    streakDays.value = await _db.loadStreak(_uid);
   }
 
   void toggleTask(String taskId, bool current) {
@@ -77,7 +78,7 @@ class PlannerController extends GetxController {
       isDone:   false,
       date:     todayDate,
     ));
-    _db.addTask('', title, priority, todayDate);
+    _db.addTask(_uid, title, priority, todayDate);
   }
 
   void deleteTask(String taskId) {
