@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
 
-      home: SignUpPage(),
+      home: ProfilePage(),
 
       theme: TCustomApp.customTheme,
 

@@ -14,7 +14,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
 
-  final _authService = AuthService();
+  final _authService = AuthService(); // only needed for signOut()
   final _service     = ProfileDatabase();
 
   bool                  isLoading   = true;
@@ -23,27 +23,14 @@ class _ProfilePageState extends State<ProfilePage> {
   List<ExperienceModel> experiences = [];
   ProfileStats          stats       = ProfileStats();
 
-  String get _uid       => _authService.getCurrentUid()   ?? '';
-  String get _firstName => _authService.getCurrentFName() ?? '';
-  String get _lastName  => _authService.getCurrentLName() ?? '';
-  String get _email     => _authService.getCurrentEmail() ?? '';
-
-  String get fullName => '$_firstName $_lastName'.trim();
-
-  String get initials {
-    final f = _firstName.trim();
-    final l = _lastName.trim();
-    if (f.isNotEmpty && l.isNotEmpty) return '${f[0]}${l[0]}'.toUpperCase();
-    if (f.isNotEmpty) return f[0].toUpperCase();
-    return '?';
-  }
+  // ── All name/email/initials now come from ProfileModel ──────
 
   int get trustScore {
     int score = 0;
-    if (_firstName.isNotEmpty)                 score += 20;
-    if ((profile.phone ?? '').isNotEmpty)      score += 15;
+    if ((profile.firstName  ?? '').isNotEmpty) score += 20;
+    if ((profile.phone      ?? '').isNotEmpty) score += 15;
     if ((profile.university ?? '').isNotEmpty) score += 15;
-    if ((profile.cvUrl ?? '').isNotEmpty)      score += 20;
+    if ((profile.cvUrl      ?? '').isNotEmpty) score += 20;
     if (skills.isNotEmpty)                     score += 15;
     if (profile.universityIdVerified)          score += 15;
     return score;
@@ -51,11 +38,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   double get completeness {
     int filled = 0;
-    if (_firstName.isNotEmpty)            filled++;
-    if (skills.isNotEmpty)                filled++;
-    if ((profile.cvUrl ?? '').isNotEmpty) filled++;
-    if (experiences.isNotEmpty)           filled++;
-    if (profile.universityIdVerified)     filled++;
+    if ((profile.firstName ?? '').isNotEmpty) filled++;
+    if (skills.isNotEmpty)                    filled++;
+    if ((profile.cvUrl ?? '').isNotEmpty)     filled++;
+    if (experiences.isNotEmpty)               filled++;
+    if (profile.universityIdVerified)         filled++;
     return filled / 5;
   }
 
@@ -79,7 +66,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> _loadAll() async {
     setState(() => isLoading = true);
-
     final results = await Future.wait([
       _service.loadProfile(),
       _service.loadSkills(),
@@ -141,11 +127,11 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _showEditSheet() {
-    final phoneCtrl    = TextEditingController(text: profile.phone       ?? '');
-    final locationCtrl = TextEditingController(text: profile.location    ?? '');
+    final phoneCtrl    = TextEditingController(text: profile.phone      ?? '');
+    final locationCtrl = TextEditingController(text: profile.location   ?? '');
     final uniCtrl      = TextEditingController(text: profile.university  ?? '');
-    final yearCtrl     = TextEditingController(text: profile.studyYear   ?? '');
-    final bioCtrl      = TextEditingController(text: profile.bio         ?? '');
+    final yearCtrl     = TextEditingController(text: profile.studyYear  ?? '');
+    final bioCtrl      = TextEditingController(text: profile.bio        ?? '');
 
     showModalBottomSheet(
       context: context,
@@ -274,6 +260,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Column(
               children: [
 
+                // ── Header ──────────────────────────────────────────
                 Container(
                   width: double.infinity,
                   color: primary,
@@ -282,8 +269,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.shield,
-                              color: Colors.white, size: 26),
+                          const Icon(Icons.shield, color: Colors.white, size: 26),
                           const SizedBox(width: 6),
                           const Text('TrustHire',
                               style: TextStyle(
@@ -292,8 +278,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fontWeight: FontWeight.bold)),
                           const Spacer(),
                           IconButton(
-                            icon: const Icon(
-                                Icons.notifications_outlined,
+                            icon: const Icon(Icons.notifications_outlined,
                                 color: Colors.white, size: 24),
                             onPressed: () {},
                           ),
@@ -320,11 +305,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                       width: 3),
                                 ),
                                 child: Center(
-                                  child: Text(initials,
-                                      style: const TextStyle(
-                                          fontSize: 26,
-                                          fontWeight: FontWeight.bold,
-                                          color: primary)),
+                                  child: Text(
+                                    profile.initials, // ← from ProfileModel
+                                    style: const TextStyle(
+                                        fontSize: 26,
+                                        fontWeight: FontWeight.bold,
+                                        color: primary),
+                                  ),
                                 ),
                               ),
                               if (profile.universityIdVerified)
@@ -335,8 +322,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     decoration: BoxDecoration(
                                       color: const Color(0xFF10B981),
                                       shape: BoxShape.circle,
-                                      border: Border.all(
-                                          color: primary, width: 2),
+                                      border: Border.all(color: primary, width: 2),
                                     ),
                                     child: const Icon(Icons.check,
                                         size: 11, color: Colors.white),
@@ -350,7 +336,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  fullName.isEmpty ? 'Your Name' : fullName,
+                                  profile.fullName.isEmpty
+                                      ? 'Your Name'
+                                      : profile.fullName, // ← from ProfileModel
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -358,7 +346,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 const SizedBox(height: 3),
                                 if ((profile.university ?? '').isNotEmpty ||
-                                    (profile.studyYear ?? '').isNotEmpty)
+                                    (profile.studyYear  ?? '').isNotEmpty)
                                   Text(
                                     [profile.university, profile.studyYear]
                                         .where((s) => (s ?? '').isNotEmpty)
@@ -405,6 +393,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
 
+                      // ── Stats ──────────────────────────────────────
                       Row(
                         children: [
                           statCard(Icons.send_outlined,
@@ -419,6 +408,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       const SizedBox(height: 14),
 
+                      // ── Completeness ───────────────────────────────
                       profileCard(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -444,11 +434,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               value: completeness,
                               minHeight: 8,
                               backgroundColor: primary.withOpacity(0.12),
-                              valueColor: const AlwaysStoppedAnimation<Color>(primary),
+                              valueColor:
+                              const AlwaysStoppedAnimation<Color>(primary),
                             ),
                           ),
                           const SizedBox(height: 12),
-                          completenessStep('Basic info added',    _firstName.isNotEmpty),
+                          // ← profile.firstName instead of _firstName
+                          completenessStep('Basic info added',
+                              (profile.firstName ?? '').isNotEmpty),
                           completenessStep('Skills added',        skills.isNotEmpty),
                           completenessStep('Upload CV / Resume',  (profile.cvUrl ?? '').isNotEmpty),
                           completenessStep('Add work experience', experiences.isNotEmpty),
@@ -457,6 +450,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       )),
                       const SizedBox(height: 14),
 
+                      // ── Basic Info ─────────────────────────────────
                       profileCard(child: Column(
                         children: [
                           sectionHeader(
@@ -467,8 +461,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             onAction: _showEditSheet,
                           ),
                           const SizedBox(height: 10),
+                          // ← profile.email instead of _email
                           infoRow(Icons.mail_outline,
-                              _email.isEmpty ? '—' : _email),
+                              (profile.email ?? '').isEmpty ? '—' : profile.email!),
                           infoRow(Icons.phone_outlined,
                               (profile.phone ?? '').isEmpty ? '—' : profile.phone!),
                           infoRow(Icons.location_on_outlined,
@@ -487,6 +482,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       )),
                       const SizedBox(height: 14),
 
+                      // ── Skills ─────────────────────────────────────
                       profileCard(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -503,8 +499,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 style: TextStyle(fontSize: 13, color: textGrey))
                           else
                             Wrap(
-                              spacing: 8,
-                              runSpacing: 8,
+                              spacing: 8, runSpacing: 8,
                               children: skills.map((skill) {
                                 return GestureDetector(
                                   onLongPress: () {
@@ -514,7 +509,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(18)),
                                         title: const Text('Remove Skill?'),
-                                        content: Text('Remove "${skill.name}" from your profile?'),
+                                        content: Text(
+                                            'Remove "${skill.name}" from your profile?'),
                                         actions: [
                                           TextButton(
                                               onPressed: () => Navigator.pop(ctx),
@@ -553,6 +549,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       )),
                       const SizedBox(height: 14),
 
+                      // ── Experience ─────────────────────────────────
                       profileCard(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -604,7 +601,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                             color: textDark)),
                                     const SizedBox(height: 3),
                                     Text(
-                                      '${exp.company} · ${exp.startDate ?? ''}${exp.endDate != null ? ' – ${exp.endDate}' : ''}',
+                                      '${exp.company} · ${exp.startDate ?? ''}'
+                                          '${exp.endDate != null ? ' – ${exp.endDate}' : ''}',
                                       style: const TextStyle(
                                           fontSize: 12, color: textGrey),
                                     ),
@@ -616,6 +614,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       )),
                       const SizedBox(height: 14),
 
+                      // ── Trust Score ────────────────────────────────
                       profileCard(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -681,6 +680,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       )),
                       const SizedBox(height: 14),
 
+                      // ── Resume / CV ────────────────────────────────
                       profileCard(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -742,10 +742,8 @@ class _ProfilePageState extends State<ProfilePage> {
   void _showSnack(String msg, {bool isError = false}) {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(msg,
-          style: const TextStyle(fontWeight: FontWeight.w600)),
-      backgroundColor:
-      isError ? const Color(0xFFEF4444) : const Color(0xFF10B981),
+      content: Text(msg, style: const TextStyle(fontWeight: FontWeight.w600)),
+      backgroundColor: isError ? const Color(0xFFEF4444) : const Color(0xFF10B981),
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       margin: const EdgeInsets.all(16),

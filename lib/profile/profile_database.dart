@@ -3,14 +3,12 @@ import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/profile/profile_models.dart';
 
 class ProfileDatabase {
-  final client = Supabase.instance.client;
+  final client      = Supabase.instance.client;
   final authService = AuthService();
 
   String _getRequiredUid() {
     final uid = authService.getCurrentUid();
-    if (uid == null) {
-      throw Exception("User is not logged in.");
-    }
+    if (uid == null) throw Exception("User is not logged in.");
     return uid;
   }
 
@@ -24,14 +22,24 @@ class ProfileDatabase {
         .maybeSingle();
 
     if (response == null) {
-      await client.from('profiles').insert({'id': uid});
-      return ProfileModel();
+      await client.from('profiles').insert({
+        'id':         uid,
+        'first_name': authService.getCurrentFName(),
+        'last_name':  authService.getCurrentLName(),
+        'email':      authService.getCurrentEmail(),
+      });
+      return ProfileModel(
+        id:        uid,
+        firstName: authService.getCurrentFName(),
+        lastName:  authService.getCurrentLName(),
+        email:     authService.getCurrentEmail(),
+      );
     }
     return ProfileModel.fromMap(response);
   }
 
   Future<List<SkillModel>> loadSkills() async {
-    final uid = _getRequiredUid();
+    final uid      = _getRequiredUid();
     final response = await client
         .from('skills')
         .select()
@@ -41,7 +49,7 @@ class ProfileDatabase {
   }
 
   Future<List<ExperienceModel>> loadExperiences() async {
-    final uid = _getRequiredUid();
+    final uid      = _getRequiredUid();
     final response = await client
         .from('experiences')
         .select()
@@ -51,12 +59,13 @@ class ProfileDatabase {
   }
 
   Future<ProfileStats> loadStats() async {
-    final uid = _getRequiredUid();
+    final uid      = _getRequiredUid();
     final response = await client
         .from('profile_stats')
         .select()
         .eq('user_id', uid)
         .maybeSingle();
+
     if (response == null) {
       await client.from('profile_stats').insert({'user_id': uid});
       return ProfileStats();
@@ -66,7 +75,6 @@ class ProfileDatabase {
 
   Future<void> updateProfile(Map<String, dynamic> updates) async {
     final uid = _getRequiredUid();
-
     await client.from('profiles').update({
       ...updates,
       'updated_at': DateTime.now().toIso8601String(),
@@ -74,7 +82,7 @@ class ProfileDatabase {
   }
 
   Future<SkillModel> addSkill(String name) async {
-    final uid = _getRequiredUid();
+    final uid      = _getRequiredUid();
     final response = await client
         .from('skills')
         .insert({'user_id': uid, 'name': name.trim()})
@@ -88,7 +96,7 @@ class ProfileDatabase {
   }
 
   Future<ExperienceModel> addExperience(Map<String, dynamic> data) async {
-    final uid = _getRequiredUid();
+    final uid      = _getRequiredUid();
     final response = await client.from('experiences').insert({
       'user_id':    uid,
       'title':      data['title'],
