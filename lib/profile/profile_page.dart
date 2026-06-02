@@ -5,6 +5,8 @@ import 'package:trust_hire_app/profile/profile_database.dart';
 import 'package:trust_hire_app/profile/profile_models.dart';
 import 'package:trust_hire_app/profile/profile_widgets.dart';
 
+import '../Pages/Job Feed/Saved Jobs/saved_jobs_page.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -14,7 +16,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
 
-  final _authService = AuthService(); // only needed for signOut()
+  final _authService = AuthService();
   final _service     = ProfileDatabase();
 
   bool                  isLoading   = true;
@@ -23,7 +25,6 @@ class _ProfilePageState extends State<ProfilePage> {
   List<ExperienceModel> experiences = [];
   ProfileStats          stats       = ProfileStats();
 
-  // ── All name/email/initials now come from ProfileModel ──────
 
   int get trustScore {
     int score = 0;
@@ -269,6 +270,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       Row(
                         children: [
+                          BackButton(
+                              onPressed: (){
+                                Navigator.pop(context);
+                              }
+                          ),
+                          const SizedBox(width: 6),
                           const Icon(Icons.shield, color: Colors.white, size: 26),
                           const SizedBox(width: 6),
                           const Text('TrustHire',
@@ -402,8 +409,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           statCard(Icons.remove_red_eye_outlined,
                               stats.profileViews.toString(), 'Profile Views'),
                           const SizedBox(width: 10),
-                          statCard(Icons.bookmark_border,
-                              stats.savedCount.toString(), 'Saved Jobs'),
+                          GestureDetector(
+                            onTap: () => Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => const SavedJobsPage())),
+                            child: statCard(Icons.bookmark_border,
+                                stats.savedCount.toString(), 'Saved Jobs'),
+                          ),
+                          /*statCard(Icons.bookmark_border,
+                              stats.savedCount.toString(), 'Saved Jobs'),*/
                         ],
                       ),
                       const SizedBox(height: 14),

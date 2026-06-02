@@ -62,7 +62,6 @@ class _SignUpPageState extends State<SignUpPage> {
           backgroundColor: Colors.green,
         ));
       }
-
     } catch(e){
       if(mounted){
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: ${e.toString()}"),

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:trust_hire_app/Pages/Guide/work_guide_page.dart';
 import 'package:trust_hire_app/Pages/Job%20Feed/job_feed_page.dart';
+import 'package:trust_hire_app/Pages/scam_detection_page.dart';
 import 'package:trust_hire_app/profile/profile_page.dart';
 import 'package:trust_hire_app/Pages/Planner/planner_page.dart';
 import 'package:trust_hire_app/Pages/Planner/planner_controller.dart';
+
+import '../Utilities/Constants/colors.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -19,8 +23,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   final pageData = [
     JobFeedPage(),
+    ScamDetectorPage(),
     PlannerPage(),
-    ProfilePage(),
+    RemoteWorkGuidePage(),
   ];
 
   @override
@@ -32,15 +37,22 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: pageData[selectedIndex],
+      extendBody: true,
+      body: IndexedStack(
+        index: selectedIndex,
+        children: pageData,
       ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: TColors.primaryColor,
+        unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.work_outline),   label: 'Jobs'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: 'Planner'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.scanner), label: 'Detect Scam'),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month_outlined), label: 'Planner'),
+          BottomNavigationBarItem(icon: Icon(Icons.library_add_check_outlined), label: 'Guide'),
         ],
         currentIndex: selectedIndex,
         onTap: (setValue) {

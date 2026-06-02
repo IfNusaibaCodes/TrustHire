@@ -266,10 +266,10 @@ class JobDetailsPage extends StatelessWidget {
     // Strip markdown symbols for a clean readable view
     final cleaned = job.descriptionMd!
         .replaceAll(RegExp(r'#{1,6}\s*'), '')
-        .replaceAll(RegExp(r'\*\*(.*?)\*\*'), r'\1')
-        .replaceAll(RegExp(r'\*(.*?)\*'), r'\1')
-        .replaceAll(RegExp(r'`(.*?)`'), r'\1')
-        .replaceAll(RegExp(r'\[([^\]]+)\]\([^)]+\)'), r'\1')
+        .replaceAll(RegExp(r'\*\*(.*?)\*\*'), r'#')
+        .replaceAll(RegExp(r'\*(.*?)\*'), r'#')
+        .replaceAll(RegExp(r'`(.*?)`'), r'#')
+        .replaceAll(RegExp(r'\[([^\]]+)\]\([^)]+\)'), r'#')
         .trim();
 
     return Container(

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../Model/job_model.dart';
+import '../../profile/profile_page.dart';
 import 'all_jobs.dart';
 import 'job_details.dart';
 import 'jobs_database.dart';
-import 'recent_job_feed.dart';
-// import '../Profile/profile_page.dart';
 
 class JobFeedPage extends StatefulWidget {
   const JobFeedPage({super.key});
@@ -53,19 +52,17 @@ class _JobFeedPageState extends State<JobFeedPage> {
           icon: const Icon(Icons.menu_rounded, color: Colors.white),
         ),
 
-        // RIGHT SIDE PROFILE ICON
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 12),
             child: GestureDetector(
               onTap: () {
-                // NAVIGATE TO PROFILE PAGE
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (_) => const ProfilePage(),
-                //   ),
-                // );
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ProfilePage(),
+                  ),
+                 );
               },
               child: Container(
                 width: 38,
@@ -247,7 +244,7 @@ class _JobFeedPageState extends State<JobFeedPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RecentJobFeedPage(),
+                            builder: (context) => AllJobs(),
                           ),
                         );
                       },
