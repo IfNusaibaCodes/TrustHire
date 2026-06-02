@@ -1,4 +1,3 @@
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
@@ -14,18 +13,19 @@ class AuthService {
   }
 
   Future<AuthResponse> signUpWithEmailAndPassword(
-      String first_name, String last_name, String email, String password) async {
+      String first_name, String last_name, String email,String phone, String password) async {
     return await _supabase.auth.signUp(
         email: email,
         password: password,
         data: {
           'first_name': first_name,
-          'last_name': last_name
+          'last_name': last_name,
+          'phone' : phone
         }
 
     );
 
-}
+  }
 
   Future<void> signOut() async {
     return await _supabase.auth.signOut();
@@ -36,15 +36,24 @@ class AuthService {
     final user = session?.user;
     return user?.email;
   }
+
   String? getCurrentFName() {
     final session = _supabase.auth.currentSession;
     final user = session?.user;
     return user?.userMetadata?['first_name'];
   }
+
   String? getCurrentLName() {
     final session = _supabase.auth.currentSession;
     final user = session?.user;
     return user?.userMetadata?['last_name'];
+
+  }
+  String? getCurrentPhone() {
+    final session = _supabase.auth.currentSession;
+    final user = session?.user;
+    return user?.userMetadata?['phone'];
+
   }
   String? getCurrentUid() {
     final session = _supabase.auth.currentSession;

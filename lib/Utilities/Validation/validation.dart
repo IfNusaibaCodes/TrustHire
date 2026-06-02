@@ -58,7 +58,7 @@ class TValidator {
   }
 
   // Phone Number Validation
- /* static String? validatePhoneNumber(String? value) {
+  static String? validatePhoneNumber(String? value) {
 
     if (value == null || value.isEmpty) {
       return 'Phone number is required.';
@@ -70,7 +70,6 @@ class TValidator {
     if (!phoneRegExp.hasMatch(value)) {
       return 'Invalid phone number format (11 digits required).';
     }
-
     return null;
-  }*/
+  }
 }

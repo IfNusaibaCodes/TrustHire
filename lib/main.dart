@@ -10,7 +10,6 @@ import 'package:trust_hire_app/Pages/onboarding_page.dart';
 import 'package:trust_hire_app/Pages/SignUp/signup_page.dart';
 import 'package:trust_hire_app/Utilities/Customs/theme.dart';
 import 'package:trust_hire_app/profile/profile_page.dart';
-
 import 'Pages/Job Feed/job_feed_page.dart';
 import 'Pages/scam_detection_page.dart';
 import 'Pages/burnout_check_page.dart';
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
 
-      home: BurnoutPage(),
+      home: SignUpPage(),
 
       theme: TCustomApp.customTheme,
 

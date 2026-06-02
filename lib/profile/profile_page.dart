@@ -3,7 +3,6 @@ import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/Pages/landing_page.dart';
 import 'package:trust_hire_app/profile/profile_database.dart';
 import 'package:trust_hire_app/profile/profile_models.dart';
-import 'package:trust_hire_app/profile/profile_service.dart';
 import 'package:trust_hire_app/profile/profile_widgets.dart';
 
 class ProfilePage extends StatefulWidget {

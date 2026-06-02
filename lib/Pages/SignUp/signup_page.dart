@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import 'package:trust_hire_app/Utilities/Validation/validation.dart';
@@ -26,8 +27,8 @@ class _SignUpPageState extends State<SignUpPage> {
   final _fNameController = TextEditingController();
   final _lNameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -35,36 +36,33 @@ class _SignUpPageState extends State<SignUpPage> {
     _fNameController.dispose();
     _lNameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
     super.dispose();
   }
 
+
+// sign up method
   void signup() async {
-    final fName = _fNameController.text;
-    final lName = _lNameController.text;
-    final email = _emailController.text;
-    final password = _passwordController.text;
-    final confirmPassword = _confirmPasswordController.text;
+    final fName = _fNameController.text.trim();
+    final lName = _lNameController.text.trim();
+    final email = _emailController.text.trim();
+    final phone = _phoneController.text.trim();
+    final password = _passwordController.text.trim();
 
     if(!_formKey.currentState!.validate()) return;
 
-    if(password != confirmPassword){
-      ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text("Password don't match!"),
-      backgroundColor: Colors.red,));
-      return;
-    }
-
     try{
-      await authService.signUpWithEmailAndPassword(fName, lName, email, password);
+      await authService.signUpWithEmailAndPassword(fName, lName, email, phone, password);
       if (mounted) {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(
-          content: Text("Registration Complete"),
+          content: Text("Verification email sent. Please verify your email"),
           backgroundColor: Colors.green,
         ));
       }
+
     } catch(e){
       if(mounted){
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: ${e.toString()}"),
@@ -108,8 +106,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 fNameController: _fNameController,
                 lNameController: _lNameController,
                 emailController: _emailController,
+                phoneController: _phoneController,
                 passwordController: _passwordController,
-                confirmPasswordController: _confirmPasswordController,
                 onSignup: signup,
               ),
 
@@ -134,8 +132,8 @@ class TForm extends StatelessWidget {
   final TextEditingController fNameController;
   final TextEditingController lNameController;
   final TextEditingController emailController;
+  final TextEditingController phoneController;
   final TextEditingController passwordController;
-  final TextEditingController confirmPasswordController;
   final VoidCallback onSignup;
 
   const TForm({
@@ -144,8 +142,8 @@ class TForm extends StatelessWidget {
     required this.fNameController,
     required this.lNameController,
     required this.emailController,
+    required this.phoneController,
     required this.passwordController,
-    required this.confirmPasswordController,
     required this.onSignup,
   });
 
@@ -196,21 +194,21 @@ class TForm extends StatelessWidget {
 
             const SizedBox( height: Tsize.spaceBtwinputfield,),
             TextFormField(
-              obscureText: true,
-                controller: passwordController,
-                validator: (value) => TValidator.validatePassword(value),
+                controller: phoneController,
+                validator: (value) => TValidator.validatePhoneNumber(value),
                 decoration: InputDecoration(
-                    prefixIcon : Icon(Icons.lock_outline_rounded), labelText: Ttexts.password,  suffixIcon: Icon(Iconsax.eye_slash),
+                    prefixIcon : Icon(Icons.call_end_outlined), labelText: Ttexts.phoneNo,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20))
                 )
             ),
             const SizedBox( height: Tsize.spaceBtwinputfield,),
             TextFormField(
-                obscureText: true,
-                controller: confirmPasswordController,
+                //obscureText: true,
+                controller: passwordController,
+                validator: (value) => TValidator.validatePassword(value),
                 decoration: InputDecoration(
-                    prefixIcon : Icon(Iconsax.password_check), labelText: "Confirm password",  suffixIcon: Icon(Iconsax.eye_slash),
+                    prefixIcon : Icon(Icons.lock_outline_rounded), labelText: Ttexts.password,  suffixIcon: Icon(Iconsax.eye_slash),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20))
                 )
