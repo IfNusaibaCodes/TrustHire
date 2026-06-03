@@ -11,7 +11,7 @@ class AllJobs extends StatefulWidget {
 }
 
 class _AllJobsState extends State<AllJobs> {
-  late final Future<List<JobModel>> _jobsFuture;
+  late Future<List<JobModel>> _jobsFuture;
 
   @override
   void initState() {
@@ -21,20 +21,40 @@ class _AllJobsState extends State<AllJobs> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<JobModel>>(
-      future: _jobsFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(color: Color(0xFF4F6EF7)),
-            ),
-          );
-        }
+    // ── Scaffold + AppBar moved here from JobItemList ──────────
+    return Scaffold(
+      backgroundColor: const Color(0xFFF5F7FA),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF1A1F36),
+        elevation: 0,
+        title: const Text(
+          'Job Feed',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 0.5,
+          ),
+        ),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(color: const Color(0xFF2D3561), height: 1),
+        ),
+      ),
+      body: FutureBuilder<List<JobModel>>(
+        future: _jobsFuture,
+        builder: (context, snapshot) {
 
-        if (snapshot.hasError) {
-          return Scaffold(
-            body: Center(
+          // ── Loading ──────────────────────────────────────────
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(color: Color(0xFF4F6EF7)),
+            );
+          }
+
+          // ── Error ────────────────────────────────────────────
+          if (snapshot.hasError) {
+            return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -63,13 +83,14 @@ class _AllJobsState extends State<AllJobs> {
                   ),
                 ],
               ),
-            ),
-          );
-        }
+            );
+          }
 
-        final List<JobModel> jobs = snapshot.data ?? [];
-        return JobItemList(jobs: jobs);
-      },
+          // ── Data ─────────────────────────────────────────────
+          final List<JobModel> jobs = snapshot.data ?? [];
+          return JobItemList(jobs: jobs);
+        },
+      ),
     );
   }
 }

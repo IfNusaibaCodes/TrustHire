@@ -22,7 +22,9 @@ class _SavedJobsPageState extends State<SavedJobsPage> {
 
   Future<void> _unsave(int jobId) async {
     await _service.unsaveJob(jobId);
-    setState(() => _savedFuture = _service.fetchSavedJobs());
+    final newFuture = _service.fetchSavedJobs();
+    setState(() => _savedFuture = newFuture);
+
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: const Text('Job removed from saved'),

@@ -409,12 +409,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           statCard(Icons.remove_red_eye_outlined,
                               stats.profileViews.toString(), 'Profile Views'),
                           const SizedBox(width: 10),
-                          GestureDetector(
-                            onTap: () => Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => const SavedJobsPage())),
-                            child: statCard(Icons.bookmark_border,
-                                stats.savedCount.toString(), 'Saved Jobs'),
-                          ),
+                          statCard(Icons.bookmark_border, stats.savedCount.toString(), 'Saved Jobs',
+                              onTap: () => Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) => const SavedJobsPage()))),
                           /*statCard(Icons.bookmark_border,
                               stats.savedCount.toString(), 'Saved Jobs'),*/
                         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../Model/job_model.dart';
+import '../../Pages/Job Feed/Saved Jobs/saved_jobs_database.dart';
 import '../../Pages/Job Feed/job_details.dart';
 
 class JobItemList extends StatelessWidget {
@@ -15,38 +16,19 @@ class JobItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF1A1F36),
-        elevation: 0,
-        title: const Text(
-          'Job Feed',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 0.5,
-          ),
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(color: const Color(0xFF2D3561), height: 1),
-        ),
-      ),
-      body: isLoading
-          ? const Center(
-        child: CircularProgressIndicator(color: Color(0xFF4F6EF7)),
-      )
-          : jobs.isEmpty
-          ? _buildEmptyState()
-          : ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-        itemCount: jobs.length,
-        itemBuilder: (context, index) {
-          return _JobCard(job: jobs[index]);
-        },
-      ),
+    // ── CHANGED: removed Scaffold + AppBar, returns content directly ──
+    return isLoading
+        ? const Center(
+      child: CircularProgressIndicator(color: Color(0xFF4F6EF7)),
+    )
+        : jobs.isEmpty
+        ? _buildEmptyState()
+        : ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      itemCount: jobs.length,
+      itemBuilder: (context, index) {
+        return _JobCard(job: jobs[index]);
+      },
     );
   }
 
@@ -76,10 +58,67 @@ class JobItemList extends StatelessWidget {
   }
 }
 
-class _JobCard extends StatelessWidget {
+class _JobCard extends StatefulWidget {
   final JobModel job;
 
   const _JobCard({required this.job});
+
+  @override
+  State<_JobCard> createState() => _JobCardState();
+}
+
+class _JobCardState extends State<_JobCard> {
+
+  final _savedService = SavedJobsService();
+  bool _isSaved   = false;
+  bool _isLoading = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfSaved();
+  }
+
+  Future<void> _checkIfSaved() async {
+    try {
+      final ids = await _savedService.fetchSavedJobIds();
+      if (mounted) setState(() => _isSaved = ids.contains(widget.job.id));
+    } catch (_) {}
+  }
+
+  Future<void> _toggleSave() async {
+    if (_isLoading) return;
+    setState(() => _isLoading = true);
+    try {
+      final nowSaved = await _savedService.toggleSave(widget.job.id, _isSaved);
+      if (mounted) {
+        setState(() => _isSaved = nowSaved);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(nowSaved ? 'Job saved ✅' : 'Job removed from saved'),
+          backgroundColor: nowSaved ? const Color(0xFF10B981) : const Color(0xFF6B7280),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          margin: const EdgeInsets.all(16),
+          duration: const Duration(seconds: 2),
+        ));
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Error: ${e.toString()}'),
+          backgroundColor: const Color(0xFFEF4444),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          margin: const EdgeInsets.all(16),
+        ));
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,14 +144,14 @@ class _JobCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _CompanyLogo(logoUrl: job.companyLogo, companyName: job.companyName),
+                _CompanyLogo(logoUrl: widget.job.companyLogo, companyName: widget.job.companyName),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        job.companyName ?? 'Unknown Company',
+                        widget.job.companyName ?? 'Unknown Company',
                         style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
@@ -123,7 +162,7 @@ class _JobCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        job.title ?? 'Untitled Position',
+                        widget.job.title ?? 'Untitled Position',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -136,7 +175,43 @@ class _JobCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (job.hasRemote == true)
+                GestureDetector(
+                  onTap: _toggleSave,
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: _isSaved
+                          ? const Color(0xFFEEF2FF)
+                          : const Color(0xFFF9FAFB),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: _isSaved
+                            ? const Color(0xFF4F6EF7)
+                            : const Color(0xFFE5E7EB),
+                      ),
+                    ),
+                    child: _isLoading
+                        ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Color(0xFF4F6EF7),
+                      ),
+                    )
+                        : Icon(
+                      _isSaved
+                          ? Icons.bookmark_rounded
+                          : Icons.bookmark_outline_rounded,
+                      size: 18,
+                      color: _isSaved
+                          ? const Color(0xFF4F6EF7)
+                          : const Color(0xFF9CA3AF),
+                    ),
+                  ),
+                ),
+
+                if (widget.job.hasRemote == true)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
@@ -164,28 +239,28 @@ class _JobCard extends StatelessWidget {
               spacing: 8,
               runSpacing: 8,
               children: [
-                if (job.cityName != null || job.cityCountryName != null)
+                if (widget.job.cityName != null || widget.job.cityCountryName != null)
                   _MetaChip(
                     icon: Icons.location_on_outlined,
-                    label: [job.cityName, job.cityCountryName]
+                    label: [widget.job.cityName, widget.job.cityCountryName]
                         .where((e) => e != null)
                         .join(', '),
                   ),
-                if (job.typePrimary != null)
+                if (widget.job.typePrimary != null)
                   _MetaChip(
                     icon: Icons.access_time_rounded,
-                    label: job.typePrimary!,
+                    label: widget.job.typePrimary!,
                   ),
-                if (job.experienceLevel != null)
+                if (widget.job.experienceLevel != null)
                   _MetaChip(
                     icon: Icons.bar_chart_rounded,
-                    label: job.experienceLevel!,
+                    label: widget.job.experienceLevel!,
                     accent: true,
                   ),
-                if (job.salaryCurrency != null)
+                if (widget.job.salaryCurrency != null)
                   _MetaChip(
                     icon: Icons.attach_money_rounded,
-                    label: job.salaryCurrency!,
+                    label: widget.job.salaryCurrency!,
                   ),
               ],
             ),
@@ -193,9 +268,9 @@ class _JobCard extends StatelessWidget {
             const SizedBox(height: 16),
 
             // Description preview
-            if (job.descriptionMd != null && job.descriptionMd!.isNotEmpty)
+            if (widget.job.descriptionMd != null && widget.job.descriptionMd!.isNotEmpty)
               Text(
-                job.descriptionMd!.replaceAll(RegExp(r'[#*`\[\]()>_~]'), '').trim(),
+                widget.job.descriptionMd!.replaceAll(RegExp(r'[#*`\[\]()>_~]'), '').trim(),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -210,9 +285,9 @@ class _JobCard extends StatelessWidget {
             // Footer: published date + view more button
             Row(
               children: [
-                if (job.published != null)
+                if (widget.job.published != null)
                   Text(
-                    _formatDate(job.published!),
+                    _formatDate(widget.job.published!),
                     style: const TextStyle(
                       fontSize: 12,
                       color: Color(0xFF9CA3AF),
@@ -226,7 +301,7 @@ class _JobCard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => JobDetailsPage(job: job),
+                          builder: (_) => JobDetailsPage(job: widget.job),
                         ),
                       );
                     },

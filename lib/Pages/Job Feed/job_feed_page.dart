@@ -57,12 +57,12 @@ class _JobFeedPageState extends State<JobFeedPage> {
             padding: const EdgeInsets.only(right: 12),
             child: GestureDetector(
               onTap: () {
-                 Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) => const ProfilePage(),
                   ),
-                 );
+                );
               },
               child: Container(
                 width: 38,

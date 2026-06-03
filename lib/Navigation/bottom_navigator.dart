@@ -22,7 +22,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int selectedIndex = 0;
 
   final pageData = [
-    JobFeedPage(),
+   // JobFeedPage(),
     ScamDetectorPage(),
     PlannerPage(),
     RemoteWorkGuidePage(),
