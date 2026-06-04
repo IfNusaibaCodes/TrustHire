@@ -399,17 +399,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
-                      // ── Stats ──────────────────────────────────────
                       Row(
                         children: [
                           statCard(Icons.send_outlined,
                               stats.appliedCount.toString(), 'Applied'),
+                          /*
                           const SizedBox(width: 10),
                           statCard(Icons.remove_red_eye_outlined,
-                              stats.profileViews.toString(), 'Profile Views'),
+                              stats.profileViews.toString(), 'Profile Views'),// no need bcz who's gonna view my profile duhh */
                           const SizedBox(width: 10),
-                          // In the statCard onTap for Saved Jobs:
                           statCard(
                             Icons.bookmark_border,
                             stats.savedCount.toString(),
