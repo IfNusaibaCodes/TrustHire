@@ -409,11 +409,27 @@ class _ProfilePageState extends State<ProfilePage> {
                           statCard(Icons.remove_red_eye_outlined,
                               stats.profileViews.toString(), 'Profile Views'),
                           const SizedBox(width: 10),
+                          // In the statCard onTap for Saved Jobs:
+                          statCard(
+                            Icons.bookmark_border,
+                            stats.savedCount.toString(),
+                            'Saved Jobs',
+                            onTap: () async {
+                              await Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) => const SavedJobsPage()));
+                              _loadAll(); // ou part reload korbo real time stats
+                            },
+                          ),
+
+
+                          /*
                           statCard(Icons.bookmark_border, stats.savedCount.toString(), 'Saved Jobs',
                               onTap: () => Navigator.push(context,
-                                  MaterialPageRoute(builder: (_) => const SavedJobsPage()))),
+                                  MaterialPageRoute(builder: (_) => const SavedJobsPage()))),  fixed one  */
+
+
                           /*statCard(Icons.bookmark_border,
-                              stats.savedCount.toString(), 'Saved Jobs'),*/
+                              stats.savedCount.toString(), 'Saved Jobs'),  unfixed */
                         ],
                       ),
                       const SizedBox(height: 14),
