@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Common/Component/job_item_list.dart';
 import '../../Model/job_model.dart';
+import '../../admin/admin_service.dart';
+import '../../admin/create_job_form.dart';
 import 'jobs_database.dart';
 
 class AllJobs extends StatefulWidget {
@@ -12,11 +14,31 @@ class AllJobs extends StatefulWidget {
 
 class _AllJobsState extends State<AllJobs> {
   late Future<List<JobModel>> _jobsFuture;
+  bool _isAdmin = false;
 
   @override
   void initState() {
     super.initState();
     _jobsFuture = JobsDatabaseService.fetchData();
+    _checkAdmin();
+  }
+
+  Future<void> _checkAdmin() async {
+    final admin = await AdminService.isAdmin();
+    if (mounted) setState(() => _isAdmin = admin);
+  }
+
+  void _openCreateForm() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => CreateJobForm(
+        onJobCreated: () => setState(() {
+          _jobsFuture = JobsDatabaseService.fetchData();
+        }),
+      ),
+    );
   }
 
   @override
@@ -24,6 +46,17 @@ class _AllJobsState extends State<AllJobs> {
     // ── Scaffold + AppBar moved here from JobItemList ──────────
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
+      floatingActionButton: _isAdmin
+          ? FloatingActionButton.extended(
+              onPressed: _openCreateForm,
+              backgroundColor: const Color(0xFF1A1F36),
+              icon: const Icon(Icons.add_rounded, color: Colors.white),
+              label: const Text(
+                'Post Job',
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+              ),
+            )
+          : null,
       appBar: AppBar(
         backgroundColor: const Color(0xFF1A1F36),
         elevation: 0,

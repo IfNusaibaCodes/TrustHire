@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../Model/job_model.dart';
+import '../../admin/admin_service.dart';
+import '../../admin/manage_trending_page.dart';
 import '../../profile/profile_page.dart';
 import 'all_jobs.dart';
 import 'job_details.dart';
@@ -15,11 +17,18 @@ class JobFeedPage extends StatefulWidget {
 
 class _JobFeedPageState extends State<JobFeedPage> {
   late Future<List<JobModel>> trendingJobsFuture;
+  bool _isAdmin = false;
 
   @override
   void initState() {
     super.initState();
-    trendingJobsFuture = JobsDatabaseService.fetchData();
+    trendingJobsFuture = JobsDatabaseService.fetchTrendingJobs();
+    _checkAdmin();
+  }
+
+  Future<void> _checkAdmin() async {
+    final admin = await AdminService.isAdmin();
+    if (mounted) setState(() => _isAdmin = admin);
   }
 
   @override
@@ -68,7 +77,7 @@ class _JobFeedPageState extends State<JobFeedPage> {
                 width: 38,
                 height: 38,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.15),
+                  color: Colors.white.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
@@ -87,7 +96,7 @@ class _JobFeedPageState extends State<JobFeedPage> {
           color: const Color(0xFF4F6EF7),
           onRefresh: () async {
             setState(() {
-              trendingJobsFuture = JobsDatabaseService.fetchData();
+              trendingJobsFuture = JobsDatabaseService.fetchTrendingJobs();
             });
           },
           child: SingleChildScrollView(
@@ -144,7 +153,7 @@ class _JobFeedPageState extends State<JobFeedPage> {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.12),
+                          color: Colors.black.withValues(alpha:0.12),
                           blurRadius: 18,
                           offset: const Offset(0, 8),
                         ),
@@ -157,7 +166,7 @@ class _JobFeedPageState extends State<JobFeedPage> {
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.15),
+                            color: Colors.white.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: const Icon(
@@ -239,22 +248,40 @@ class _JobFeedPageState extends State<JobFeedPage> {
                       ),
                     ),
 
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AllJobs(),
+                    Row(
+                      children: [
+                        if (_isAdmin)
+                          TextButton.icon(
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const ManageTrendingPage(),
+                              ),
+                            ),
+                            icon: const Icon(Icons.edit_rounded, size: 16, color: Color(0xFF4F6EF7)),
+                            label: const Text(
+                              'Manage',
+                              style: TextStyle(color: Color(0xFF4F6EF7), fontWeight: FontWeight.w700),
+                            ),
                           ),
-                        );
-                      },
-                      child: const Text(
-                        "See All",
-                        style: TextStyle(
-                          color: Color(0xFF4F6EF7),
-                          fontWeight: FontWeight.w700,
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AllJobs(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "See All",
+                            style: TextStyle(
+                              color: Color(0xFF4F6EF7),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
@@ -333,7 +360,7 @@ class _JobFeedPageState extends State<JobFeedPage> {
                               borderRadius: BorderRadius.circular(18),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
+                                  color: Colors.black.withValues(alpha:0.05),
                                   blurRadius: 10,
                                   offset: const Offset(0, 4),
                                 ),

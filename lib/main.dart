@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Pages/Burnout/burnout_check_page.dart';
 import 'package:trust_hire_app/Pages/Guide/work_guide_page.dart';
 import 'package:trust_hire_app/Pages/Login/login_page.dart';
+import 'package:trust_hire_app/Pages/landing_page.dart';
 import 'package:trust_hire_app/Pages/onboarding_page.dart';
 import 'package:trust_hire_app/Pages/SignUp/signup_page.dart';
 import 'package:trust_hire_app/Utilities/Customs/theme.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
 
-      home: JobFeedPage(),
+      home: LandingPage(),
 
       theme: TCustomApp.customTheme,
 

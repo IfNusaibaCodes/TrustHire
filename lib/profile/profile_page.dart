@@ -6,6 +6,7 @@ import 'package:trust_hire_app/profile/profile_models.dart';
 import 'package:trust_hire_app/profile/profile_widgets.dart';
 
 import '../Pages/Job Feed/Saved Jobs/saved_jobs_page.dart';
+import '../Pages/Job Feed/Applied Jobs/applied_jobs_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -401,8 +402,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     children: [
                       Row(
                         children: [
-                          statCard(Icons.send_outlined,
-                              stats.appliedCount.toString(), 'Applied'),
+                          statCard(
+                            Icons.send_outlined,
+                            stats.appliedCount.toString(),
+                            'Applied',
+                            onTap: () async {
+                              await Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) => const AppliedJobsPage()));
+                              _loadAll();
+                            },
+                          ),
                           /*
                           const SizedBox(width: 10),
                           statCard(Icons.remove_red_eye_outlined,

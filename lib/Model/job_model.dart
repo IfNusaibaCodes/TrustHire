@@ -24,6 +24,7 @@ class JobModel {
   final String? language;
   final String? salaryCurrency;
   final String? descriptionMd;
+  final bool? isTrending;
 
   const JobModel({
     required this.id,
@@ -51,6 +52,7 @@ class JobModel {
     this.language,
     this.salaryCurrency,
     this.descriptionMd,
+    this.isTrending,
   });
 
   factory JobModel.fromMap(Map<String, dynamic> map) {
@@ -98,6 +100,7 @@ class JobModel {
       language:            map['language']          as String?,
       salaryCurrency:      map['salary_currency']   as String?,
       descriptionMd:       map['description_md']    as String?,
+      isTrending:          map['is_trending']        as bool?,
     );
   }
 
@@ -128,6 +131,7 @@ class JobModel {
     if (language != null)            map['language']                = language;
     if (salaryCurrency != null)      map['salary_currency']         = salaryCurrency;
     if (descriptionMd != null)       map['description_md']          = descriptionMd;
+    if (isTrending != null)          map['is_trending']             = isTrending;
     return map;
   }
 
@@ -157,6 +161,7 @@ class JobModel {
     String? language,
     String? salaryCurrency,
     String? descriptionMd,
+    bool? isTrending,
   }) {
     return JobModel(
       id:                   id                   ?? this.id,
@@ -184,6 +189,7 @@ class JobModel {
       language:             language             ?? this.language,
       salaryCurrency:       salaryCurrency       ?? this.salaryCurrency,
       descriptionMd:        descriptionMd        ?? this.descriptionMd,
+      isTrending:           isTrending           ?? this.isTrending,
     );
   }
 

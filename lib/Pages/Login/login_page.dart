@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
+import 'package:trust_hire_app/Pages/Job%20Feed/job_feed_page.dart';
 import 'package:trust_hire_app/Pages/Login/forget_password_page.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
 import 'package:trust_hire_app/profile/profile_page.dart';
@@ -12,6 +13,7 @@ import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import 'package:trust_hire_app/common/styles/spacing_styles.dart';
 
+import '../../Navigation/bottom_navigator.dart';
 import '../../Utilities/Constants/image_strings.dart';
 import '../../Utilities/Constants/size.dart';
 import '../../Utilities/Validation/validation.dart';
@@ -63,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: Colors.green,
         ));
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ProfilePage()));
+            context, MaterialPageRoute(builder: (context) => BottomNavBar()));
       }
     } catch(e){
       if(mounted){

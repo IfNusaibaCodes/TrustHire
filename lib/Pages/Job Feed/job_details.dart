@@ -2,11 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../Model/job_model.dart';
+import 'Applied Jobs/applied_jobs_database.dart';
 
-class JobDetailsPage extends StatelessWidget {
+class JobDetailsPage extends StatefulWidget {
   final JobModel job;
 
   const JobDetailsPage({super.key, required this.job});
+
+  @override
+  State<JobDetailsPage> createState() => _JobDetailsPageState();
+}
+
+class _JobDetailsPageState extends State<JobDetailsPage> {
+  final _appliedService = AppliedJobsService();
+  bool _isApplied = false;
+  bool _loading = true;
+
+  JobModel get job => widget.job;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkApplied();
+  }
+
+  Future<void> _checkApplied() async {
+    final applied = await _appliedService.isApplied(job.id);
+    if (mounted) setState(() { _isApplied = applied; _loading = false; });
+  }
+
+  Future<void> _toggleApplied() async {
+    setState(() => _loading = true);
+    if (_isApplied) {
+      await _appliedService.removeApplied(job.id);
+    } else {
+      await _appliedService.markApplied(job.id);
+    }
+    if (mounted) setState(() { _isApplied = !_isApplied; _loading = false; });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +63,8 @@ class JobDetailsPage extends StatelessWidget {
                     const SizedBox(height: 24),
                   ],
                   _buildCompanySection(),
+                  const SizedBox(height: 24),
+                  _buildAppliedToggle(),
                   const SizedBox(height: 100), // space for FAB
                 ],
               ),
@@ -385,6 +420,80 @@ class JobDetailsPage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildAppliedToggle() {
+    return GestureDetector(
+      onTap: _loading ? null : _toggleApplied,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          color: _isApplied ? const Color(0xFFECFDF5) : Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: _isApplied ? const Color(0xFF10B981) : const Color(0xFFE5E7EB),
+            width: 1.5,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.04),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: _isApplied ? const Color(0xFF10B981) : const Color(0xFFF3F4F6),
+                shape: BoxShape.circle,
+              ),
+              child: _loading
+                  ? const Padding(
+                      padding: EdgeInsets.all(10),
+                      child: CircularProgressIndicator(
+                          strokeWidth: 2, color: Colors.white),
+                    )
+                  : Icon(
+                      _isApplied ? Icons.check_rounded : Icons.close_rounded,
+                      color: _isApplied ? Colors.white : const Color(0xFF9CA3AF),
+                      size: 22,
+                    ),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _isApplied ? 'Applied' : 'Mark as Applied',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: _isApplied
+                          ? const Color(0xFF10B981)
+                          : const Color(0xFF1A1F36),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    _isApplied
+                        ? 'Tap to undo'
+                        : 'Did you apply? Tap to track it',
+                    style: const TextStyle(
+                        fontSize: 12, color: Color(0xFF6B7280)),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
