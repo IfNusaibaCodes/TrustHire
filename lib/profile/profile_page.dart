@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if ((profile.university ?? '').isNotEmpty) score += 15;
     if ((profile.cvUrl      ?? '').isNotEmpty) score += 20;
     if (skills.isNotEmpty)                     score += 15;
-    if (profile.universityIdVerified)          score += 15;
+    // removed: universityIdVerified score += 15
     return score;
   }
 
@@ -45,8 +45,8 @@ class _ProfilePageState extends State<ProfilePage> {
     if (skills.isNotEmpty)                    filled++;
     if ((profile.cvUrl ?? '').isNotEmpty)     filled++;
     if (experiences.isNotEmpty)               filled++;
-    if (profile.universityIdVerified)         filled++;
-    return filled / 5;
+    // removed: universityIdVerified filled++
+    return filled / 4;
   }
 
   Color get trustColor {
@@ -248,13 +248,14 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  // ── ONLY THIS METHOD WAS CHANGED ─────────────────────────────────────────
   void _showCvDialog() {
     final controller = TextEditingController(
       text: profile.cvUrl ?? '',
     );
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (_) => AlertDialog(
         title: const Text('Add CV Link'),
         content: TextField(
           controller: controller,
@@ -264,8 +265,18 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         actions: [
+          if ((profile.cvUrl ?? '').isNotEmpty)
+            TextButton(
+              onPressed: () async {
+                await _service.updateProfile({'cv_url': ''});
+                setState(() => profile = profile.copyWith({'cv_url': ''}));
+                Navigator.pop(context);
+                _showSnack('CV link removed');
+              },
+              child: const Text('Remove', style: TextStyle(color: Colors.red)),
+            ),
           TextButton(
-            onPressed: () => Navigator.pop(ctx),
+            onPressed: () => Navigator.pop(context),
             child: const Text('Cancel'),
           ),
           ElevatedButton(
@@ -274,7 +285,7 @@ class _ProfilePageState extends State<ProfilePage> {
               if (url.isEmpty) return;
               await _service.updateProfile({'cv_url': url});
               setState(() => profile = profile.copyWith({'cv_url': url}));
-              Navigator.pop(ctx);
+              Navigator.pop(context);
               _showSnack('CV link saved ✅');
             },
             child: const Text('Save'),
@@ -283,6 +294,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+  // ─────────────────────────────────────────────────────────────────────────
 
   Future<void> _openCvLink() async {
     final url = profile.cvUrl ?? '';
@@ -529,7 +541,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           completenessStep('Skills added',        skills.isNotEmpty),
                           completenessStep('Upload CV / Resume',  (profile.cvUrl ?? '').isNotEmpty),
                           completenessStep('Add work experience', experiences.isNotEmpty),
-                          completenessStep('Link university ID',  profile.universityIdVerified),
+                          // removed: completenessStep('Link university ID', ...)
                         ],
                       )),
                       const SizedBox(height: 14),
@@ -735,11 +747,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                               fontWeight: FontWeight.bold,
                                               color: trustColor)),
                                       const SizedBox(height: 3),
-                                      Text(
-                                        profile.universityIdVerified
-                                            ? 'Verified email · Student ID linked'
-                                            : 'Complete profile to raise score',
-                                        style: const TextStyle(
+                                      const Text(
+                                        'Complete profile to raise score',
+                                        style: TextStyle(
                                             fontSize: 11, color: textGrey),
                                       ),
                                     ],
