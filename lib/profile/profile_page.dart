@@ -4,6 +4,7 @@ import 'package:trust_hire_app/Pages/landing_page.dart';
 import 'package:trust_hire_app/profile/profile_database.dart';
 import 'package:trust_hire_app/profile/profile_models.dart';
 import 'package:trust_hire_app/profile/profile_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Pages/Job Feed/Saved Jobs/saved_jobs_page.dart';
 import '../Pages/Job Feed/Applied Jobs/applied_jobs_page.dart';
@@ -246,9 +247,10 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
   void _showCvDialog() {
     final controller = TextEditingController(
-      text: profile?.cvUrl ?? '',
+      text: profile.cvUrl ?? '',
     );
     showDialog(
       context: context,
@@ -271,7 +273,7 @@ class _ProfilePageState extends State<ProfilePage> {
               final url = controller.text.trim();
               if (url.isEmpty) return;
               await _service.updateProfile({'cv_url': url});
-              setState(() => profile = profile!.copyWith({'cv_url': url}));
+              setState(() => profile = profile.copyWith({'cv_url': url}));
               Navigator.pop(ctx);
               _showSnack('CV link saved ✅');
             },
@@ -280,6 +282,20 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
     );
+  }
+
+  Future<void> _openCvLink() async {
+    final url = profile.cvUrl ?? '';
+    if (url.isEmpty) {
+      _showSnack('No CV link added yet', isError: true);
+      return;
+    }
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      _showSnack('Could not open link', isError: true);
+    }
   }
 
   @override
@@ -757,40 +773,43 @@ class _ProfilePageState extends State<ProfilePage> {
                             title: 'Resume / CV',
                             action: 'Upload',
                             actionIcon: Icons.upload_outlined,
-                              onAction: () => _showCvDialog(),
+                            onAction: () => _showCvDialog(),
                           ),
                           const SizedBox(height: 10),
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: primary.withOpacity(0.05),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.picture_as_pdf_outlined,
-                                    color: primary, size: 28),
-                                const SizedBox(width: 12),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      (profile.cvUrl ?? '').isNotEmpty
-                                          ? 'CV Uploaded ✅'
-                                          : 'No CV uploaded yet',
-                                      style: const TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600,
-                                          color: textDark),
-                                    ),
-                                    const SizedBox(height: 2),
-                                    const Text(
-                                      'Upload PDF or generate from profile',
-                                      style: TextStyle(fontSize: 11, color: textGrey),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                          GestureDetector(
+                            onTap: _openCvLink,
+                            child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: primary.withOpacity(0.05),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.picture_as_pdf_outlined,
+                                      color: primary, size: 28),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        (profile.cvUrl ?? '').isNotEmpty
+                                            ? 'CV Uploaded ✅ '
+                                            : 'No CV uploaded yet',
+                                        style: const TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                            color: textDark),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      const Text(
+                                        'Upload PDF or generate from profile',
+                                        style: TextStyle(fontSize: 11, color: textGrey),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
