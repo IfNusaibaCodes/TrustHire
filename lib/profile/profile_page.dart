@@ -246,6 +246,41 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+  void _showCvDialog() {
+    final controller = TextEditingController(
+      text: profile?.cvUrl ?? '',
+    );
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Add CV Link'),
+        content: TextField(
+          controller: controller,
+          decoration: const InputDecoration(
+            hintText: 'Paste your Google Drive or PDF link',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final url = controller.text.trim();
+              if (url.isEmpty) return;
+              await _service.updateProfile({'cv_url': url});
+              setState(() => profile = profile!.copyWith({'cv_url': url}));
+              Navigator.pop(ctx);
+              _showSnack('CV link saved ✅');
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -722,7 +757,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             title: 'Resume / CV',
                             action: 'Upload',
                             actionIcon: Icons.upload_outlined,
-                            onAction: () => _showSnack('CV upload coming soon!'),
+                              onAction: () => _showCvDialog(),
                           ),
                           const SizedBox(height: 10),
                           Container(
