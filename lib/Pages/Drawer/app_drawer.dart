@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'about_us_page.dart';
 import 'contact_us_page.dart';
-import 'feedback_support_page.dart';
+import 'Feedback_Support/feedback_support_page.dart';
 import 'privacy_policy_page.dart';
 import 'terms_conditions_page.dart';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'feedback_database.dart';
 
 
 const Color _primary  = Color(0xFF3B5BDB);
@@ -105,17 +106,22 @@ class _FeedbackSupportPageState extends State<FeedbackSupportPage> {
     final email      = _emailCtrl.text.trim();
     final phone      = _phoneCtrl.text.trim();
 
-    // TODO (backend): insert into Supabase here, e.g.
-    // await Supabase.instance.client.from('feedback').insert({
-    //   'rating': rating, 'feature': feature, 'problem': problem,
-    //   'suggestion': suggestion, 'email': email, 'phone': phone,
-    // });
-
-    // TODO (backend): on success → setState(() { _submitting = false; _submitted = true; });
-    //                         on error  → _snack('Error message', error: true); setState(() => _submitting = false);
-    // ── Remove the two lines below once backend is wired ──────────────────
-    await Future.delayed(const Duration(milliseconds: 600));
-    if (mounted) setState(() { _submitting = false; _submitted = true; });
+    try {
+      await FeedbackService.submitFeedback(
+        feature:    feature,
+        rating:     rating,
+        problem:    problem.isEmpty    ? null : problem,
+        suggestion: suggestion.isEmpty ? null : suggestion,
+        email:      email.isEmpty      ? null : email,
+        phone:      phone.isEmpty      ? null : phone,
+      );
+      if (mounted) setState(() { _submitting = false; _submitted = true; });
+    } catch (e) {
+      if (mounted) {
+        _snack('Failed to submit: $e', error: true);
+        setState(() => _submitting = false);
+      }
+    }
   }
 
   void _snack(String msg, {bool error = false}) {
