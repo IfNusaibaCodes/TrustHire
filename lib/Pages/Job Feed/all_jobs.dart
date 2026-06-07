@@ -13,14 +13,75 @@ class AllJobs extends StatefulWidget {
 }
 
 class _AllJobsState extends State<AllJobs> {
-  late Future<List<JobModel>> _jobsFuture;
-  bool _isAdmin = false;
+  // ── State ────────────────────────────────────────────────────
+  List<JobModel> _allJobs      = [];
+  String         _searchQuery  = '';
+  String         _selectedType = 'All';
+  bool           _isLoading    = true;
+  String?        _error;
+  bool           _isAdmin      = false;
 
+  final _searchController = TextEditingController();
+
+  static const _filters = ['All', 'Full-time', 'Part-time', 'Remote', 'Recent'];
+
+  // ── Filtering logic (single place) ───────────────────────────
+  List<JobModel> get _filteredJobs {
+    var list = _allJobs;
+
+    // Step A — chip filter
+    if (_selectedType == 'Remote') {
+      list = list.where((j) => j.hasRemote == true).toList();
+    } else if (_selectedType == 'Recent') {
+      final cutoff = DateTime.now().subtract(const Duration(days: 7));
+      list = list.where((j) => j.published != null && j.published!.isAfter(cutoff)).toList();
+    } else if (_selectedType != 'All') {
+      // Normalize both sides: remove dashes, underscores, spaces so
+      // "Full-time" matches "full_time", "Full Time", "fulltime", etc.
+      String normalize(String s) =>
+          s.toLowerCase().replaceAll(RegExp(r'[-_\s]'), '');
+      final key = normalize(_selectedType);
+      list = list.where((j) =>
+        normalize(j.typePrimary ?? '').contains(key)
+      ).toList();
+    }
+
+    // Step B — text filter (substring, case-insensitive, OR across fields)
+    final q = _searchQuery.trim().toLowerCase();
+    if (q.isNotEmpty) {
+      list = list.where((j) =>
+        (j.title           ?? '').toLowerCase().contains(q) ||
+        (j.companyName     ?? '').toLowerCase().contains(q) ||
+        (j.cityName        ?? '').toLowerCase().contains(q) ||
+        (j.cityCountryName ?? '').toLowerCase().contains(q),
+      ).toList();
+    }
+
+    return list;
+  }
+
+  // ── Lifecycle ─────────────────────────────────────────────────
   @override
   void initState() {
     super.initState();
-    _jobsFuture = JobsDatabaseService.fetchData();
+    _loadJobs();
     _checkAdmin();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadJobs() async {
+    setState(() { _isLoading = true; _error = null; });
+    try {
+      final jobs = await JobsDatabaseService.fetchData();
+      if (mounted) setState(() { _allJobs = jobs; _isLoading = false; });
+    } catch (e) {
+      if (mounted) setState(() { _error = e.toString(); _isLoading = false; });
+    }
   }
 
   Future<void> _checkAdmin() async {
@@ -33,17 +94,13 @@ class _AllJobsState extends State<AllJobs> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => CreateJobForm(
-        onJobCreated: () => setState(() {
-          _jobsFuture = JobsDatabaseService.fetchData();
-        }),
-      ),
+      builder: (_) => CreateJobForm(onJobCreated: _loadJobs),
     );
   }
 
+  // ── Build ─────────────────────────────────────────────────────
   @override
   Widget build(BuildContext context) {
-    // ── Scaffold + AppBar moved here from JobItemList ──────────
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       floatingActionButton: _isAdmin
@@ -70,59 +127,156 @@ class _AllJobsState extends State<AllJobs> {
           ),
         ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(color: const Color(0xFF2D3561), height: 1),
+          preferredSize: const Size.fromHeight(56),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+            child: TextField(
+              controller: _searchController,
+              onChanged: (val) => setState(() => _searchQuery = val),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+              decoration: InputDecoration(
+                hintText: 'Search jobs, companies, cities…',
+                hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.45), fontSize: 14),
+                prefixIcon: const Icon(Icons.search_rounded, color: Colors.white54, size: 20),
+                suffixIcon: _searchQuery.isNotEmpty
+                    ? GestureDetector(
+                        onTap: () {
+                          _searchController.clear();
+                          setState(() => _searchQuery = '');
+                        },
+                        child: const Icon(Icons.close_rounded, color: Colors.white54, size: 18),
+                      )
+                    : null,
+                filled: true,
+                fillColor: Colors.white.withValues(alpha: 0.1),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
-      body: FutureBuilder<List<JobModel>>(
-        future: _jobsFuture,
-        builder: (context, snapshot) {
+      body: Column(
+        children: [
+          _filterChips(),
+          Expanded(child: _body()),
+        ],
+      ),
+    );
+  }
 
-          // ── Loading ──────────────────────────────────────────
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(color: Color(0xFF4F6EF7)),
-            );
-          }
-
-          // ── Error ────────────────────────────────────────────
-          if (snapshot.hasError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.error_outline_rounded,
-                      size: 64, color: Colors.red.shade300),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Failed to load jobs',
+  // ── Filter chips row ──────────────────────────────────────────
+  Widget _filterChips() {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: _filters.map((f) {
+            final selected = f == _selectedType;
+            return Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: GestureDetector(
+                onTap: () => setState(() => _selectedType = f),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+                  decoration: BoxDecoration(
+                    color: selected ? const Color(0xFF1A1F36) : const Color(0xFFF9FAFB),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: selected ? const Color(0xFF1A1F36) : const Color(0xFFE5E7EB),
+                    ),
+                  ),
+                  child: Text(
+                    f,
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF1A1F36),
+                      color: selected ? Colors.white : const Color(0xFF6B7280),
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  ElevatedButton.icon(
-                    onPressed: () => setState(() {
-                      _jobsFuture = JobsDatabaseService.fetchData();
-                    }),
-                    icon: const Icon(Icons.refresh_rounded),
-                    label: const Text('Retry'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1A1F36),
-                      foregroundColor: Colors.white,
-                    ),
-                  ),
-                ],
+                ),
               ),
             );
-          }
+          }).toList(),
+        ),
+      ),
+    );
+  }
 
-          // ── Data ─────────────────────────────────────────────
-          final List<JobModel> jobs = snapshot.data ?? [];
-          return JobItemList(jobs: jobs);
-        },
+  // ── Body: loading / error / list ──────────────────────────────
+  Widget _body() {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator(color: Color(0xFF4F6EF7)));
+    }
+
+    if (_error != null) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.error_outline_rounded, size: 64, color: Colors.red.shade300),
+            const SizedBox(height: 16),
+            const Text(
+              'Failed to load jobs',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF1A1F36)),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: _loadJobs,
+              icon: const Icon(Icons.refresh_rounded),
+              label: const Text('Retry'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF1A1F36),
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    final results = _filteredJobs;
+
+    if (results.isEmpty && (_searchQuery.isNotEmpty || _selectedType != 'All')) {
+      return _emptySearch();
+    }
+
+    return JobItemList(jobs: results);
+  }
+
+  // ── Empty search state ────────────────────────────────────────
+  Widget _emptySearch() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.search_off_rounded, size: 72, color: Colors.grey.shade300),
+          const SizedBox(height: 16),
+          const Text(
+            'No results found',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF1A1F36)),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Try a different keyword or filter',
+            style: TextStyle(fontSize: 14, color: Colors.grey.shade400),
+          ),
+          const SizedBox(height: 24),
+          TextButton.icon(
+            onPressed: () {
+              _searchController.clear();
+              setState(() { _searchQuery = ''; _selectedType = 'All'; });
+            },
+            icon: const Icon(Icons.refresh_rounded, color: Color(0xFF4F6EF7)),
+            label: const Text('Clear filters', style: TextStyle(color: Color(0xFF4F6EF7), fontWeight: FontWeight.w600)),
+          ),
+        ],
       ),
     );
   }

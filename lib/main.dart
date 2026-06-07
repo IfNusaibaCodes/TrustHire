@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Pages/Burnout/burnout_check_page.dart';
 import 'package:trust_hire_app/Pages/Growth/growth_page.dart';
 import 'package:trust_hire_app/Pages/Guide/work_guide_page.dart';
+import 'package:trust_hire_app/Pages/Job%20Feed/all_jobs.dart';
 import 'package:trust_hire_app/Pages/Login/login_page.dart';
 import 'package:trust_hire_app/Pages/landing_page.dart';
 import 'package:trust_hire_app/Pages/onboarding_page.dart';
@@ -13,7 +14,6 @@ import 'package:trust_hire_app/Utilities/Customs/theme.dart';
 import 'package:trust_hire_app/profile/profile_page.dart';
 import 'Pages/Job Feed/job_feed_page.dart';
 import 'Pages/scam_detection_page.dart';
-import 'Pages/burnout_check_page.dart';
 import 'Pages/Planner/planner_page.dart';
 
 void main() async{
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
 
-      home: GrowthPage(),
+      home: AllJobs(),
 
       theme: TCustomApp.customTheme,
 
