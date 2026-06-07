@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../Model/job_model.dart';
 import '../../admin/admin_service.dart';
 import '../../admin/manage_trending_page.dart';
+import '../Drawer/app_drawer.dart';
 import '../../profile/profile_page.dart';
 import 'all_jobs.dart';
 import 'job_details.dart';
@@ -35,6 +36,7 @@ class _JobFeedPageState extends State<JobFeedPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
+      drawer: const AppDrawer(),
 
       // ================= APP BAR =================
       appBar: AppBar(
@@ -48,19 +50,13 @@ class _JobFeedPageState extends State<JobFeedPage> {
             letterSpacing: 0.5,
           ),
         ),
-
         // LEFT SIDE MORE ICON
-        leading: IconButton(
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("More options coming soon"),
-              ),
-            );
-          },
-          icon: const Icon(Icons.menu_rounded, color: Colors.white),
+        leading: Builder(
+          builder: (ctx) => IconButton(
+            onPressed: () => Scaffold.of(ctx).openDrawer(),
+            icon: const Icon(Icons.menu_rounded, color: Colors.white),
+          ),
         ),
-
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 12),

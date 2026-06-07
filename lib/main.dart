@@ -15,13 +15,6 @@ import 'Pages/scam_detection_page.dart';
 import 'Pages/burnout_check_page.dart';
 import 'Pages/Planner/planner_page.dart';
 
-
-import 'Pages/Drawer/about_us_page.dart';
-import 'Pages/Drawer/contact_us_page.dart';
-import 'Pages/Drawer/privacy_policy_page.dart';
-import 'Pages/Drawer/terms_conditions_page.dart';
-import 'Pages/Drawer/feedback_support_page.dart';
-
 void main() async{
   await Supabase.initialize(
       url: "https://pgqagkfcbeifyibyyyce.supabase.co",
@@ -38,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
 
-      home: FeedbackSupportPage(),
+      home: JobFeedPage(),
 
       theme: TCustomApp.customTheme,
 
