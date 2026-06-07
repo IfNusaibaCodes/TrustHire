@@ -3,8 +3,21 @@ import 'package:get/get.dart';
 import 'planner_controller.dart';
 import 'planner_widgets.dart';
 
-class PlannerPage extends StatelessWidget {
+class PlannerPage extends StatefulWidget {
   const PlannerPage({super.key});
+
+  @override
+  State<PlannerPage> createState() => _PlannerPageState();
+}
+
+class _PlannerPageState extends State<PlannerPage> {
+  @override
+  void initState() {
+    super.initState();
+    if (!Get.isRegistered<PlannerController>()) {
+      Get.put(PlannerController());
+    }
+  }
 
   // ── THEME ──────────────────────────────────────────────────
   static const Color primary  = Color(0xFF3B5BDB);
@@ -151,11 +164,20 @@ class PlannerPage extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (ctrl.text.trim().isEmpty) return;
+                    final messenger = ScaffoldMessenger.of(context);
                     Navigator.pop(ctx);
-                    c.addTask(ctrl.text.trim(), selectedPriority);
-                    _snack(context, 'Task added ✅');
+                    await c.addTask(ctrl.text.trim(), selectedPriority);
+                    messenger.showSnackBar(SnackBar(
+                      content: const Text('Task added ✅',
+                          style: TextStyle(fontWeight: FontWeight.w600)),
+                      backgroundColor: success,
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14)),
+                      margin: const EdgeInsets.all(16),
+                    ));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primary,

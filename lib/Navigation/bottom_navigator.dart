@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:trust_hire_app/Pages/Guide/work_guide_page.dart';
 import 'package:trust_hire_app/Pages/Job%20Feed/job_feed_page.dart';
 import 'package:trust_hire_app/Pages/scam_detection_page.dart';
 import 'package:trust_hire_app/profile/profile_page.dart';
 import 'package:trust_hire_app/Pages/Planner/planner_page.dart';
-import 'package:trust_hire_app/Pages/Planner/planner_controller.dart';
 
 import '../Utilities/Constants/colors.dart';
 
@@ -27,12 +25,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
     PlannerPage(),
     RemoteWorkGuidePage(),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    Get.put(PlannerController());
-  }
 
   @override
   Widget build(BuildContext context) {

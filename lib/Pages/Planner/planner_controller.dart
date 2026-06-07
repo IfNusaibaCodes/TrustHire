@@ -13,7 +13,7 @@ class PlannerController extends GetxController {
 
   var tasks      = <TaskModel>[].obs;
   var isLoading  = false.obs;
-  var streakDays = 5.obs;
+  var streakDays = 0.obs;
   var filter     = 'All'.obs;
 
   String get todayDate      => DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -53,7 +53,7 @@ class PlannerController extends GetxController {
 
   Future<void> loadTasks() async {
     isLoading.value = true;
-    tasks.value = await _db.loadTasks(todayDate);
+    tasks.value = await _db.loadTasks(_uid, todayDate);
     isLoading.value = false;
   }
 
@@ -70,15 +70,10 @@ class PlannerController extends GetxController {
     _db.toggleTask(taskId, !current);
   }
 
-  void addTask(String title, String priority) {
-    tasks.add(TaskModel(
-      id:       DateTime.now().millisecondsSinceEpoch.toString(),
-      title:    title,
-      priority: priority,
-      isDone:   false,
-      date:     todayDate,
-    ));
-    _db.addTask(_uid, title, priority, todayDate);
+  Future<void> addTask(String title, String priority) async {
+    // get real UUID from DB then add to local list
+    final task = await _db.addTask(_uid, title, priority, todayDate);
+    if (task != null) tasks.add(task);
   }
 
   void deleteTask(String taskId) {
