@@ -2,16 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'feedback_support_page.dart';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// CONTACT US PAGE
-// Structure:
-//   1. Hero card (same style as About Us)
-//   2. Email Us card — tap to copy
-//   3. Find Us On Social — Facebook + LinkedIn
-//   4. Response time note
-//   5. Send a Message button → FeedbackSupportPage
-// No phone numbers, no fake address — clean & professional for a defense.
-// ─────────────────────────────────────────────────────────────────────────────
 
 class ContactUsPage extends StatelessWidget {
   const ContactUsPage({super.key});
@@ -48,22 +38,18 @@ class ContactUsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // ── 1. HERO ───────────────────────────────────────────
             _HeroCard(),
 
             const SizedBox(height: 24),
 
-            // ── 2. EMAIL US ───────────────────────────────────────
             _EmailCard(context),
 
             const SizedBox(height: 16),
 
-            // ── 3. SOCIAL LINKS ───────────────────────────────────
             _SocialSection(),
 
             const SizedBox(height: 16),
 
-            // ── 4. RESPONSE TIME ──────────────────────────────────
             _ResponseNote(),
 
             const SizedBox(height: 24),
@@ -76,10 +62,6 @@ class ContactUsPage extends StatelessWidget {
   }
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// CONTENT  ← only change text here
-// ═════════════════════════════════════════════════════════════════════════════
-
 class _ContactContent {
   static const email       = 'trusthire.team@gmail.com';  //email change korbo
   static const facebookUrl = 'https://facebook.com/trusthire';   // update when you have a page
@@ -88,11 +70,6 @@ class _ContactContent {
   static const availability = 'Available Sunday to Thursday';
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// SECTION WIDGETS
-// ═════════════════════════════════════════════════════════════════════════════
-
-/// 1. Hero — same gradient style as About Us hero
 class _HeroCard extends StatelessWidget {
   static const _navy = Color(0xFF1A1F36);
   static const _blue = Color(0xFF0B2555);
@@ -187,7 +164,6 @@ class _HeroCard extends StatelessWidget {
   }
 }
 
-/// 2. Email card — tap to copy email to clipboard
 Widget _EmailCard(BuildContext context) {
   return GestureDetector(
     onTap: () {
@@ -291,7 +267,6 @@ Widget _EmailCard(BuildContext context) {
   );
 }
 
-/// 3. Social links section — Facebook + LinkedIn cards
 class _SocialSection extends StatelessWidget {
   static const _navy = Color(0xFF1A1F36);
   static const _blue = Color(0xFF4F6EF7);
@@ -314,7 +289,6 @@ class _SocialSection extends StatelessWidget {
           ),
         ),
 
-        // Facebook card
         _SocialCard(
           icon: Icons.facebook_rounded,
           platformName: 'Facebook',
@@ -325,7 +299,6 @@ class _SocialSection extends StatelessWidget {
 
         const SizedBox(height: 12),
 
-        // LinkedIn card
         _SocialCard(
           icon: Icons.work_rounded,
           platformName: 'LinkedIn',
@@ -440,7 +413,6 @@ class _SocialCard extends StatelessWidget {
   }
 }
 
-/// 4. Response time note
 class _ResponseNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

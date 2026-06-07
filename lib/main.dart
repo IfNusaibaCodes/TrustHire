@@ -20,6 +20,7 @@ import 'Pages/Drawer/about_us_page.dart';
 import 'Pages/Drawer/contact_us_page.dart';
 import 'Pages/Drawer/privacy_policy_page.dart';
 import 'Pages/Drawer/terms_conditions_page.dart';
+import 'Pages/Drawer/feedback_support_page.dart';
 
 void main() async{
   await Supabase.initialize(
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
 
-      home: TermsConditionsPage(),
+      home: FeedbackSupportPage(),
 
       theme: TCustomApp.customTheme,
 

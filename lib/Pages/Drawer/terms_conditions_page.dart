@@ -1,21 +1,5 @@
 import 'package:flutter/material.dart';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// TERMS & CONDITIONS PAGE  —  TrustHire
-// Inspired by the bdjobs.com T&C structure (sections with numbered sub-points)
-// but styled 100% to match the TrustHire project:
-//   primary  = Color(0xFF3B5BDB)
-//   bgColor  = Color(0xFFF5F6FA)
-//   appBar   = Color(0xFF1A1F36)  navy
-//
-// Structure:
-//   1. Hero card   (navy→primary gradient)
-//   2. Date badge  (white card)
-//   3. Intro note  (disclaimer paragraph — like bdjobs opening text)
-//   4. T&C Sections — expandable cards, each with numbered sub-points
-//   5. Agreement banner
-// ─────────────────────────────────────────────────────────────────────────────
-
 const Color _primary  = Color(0xFF3B5BDB);
 const Color _bgColor  = Color(0xFFF5F6FA);
 const Color _textDark = Color(0xFF1A1A2E);
@@ -52,20 +36,15 @@ class TermsConditionsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            // ── 1. HERO ───────────────────────────────────────────
             const _HeroCard(),
             const SizedBox(height: 18),
 
-            // ── 2. DATE BADGE ─────────────────────────────────────
             const _DateBadge(),
             const SizedBox(height: 20),
 
-            // ── 3. DISCLAIMER INTRO ───────────────────────────────
             const _IntroCard(),
             const SizedBox(height: 16),
 
-            // ── 4. T&C SECTIONS ───────────────────────────────────
             ..._TcContent.sections.map(
                   (s) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),
@@ -74,8 +53,6 @@ class TermsConditionsPage extends StatelessWidget {
             ),
 
             const SizedBox(height: 8),
-
-            // ── 5. AGREEMENT BANNER ───────────────────────────────
             const _AgreementBanner(),
             const SizedBox(height: 32),
           ],
@@ -84,10 +61,6 @@ class TermsConditionsPage extends StatelessWidget {
     );
   }
 }
-
-// ═════════════════════════════════════════════════════════════════════════════
-// CONTENT  ← update text here only
-// ═════════════════════════════════════════════════════════════════════════════
 
 class _TcContent {
   static const effectiveDate = 'Effective: January 1, 2025';
@@ -189,11 +162,6 @@ class _TcContent {
   ];
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// WIDGETS
-// ═════════════════════════════════════════════════════════════════════════════
-
-/// 1. Hero
 class _HeroCard extends StatelessWidget {
   const _HeroCard();
 
@@ -276,7 +244,6 @@ class _HeroCard extends StatelessWidget {
   }
 }
 
-/// 2. Date badge
 class _DateBadge extends StatelessWidget {
   const _DateBadge();
 
@@ -351,7 +318,6 @@ class _DateBadge extends StatelessWidget {
   }
 }
 
-/// 3. Intro / disclaimer card
 class _IntroCard extends StatelessWidget {
   const _IntroCard();
 
@@ -387,7 +353,6 @@ class _IntroCard extends StatelessWidget {
   }
 }
 
-/// 4. Expandable T&C section with numbered points (like bdjobs sections)
 class _TcSectionCard extends StatefulWidget {
   final _SectionData section;
   const _TcSectionCard({required this.section});
@@ -428,7 +393,6 @@ class _TcSectionCardState extends State<_TcSectionCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Header row ────────────────────────────────────────
             Row(
               children: [
                 Container(
@@ -490,7 +454,7 @@ class _TcSectionCardState extends State<_TcSectionCard> {
               ],
             ),
 
-            // ── Numbered points ───────────────────────────────────
+
             if (_open) ...[
               const SizedBox(height: 14),
               Divider(color: _primary.withOpacity(0.12), height: 1),
@@ -509,7 +473,6 @@ class _TcSectionCardState extends State<_TcSectionCard> {
   }
 }
 
-/// Numbered bullet point — mirrors the bdjobs 1. 2. 3. list style
 class _NumberedPoint extends StatelessWidget {
   final int    number;
   final String text;
@@ -522,7 +485,6 @@ class _NumberedPoint extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Number bubble
           Container(
             width: 24,
             height: 24,
@@ -560,8 +522,6 @@ class _NumberedPoint extends StatelessWidget {
     );
   }
 }
-
-/// 5. Agreement banner at the bottom
 class _AgreementBanner extends StatelessWidget {
   const _AgreementBanner();
 
@@ -630,10 +590,7 @@ class _AgreementBanner extends StatelessWidget {
   }
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// DATA MODEL
-// ═════════════════════════════════════════════════════════════════════════════
-
+//data models
 class _SectionData {
   final IconData     icon;
   final String       title;

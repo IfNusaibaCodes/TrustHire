@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ABOUT US PAGE
-// Structure:
-//   1. App identity hero (gradient, no images)
-//   2. About Trust Hire section
-//   3. Our Mission section
-//   4. Our Values — coloured cards (like the sample, adapted to app palette)
-//   5. What We Offer — feature chips
-//   6. Version badge
-// ─────────────────────────────────────────────────────────────────────────────
-
 class AboutUsPage extends StatelessWidget {
   const AboutUsPage({super.key});
 
-  // ── Brand colours ─────────────────────────────────────────────────────────
   static const _navy = Color(0xFF1A1F36);
   static const _blue = Color(0xFF4F6EF7);
   static const _bg   = Color(0xFFF5F7FA);
@@ -47,32 +35,24 @@ class AboutUsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // ── 1. HERO ───────────────────────────────────────────
             _HeroCard(),
 
             const SizedBox(height: 24),
-
-            // ── 2. ABOUT TRUST HIRE ───────────────────────────────
             _AboutSection(),
 
             const SizedBox(height: 20),
-
-            // ── 3. OUR MISSION ────────────────────────────────────
             _MissionSection(),
 
             const SizedBox(height: 28),
 
-            // ── 4. OUR VALUES ─────────────────────────────────────
             _ValuesSection(),
 
             const SizedBox(height: 28),
 
-            // ── 5. WHAT WE OFFER ──────────────────────────────────
             _OffersSection(),
 
             const SizedBox(height: 24),
 
-            // ── 6. VERSION BADGE ──────────────────────────────────
             _VersionBadge(),
 
             const SizedBox(height: 32),
@@ -83,17 +63,11 @@ class AboutUsPage extends StatelessWidget {
   }
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// CONTENT DATA  ← change korte parbo
-// ═════════════════════════════════════════════════════════════════════════════
-
 class _AppContent {
-  // Hero
   static const appName    = 'Trust Hire';
   static const tagline    = 'Find. Trust. Hire.';
   static const heroSub    = 'Bangladesh\'s trusted job discovery platform';
 
-  // About
   static const aboutLabel = 'About Trust Hire';
   static const aboutHeading =
       'Bangladesh\'s most trusted\njob discovery platform';
@@ -103,13 +77,11 @@ class _AppContent {
       'you the tools to make confident career decisions. We believe '
       'every person deserves a safe, transparent hiring experience.';
 
-  // Mission
   static const missionBody =
       'Our mission is to make the job search process safer, smarter, '
       'and more transparent for every job seeker in Bangladesh — '
       'removing friction, building trust, and empowering careers.';
 
-  // Values
   static const values = <_ValueItem>[
     _ValueItem(
       icon: Icons.verified_outlined,
@@ -137,7 +109,6 @@ class _AppContent {
     ),
   ];
 
-  // Offers
   static const offers = <_OfferItem>[
     _OfferItem(icon: Icons.verified_outlined,         label: 'Verified job listings'),
     _OfferItem(icon: Icons.security_outlined,         label: 'Scam detection system'),
@@ -147,15 +118,10 @@ class _AppContent {
     _OfferItem(icon: Icons.bookmark_outline_rounded,  label: 'Save jobs for later'),
   ];
 
-  // Version
   static const version = 'v1.0.0';
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// SECTION WIDGETS
-// ═════════════════════════════════════════════════════════════════════════════
 
-/// 1. Hero gradient card — no image, fully illustrative via icon + typography
 class _HeroCard extends StatelessWidget {
   static const _navy = Color(0xFF1A1F36);
   static const _blue = Color(0xFF4F6EF7);
@@ -203,7 +169,6 @@ class _HeroCard extends StatelessWidget {
 
           const SizedBox(height: 18),
 
-          // App name
           const Text(
             _AppContent.appName,
             textAlign: TextAlign.center,
@@ -218,7 +183,6 @@ class _HeroCard extends StatelessWidget {
 
           const SizedBox(height: 6),
 
-          // Tagline pill
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
             decoration: BoxDecoration(
@@ -238,7 +202,6 @@ class _HeroCard extends StatelessWidget {
 
           const SizedBox(height: 14),
 
-          // Sub line
           const Text(
             _AppContent.heroSub,
             textAlign: TextAlign.center,
@@ -255,7 +218,6 @@ class _HeroCard extends StatelessWidget {
   }
 }
 
-/// 2. About section — label + big heading + body (mirrors the sample layout)
 class _AboutSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -276,7 +238,6 @@ class _AboutSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Coloured small label — same teal/green from sample
           const Text(
             _AppContent.aboutLabel,
             style: TextStyle(
@@ -289,8 +250,6 @@ class _AboutSection extends StatelessWidget {
           ),
 
           const SizedBox(height: 12),
-
-          // Big bold heading
           const Text(
             _AppContent.aboutHeading,
             textAlign: TextAlign.center,
@@ -309,7 +268,6 @@ class _AboutSection extends StatelessWidget {
 
           const SizedBox(height: 14),
 
-          // Body text
           const Text(
             _AppContent.aboutBody,
             textAlign: TextAlign.center,
@@ -326,7 +284,6 @@ class _AboutSection extends StatelessWidget {
   }
 }
 
-/// 3. Mission section — icon + text, subtle left-border accent
 class _MissionSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -395,7 +352,6 @@ class _MissionSection extends StatelessWidget {
   }
 }
 
-/// 4. Our Values — full-width coloured cards, exactly like the sample
 class _ValuesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -494,7 +450,6 @@ class _ValueCard extends StatelessWidget {
   }
 }
 
-/// 5. What We Offer — icon + label chips in a wrap grid
 class _OffersSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -588,8 +543,6 @@ class _OfferChip extends StatelessWidget {
     );
   }
 }
-
-/// 6. Version badge
 class _VersionBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -665,10 +618,7 @@ class _VersionBadge extends StatelessWidget {
   }
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// DATA MODELS (simple const classes — no JSON, no backend needed)
-// ═════════════════════════════════════════════════════════════════════════════
-
+//data models
 class _ValueItem {
   final IconData icon;
   final String   title;

@@ -1,21 +1,5 @@
 import 'package:flutter/material.dart';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// PRIVACY POLICY PAGE  —  TrustHire
-// Colours & style pulled directly from profile_widgets.dart + job_feed_page.dart:
-//   primary  = Color(0xFF3B5BDB)
-//   bgColor  = Color(0xFFF5F6FA)
-//   appBar   = Color(0xFF1A1F36)  (same as job_feed_page AppBar)
-// Structure:
-//   1. Hero card  (navy→primary gradient, same as about_us_page hero)
-//   2. Effective date badge  (white card, like profileCard)
-//   3. Expandable policy sections  (tap to open, left-border highlight)
-//   4. Your Rights  (coloured chips, same wrap style as profile skills)
-//   5. Contact note  (tinted info banner, like response note in contact_us)
-// All content lives in _PolicyContent — nowhere else.
-// ─────────────────────────────────────────────────────────────────────────────
-
-// ── Shared colour tokens (mirrors profile_widgets.dart) ───────────────────
 const Color _primary  = Color(0xFF3B5BDB);
 const Color _bgColor  = Color(0xFFF5F6FA);
 const Color _textDark = Color(0xFF1A1A2E);
@@ -53,17 +37,13 @@ class PrivacyPolicyPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // ── 1. HERO ──────────────────────────────────────────
             const _HeroCard(),
 
             const SizedBox(height: 18),
-
-            // ── 2. EFFECTIVE DATE ────────────────────────────────
             const _DateBadge(),
 
             const SizedBox(height: 20),
 
-            // ── 3. EXPANDABLE SECTIONS ───────────────────────────
             ..._PolicyContent.sections.map(
                   (s) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),
@@ -72,13 +52,9 @@ class PrivacyPolicyPage extends StatelessWidget {
             ),
 
             const SizedBox(height: 8),
-
-            // ── 4. YOUR RIGHTS ───────────────────────────────────
             const _RightsCard(),
 
             const SizedBox(height: 16),
-
-            // ── 5. CONTACT NOTE ──────────────────────────────────
             const _ContactNote(),
 
             const SizedBox(height: 32),
@@ -94,7 +70,7 @@ class PrivacyPolicyPage extends StatelessWidget {
 // ═════════════════════════════════════════════════════════════════════════════
 
 class _PolicyContent {
-  static const effectiveDate = 'Effective: January 1, 2025';
+  static const effectiveDate = 'Effective: January 1, 2026';
   static const lastUpdated   = 'Last updated: June 2025';
   static const contactEmail  = 'trusthire.team@gmail.com';
 
@@ -175,11 +151,6 @@ class _PolicyContent {
   ];
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// WIDGETS
-// ═════════════════════════════════════════════════════════════════════════════
-
-/// 1. Hero — navy→primary gradient, mirrors about_us_page._HeroCard
 class _HeroCard extends StatelessWidget {
   const _HeroCard();
 
@@ -205,7 +176,6 @@ class _HeroCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Icon badge
           Container(
             width: 62,
             height: 62,
@@ -263,7 +233,6 @@ class _HeroCard extends StatelessWidget {
   }
 }
 
-/// 2. Effective date badge — same white-card style as profileCard
 class _DateBadge extends StatelessWidget {
   const _DateBadge();
 
@@ -342,7 +311,6 @@ class _DateBadge extends StatelessWidget {
   }
 }
 
-/// 3. Expandable policy section — white card, left border on expand
 class _PolicyCard extends StatefulWidget {
   final _SectionData section;
   const _PolicyCard({required this.section});
@@ -421,7 +389,6 @@ class _PolicyCardState extends State<_PolicyCard> {
                 ),
               ],
             ),
-            // Body
             if (_open) ...[
               const SizedBox(height: 14),
               Divider(color: _primary.withOpacity(0.12), height: 1),
@@ -443,7 +410,6 @@ class _PolicyCardState extends State<_PolicyCard> {
   }
 }
 
-/// 4. Your Rights — white card with primary-tinted chips (like profile skills)
 class _RightsCard extends StatelessWidget {
   const _RightsCard();
 
@@ -466,7 +432,6 @@ class _RightsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Section header (mirrors profile_widgets sectionHeader style)
           Row(
             children: [
               Container(
@@ -506,7 +471,6 @@ class _RightsCard extends StatelessWidget {
           const SizedBox(height: 14),
           Divider(color: _primary.withOpacity(0.10), height: 1),
           const SizedBox(height: 14),
-          // Rights chips — same wrap style as profile skills
           Wrap(
             spacing: 10,
             runSpacing: 10,
@@ -553,7 +517,6 @@ class _RightChip extends StatelessWidget {
   }
 }
 
-/// 5. Contact note — tinted banner, same feel as contact_us _ResponseNote
 class _ContactNote extends StatelessWidget {
   const _ContactNote();
 
@@ -614,10 +577,7 @@ class _ContactNote extends StatelessWidget {
   }
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// DATA MODELS
-// ═════════════════════════════════════════════════════════════════════════════
-
+//data models
 class _SectionData {
   final IconData icon;
   final String   title;
