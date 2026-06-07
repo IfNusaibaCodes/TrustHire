@@ -4,6 +4,7 @@ import 'contact_us_page.dart';
 import 'Feedback_Support/feedback_support_page.dart';
 import 'privacy_policy_page.dart';
 import 'terms_conditions_page.dart';
+import '../Guide/work_guide_page.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -54,6 +55,11 @@ class AppDrawer extends StatelessWidget {
             ),
 
             // Nav items
+            _DrawerItem(
+              icon: Icons.public_outlined,
+              label: 'Remote Work Guide',
+              onTap: () => _push(context, const RemoteWorkGuidePage()),
+            ),
             _DrawerItem(
               icon: Icons.info_outline_rounded,
               label: 'About Us',

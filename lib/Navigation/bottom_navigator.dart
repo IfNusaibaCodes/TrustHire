@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:trust_hire_app/Pages/Guide/work_guide_page.dart';
 import 'package:trust_hire_app/Pages/Job%20Feed/job_feed_page.dart';
 import 'package:trust_hire_app/Pages/scam_detection_page.dart';
-import 'package:trust_hire_app/profile/profile_page.dart';
 import 'package:trust_hire_app/Pages/Planner/planner_page.dart';
+import 'package:trust_hire_app/Pages/Growth/growth_page.dart';
 
 import '../Utilities/Constants/colors.dart';
 
@@ -23,7 +21,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     JobFeedPage(),
     ScamDetectorPage(),
     PlannerPage(),
-    RemoteWorkGuidePage(),
+    GrowthPage(),
   ];
 
   @override
@@ -44,7 +42,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           BottomNavigationBarItem(icon: Icon(Icons.work_outline),   label: 'Jobs'),
           BottomNavigationBarItem(icon: Icon(Icons.scanner), label: 'Detect Scam'),
           BottomNavigationBarItem(icon: Icon(Icons.calendar_month_outlined), label: 'Planner'),
-          BottomNavigationBarItem(icon: Icon(Icons.library_add_check_outlined), label: 'Guide'),
+          BottomNavigationBarItem(icon: Icon(Icons.trending_up_rounded), label: 'Growth'),
         ],
         currentIndex: selectedIndex,
         onTap: (setValue) {
