@@ -84,6 +84,12 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
   Widget _buildJobGuardHeader() {
     return Row(
       children: [
+        BackButton(
+            onPressed: (){
+              Navigator.pop(context);
+            }
+        ),
+        const Spacer(),    // ono fix koris
         const Text(
           'TrustHire',
           style: TextStyle(

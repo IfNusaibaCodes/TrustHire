@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
 
-      home: AllJobs(),
+      home: LandingPage(),
 
       theme: TCustomApp.customTheme,
 

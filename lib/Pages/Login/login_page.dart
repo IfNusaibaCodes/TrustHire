@@ -88,6 +88,16 @@ class _LoginPageState extends State<LoginPage> {
     final width = size.width;
 
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: BackButton(
+            onPressed: (){
+              Navigator.pop(context);
+            }
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: Padding(padding: TSpacingStyle.paddingWithAppBarHeight,
         child: Column(
