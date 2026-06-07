@@ -1,17 +1,3 @@
-// ============================================================
-//  FILE: lib/Pages/burnout_check_page.dart
-// ============================================================
-//  Burnout Check — UI Only
-//  All data comes from BurnoutData (model).
-//  All DB calls go through BurnoutRepository.
-//
-//  ── IMAGES ────────────────────────────────────────────────
-//  assets/images/burnedout_images/
-//    exhausted.png.png  |  stress.png.png  |  motivation.png.png
-//    team.png.png       |  overall.png.png |  balance.png.png
-//    sleep.png.png
-// ============================================================
-
 import 'package:flutter/material.dart';
 import '../../Model/burnout_model.dart';
 

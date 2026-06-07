@@ -83,10 +83,10 @@ class GrowthDatabase {
   }
 
   static Future<int> loadAppliedThisWeek() async {
-    final uid  = _uid();
-    final now  = DateTime.now();
+    final uid    = _uid();
+    final now    = DateTime.now();
     final monday = now.subtract(Duration(days: now.weekday - 1));
-    final from = DateTime(monday.year, monday.month, monday.day).toIso8601String();
+    final from   = DateTime(monday.year, monday.month, monday.day).toIso8601String();
 
     final response = await _client
         .from('applied_jobs')
@@ -94,5 +94,29 @@ class GrowthDatabase {
         .eq('user_id', uid)
         .gte('created_at', from);
     return (response as List).length;
+  }
+
+  // Returns List of 7 ints [Mon..Sun] = applications per day this week
+  static Future<List<int>> loadWeeklyActivity() async {
+    final uid    = _uid();
+    final now    = DateTime.now();
+    final monday = now.subtract(Duration(days: now.weekday - 1));
+    final from   = DateTime(monday.year, monday.month, monday.day);
+
+    final response = await _client
+        .from('applied_jobs')
+        .select('created_at')
+        .eq('user_id', uid)
+        .gte('created_at', from.toIso8601String());
+
+    final counts = List.filled(7, 0);
+    for (final row in response as List) {
+      final date = DateTime.tryParse((row['created_at'] as String?) ?? '');
+      if (date != null) {
+        final i = date.toLocal().weekday - 1;
+        if (i >= 0 && i < 7) counts[i]++;
+      }
+    }
+    return counts;
   }
 }
