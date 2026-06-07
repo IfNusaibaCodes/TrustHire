@@ -58,8 +58,7 @@ class _GrowthPageState extends State<GrowthPage> {
     if ((d.profile.cvUrl ?? '').isNotEmpty)     s++;
     if (d.skillCount > 0)                       s++;
     if (d.experienceCount > 0)                  s++;
-    if (d.profile.universityIdVerified)         s++;
-    return ((s / 6) * 100).round();
+    return ((s / 5) * 100).round();
   }
 
   @override
@@ -235,7 +234,7 @@ class _GrowthPageState extends State<GrowthPage> {
       subtitle: 'Applications this week',
       icon: Icons.bar_chart_rounded,
       child: SizedBox(
-        height: 100,
+        height: 120,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -278,12 +277,11 @@ class _GrowthPageState extends State<GrowthPage> {
   // ─────────────────────────────────────────────────────────── Profile Strength
   Widget _profileStrength(_GrowthData d, int pct) {
     final checks = [
-      ('Name added',          (d.profile.firstName ?? '').isNotEmpty),
-      ('Bio written',         (d.profile.bio ?? '').isNotEmpty),
-      ('CV uploaded',         (d.profile.cvUrl ?? '').isNotEmpty),
-      ('Skills added',        d.skillCount > 0),
-      ('Experience added',    d.experienceCount > 0),
-      ('University verified', d.profile.universityIdVerified),
+      ('Name added',       (d.profile.firstName ?? '').isNotEmpty),
+      ('Bio written',      (d.profile.bio ?? '').isNotEmpty),
+      ('CV uploaded',      (d.profile.cvUrl ?? '').isNotEmpty),
+      ('Skills added',     d.skillCount > 0),
+      ('Experience added', d.experienceCount > 0),
     ];
 
     return _card(
