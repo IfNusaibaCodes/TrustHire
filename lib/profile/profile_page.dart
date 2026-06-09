@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/Pages/landing_page.dart';
+import 'package:trust_hire_app/Pages/Notifications/notification_controller.dart';
+import 'package:trust_hire_app/Pages/Notifications/notification_page.dart';
 import 'package:trust_hire_app/profile/profile_database.dart';
 import 'package:trust_hire_app/profile/profile_models.dart';
 import 'package:trust_hire_app/profile/profile_widgets.dart';
@@ -348,11 +351,44 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold)),
                           const Spacer(),
-                          IconButton(
-                            icon: const Icon(Icons.notifications_outlined,
-                                color: Colors.white, size: 24),
-                            onPressed: () {},
-                          ),
+                          Obx(() {
+                            final c = Get.find<NotificationController>();
+                            final count = c.unreadCount;
+                            return Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.notifications_outlined,
+                                      color: Colors.white, size: 24),
+                                  onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (_) => const NotificationPage()),
+                                  ),
+                                ),
+                                if (count > 0)
+                                  Positioned(
+                                    top: 6, right: 6,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(3),
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFFEF4444),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                                      child: Text(
+                                        count > 99 ? '99+' : '$count',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 9,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            );
+                          }),
                           IconButton(
                             icon: const Icon(Icons.logout,
                                 color: Colors.white, size: 22),

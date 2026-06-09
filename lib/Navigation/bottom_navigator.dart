@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trust_hire_app/Pages/Job%20Feed/job_feed_page.dart';
 import 'package:trust_hire_app/Pages/scam_detection_page.dart';
 import 'package:trust_hire_app/Pages/Planner/planner_page.dart';
 import 'package:trust_hire_app/Pages/Growth/growth_page.dart';
+import 'package:trust_hire_app/Pages/Notifications/notification_controller.dart';
 
 import '../Utilities/Constants/colors.dart';
 
@@ -16,6 +18,12 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
 
   int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Get.put(NotificationController());
+  }
 
   final pageData = [
     JobFeedPage(),
