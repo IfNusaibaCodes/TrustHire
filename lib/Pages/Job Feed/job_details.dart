@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../Model/job_model.dart';
+import '../../admin/admin_service.dart';
+import '../../admin/edit_job_form.dart';
 import 'Applied Jobs/applied_jobs_database.dart';
 
 class JobDetailsPage extends StatefulWidget {
@@ -16,7 +18,8 @@ class JobDetailsPage extends StatefulWidget {
 class _JobDetailsPageState extends State<JobDetailsPage> {
   final _appliedService = AppliedJobsService();
   bool _isApplied = false;
-  bool _loading = true;
+  bool _loading   = true;
+  bool _isAdmin   = false;
 
   JobModel get job => widget.job;
 
@@ -24,6 +27,12 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
   void initState() {
     super.initState();
     _checkApplied();
+    _checkAdmin();
+  }
+
+  Future<void> _checkAdmin() async {
+    final admin = await AdminService.isAdmin();
+    if (mounted) setState(() => _isAdmin = admin);
   }
 
   Future<void> _checkApplied() async {
@@ -65,6 +74,10 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                   _buildCompanySection(),
                   const SizedBox(height: 24),
                   _buildAppliedToggle(),
+                  if (_isAdmin) ...[
+                    const SizedBox(height: 12),
+                    _buildEditButton(),
+                  ],
                   const SizedBox(height: 100), // space for FAB
                 ],
               ),
@@ -491,6 +504,53 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                 ],
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEditButton() {
+    return GestureDetector(
+      onTap: () => showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (_) => EditJobForm(job: job, onSaved: () {}),
+      ),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFF7ED),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: const Color(0xFFFED7AA), width: 1.5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.04),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: const Row(
+          children: [
+            Icon(Icons.edit_outlined, color: Color(0xFFF97316), size: 22),
+            SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Edit Job',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700,
+                          color: Color(0xFFF97316))),
+                  SizedBox(height: 2),
+                  Text('Update job details, type or description',
+                      style: TextStyle(fontSize: 12, color: Color(0xFF6B7280))),
+                ],
+              ),
+            ),
+            Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Color(0xFF9CA3AF)),
           ],
         ),
       ),
