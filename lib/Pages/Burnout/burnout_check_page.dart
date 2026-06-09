@@ -19,7 +19,8 @@ class _BurnoutPageState extends State<BurnoutPage> {
   final Map<int, int> selectedAnswers = {};
   final PageController _pageController = PageController();
   int currentPage = 0;
-  bool isSaving = false;
+  bool isSaving   = false;
+  bool _submitted = false;
 
   // ── Short-hands ──────────────────────────────────────────
   List<BurnoutQuestion>  get _questions   => BurnoutData.questions;
@@ -46,9 +47,7 @@ class _BurnoutPageState extends State<BurnoutPage> {
         selectedAnswers: selectedAnswers,
       );
 
-      _showMessage('Check-in complete! 🎉');
-      await Future.delayed(const Duration(seconds: 1));
-      if (mounted) Navigator.pop(context);
+      if (mounted) setState(() => _submitted = true);
 
     } catch (e) {
       _showMessage('Error: $e', isError: true);
@@ -82,6 +81,8 @@ class _BurnoutPageState extends State<BurnoutPage> {
   // ════════════════════════════════════════════════════════
   @override
   Widget build(BuildContext context) {
+    if (_submitted) return _ResultsScreen(suggestions: _suggestions);
+
     return Scaffold(
       backgroundColor: bgColor,
       body: SafeArea(
@@ -241,25 +242,6 @@ class _BurnoutPageState extends State<BurnoutPage> {
                                 style: TextStyle(color: textGrey, fontSize: 13)),
                           ),
 
-                        // ── LAST PAGE: suggestions + badge ─
-                        if (isLastPage) ...[
-                          const SizedBox(height: 24),
-                          const Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text('Suggestions for you',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: textDark)),
-                          ),
-                          const SizedBox(height: 12),
-                          ...BurnoutData.suggestions.map(
-                                (s) => _SuggestionCard(suggestion: s),
-                          ),
-                          const SizedBox(height: 16),
-                          const _ConsistencyBadge(),
-                          const SizedBox(height: 30),
-                        ],
                       ],
                     ),
                   );
@@ -519,6 +501,90 @@ class _ActionButton extends StatelessWidget {
                 color: answered ? Colors.white : Colors.grey,
                 size: 20,
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ── Results screen (shown after successful submission) ─────────
+class _ResultsScreen extends StatelessWidget {
+  final List<BurnoutSuggestion> suggestions;
+  const _ResultsScreen({required this.suggestions});
+
+  static const Color primary  = Color(0xFF7C3AED);
+  static const Color bgColor  = Color(0xFFF8F7FF);
+  static const Color textDark = Color(0xFF1E1B4B);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: bgColor,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // ── Header ──────────────────────────────────────
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: primary.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.check_circle_rounded, color: primary, size: 30),
+                  ),
+                  const SizedBox(width: 14),
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Check-In Complete!',
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: textDark)),
+                        SizedBox(height: 2),
+                        Text('Here are your personalised suggestions',
+                            style: TextStyle(fontSize: 13, color: Color(0xFF9CA3AF))),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 28),
+
+              // ── Suggestions label ────────────────────────────
+              const Text('Suggestions for you',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textDark)),
+              const SizedBox(height: 12),
+
+              // ── Suggestion cards ─────────────────────────────
+              ...suggestions.map((s) => _SuggestionCard(suggestion: s)),
+              const SizedBox(height: 16),
+
+              // ── Consistency badge ────────────────────────────
+              const _ConsistencyBadge(),
+              const SizedBox(height: 24),
+
+              // ── Done button ──────────────────────────────────
+              SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primary,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                    elevation: 0,
+                  ),
+                  child: const Text('Done', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                ),
+              ),
+              const SizedBox(height: 16),
             ],
           ),
         ),
