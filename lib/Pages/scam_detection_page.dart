@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../Utilities/Constants/size.dart';
-
 class ScamDetectorPage extends StatefulWidget {
   const ScamDetectorPage({super.key});
 
@@ -10,424 +8,273 @@ class ScamDetectorPage extends StatefulWidget {
 }
 
 class _ScamDetectorPageState extends State<ScamDetectorPage> {
-  int selectedMethod = 0;
+  static const _navy    = Color(0xFF1A1F36);
+  static const _bg      = Color(0xFFF5F7FA);
 
-  final TextEditingController textController = TextEditingController();
+  int _method = 0;
+  final _textCtrl = TextEditingController();
 
-  void selectMethod(int index) {
-    setState(() {
-      selectedMethod = index;
-    });
+  @override
+  void dispose() {
+    _textCtrl.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF5F5F5),
+      backgroundColor: _bg,
+      appBar: AppBar(
+        backgroundColor: _navy,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text(
+          'Scam Detector',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, letterSpacing: 0.5),
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
 
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
-
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-              /// TOP BAR
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-
-                  /// BACK BUTTON
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    borderRadius: BorderRadius.circular(30),
-                    child: const Padding(
-                      padding: EdgeInsets.all(6),
-                      child: Icon(Icons.arrow_back_ios_new),
-                    ),
-                  ),
-
-                  const Icon(
-                    Icons.help_outline,
-                    size: 28,
+            // ── Hero card ───────────────────────────────────
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(22),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                gradient: const LinearGradient(
+                  colors: [_navy, Color(0xFF4F6EF7)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.12),
+                    blurRadius: 18,
+                    offset: const Offset(0, 8),
                   ),
                 ],
               ),
-
-              const SizedBox(height: 25),
-
-              /// TITLE
-              const Text(
-                "Scam Detector",
-                style: TextStyle(
-                  fontSize:Tsize.Fontxlg,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              const Text(
-                "Verify job offers before you apply or share personal data.",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black54,
-                  height: 1.4,
-                ),
-              ),
-
-              const SizedBox(height: 30),
-
-              /// STAY PROTECTED CARD
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(18),
-                ),
-
-                child: Row(
-                  children: [
-
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-
-                          Text(
-                            "Stay Protected",
+              child: Row(
+                children: [
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Stay Protected',
                             style: TextStyle(
-                              color: Colors.cyanAccent,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-
-                          SizedBox(height: 12),
-
-                          Text(
-                            "Our AI analyzes 20+ risk\nfactors including email\ndomains and salary realism.",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              height: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
+                                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800)),
+                        SizedBox(height: 8),
+                        Text(
+                          'Analyze job offers for 20+ risk factors — suspicious emails, unrealistic salaries, and known scam patterns.',
+                          style: TextStyle(color: Colors.white70, fontSize: 13, height: 1.5),
+                        ),
+                      ],
                     ),
-
-                    const Icon(
-                      Icons.shield,
-                      color: Colors.cyanAccent,
-                      size: 50,
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 35),
-
-              /// CHOOSE INPUT
-              const Center(
-                child: Text(
-                  "Choose input method",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
                   ),
+                  const SizedBox(width: 16),
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: const Icon(Icons.shield_rounded, color: Colors.white, size: 32),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 28),
+
+            // ── Input method ─────────────────────────────────
+            const Text('Choose input method',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: _navy)),
+            const SizedBox(height: 14),
+
+            Row(
+              children: [
+                _MethodChip(
+                  icon: Icons.description_outlined,
+                  label: 'Paste Text',
+                  selected: _method == 0,
+                  onTap: () => setState(() => _method = 0),
                 ),
-              ),
+                const SizedBox(width: 12),
+                _MethodChip(
+                  icon: Icons.image_outlined,
+                  label: 'Screenshot',
+                  selected: _method == 1,
+                  onTap: () => setState(() => _method = 1),
+                ),
+              ],
+            ),
 
-              const SizedBox(height: 25),
+            const SizedBox(height: 20),
 
-              /// PASTE TEXT
-              buildInputCard(
-                index: 0,
-                icon: Icons.description,
-                title: "Paste Text",
-                subtitle: "Job description, email, or message",
-              ),
-
-              const SizedBox(height: 20),
-
-              /// UPLOAD SCREENSHOT
-              buildInputCard(
-                index: 1,
-                icon: Icons.image,
-                title: "Upload Screenshot",
-                subtitle: "WhatsApp, Facebook, or Email caps",
-              ),
-
-              const SizedBox(height: 20),
-
-              /// ENTER URL
-              buildInputCard(
-                index: 2,
-                icon: Icons.link,
-                title: "Enter URL",
-                subtitle: "Link to the job posting",
-              ),
-
-              const SizedBox(height: 30),
-
-              /// TEXT FIELD
+            // ── Input area ───────────────────────────────────
+            if (_method == 0) ...[
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 18),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.all(
-                    color: Colors.grey.shade400,
-                  ),
+                  border: Border.all(color: const Color(0xFFE5E7EB)),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.04),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4)),
+                  ],
                 ),
-
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-
                     TextField(
-                      controller: textController,
-                      maxLines: 6,
+                      controller: _textCtrl,
+                      maxLines: 7,
+                      onChanged: (_) => setState(() {}),
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: "Paste the job post here...",
-                        hintStyle: TextStyle(
-                          fontSize: 18,
-                        ),
-                        prefixIcon: Icon(Icons.search),
+                        hintText: 'Paste the job post, email or message here...',
+                        hintStyle: TextStyle(color: Color(0xFF9CA3AF), fontSize: 14),
+                        contentPadding: EdgeInsets.all(16),
                       ),
                     ),
-
-                    Align(
-                      alignment: Alignment.bottomRight,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 14, bottom: 10),
                       child: Text(
-                        "${textController.text.length} / 5000",
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
-                        ),
+                        '${_textCtrl.text.length} / 5000',
+                        style: const TextStyle(fontSize: 12, color: Color(0xFF9CA3AF)),
                       ),
                     ),
-
-                    const SizedBox(height: 10),
                   ],
                 ),
               ),
-
-              const SizedBox(height: 30),
-
-              /// ANALYZE BUTTON
-              SizedBox(
-                width: double.infinity,
-                height: 60,
-
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                  ),
-
-                  onPressed: () {
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Analyzing for scams..."),
-                      ),
-                    );
-                  },
-
-                  child: const Text(
-                    "Analyze for Scams",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+            ] else ...[
+              GestureDetector(
+                onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Image picker coming soon')),
                 ),
-              ),
-
-              const SizedBox(height: 25),
-
-              /// LEARN CARD
-              InkWell(
-                borderRadius: BorderRadius.circular(18),
-
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Learning lab clicked"),
-                    ),
-                  );
-                },
-
                 child: Container(
-                  padding: const EdgeInsets.all(20),
-
+                  width: double.infinity,
+                  height: 140,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(18),
-                    border: Border.all(
-                      color: Colors.grey.shade300,
-                    ),
+                    border: Border.all(color: const Color(0xFFE5E7EB)),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.04),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4)),
+                    ],
                   ),
-
-                  child: Row(
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
-                      const Icon(
-                        Icons.lightbulb_outline,
-                        size: 30,
-                      ),
-
-                      const SizedBox(width: 15),
-
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-
-                            Text(
-                              "Not sure what to look for?",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-
-                            SizedBox(height: 6),
-
-                            Text(
-                              "Learn Common red flags in our Lab",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      Container(
-                        height: 50,
-                        width: 50,
-
-                        decoration: BoxDecoration(
-                          color: Colors.orange,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-
-                        child: const Icon(
-                          Icons.play_arrow,
-                          color: Colors.black,
-                        ),
-                      ),
+                      Icon(Icons.upload_rounded, size: 40, color: Color(0xFF9CA3AF)),
+                      SizedBox(height: 10),
+                      Text('Tap to upload screenshot',
+                          style: TextStyle(
+                              color: Color(0xFF6B7280), fontWeight: FontWeight.w600)),
+                      SizedBox(height: 4),
+                      Text('WhatsApp, email or job site caps',
+                          style: TextStyle(color: Color(0xFF9CA3AF), fontSize: 12)),
                     ],
                   ),
                 ),
               ),
-
-              const SizedBox(height: 30),
             ],
-          ),
+
+            const SizedBox(height: 24),
+
+            // ── Analyze button ───────────────────────────────
+            SizedBox(
+              width: double.infinity,
+              height: 54,
+              child: ElevatedButton.icon(
+                onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Analyzing for scams...')),
+                ),
+                icon: const Icon(Icons.shield_rounded, size: 20),
+                label: const Text('Analyze for Scams',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _navy,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  elevation: 0,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 24),
+          ],
         ),
       ),
     );
   }
+}
 
-  Widget buildInputCard({
-    required int index,
-    required IconData icon,
-    required String title,
-    required String subtitle,
-  }) {
-    bool isSelected = selectedMethod == index;
+// ── Method chip ────────────────────────────────────────────────
+class _MethodChip extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
 
-    return InkWell(
-      borderRadius: BorderRadius.circular(18),
+  const _MethodChip({
+    required this.icon,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
 
-      onTap: () {
-        selectMethod(index);
+  static const _navy = Color(0xFF1A1F36);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("$title selected"),
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          decoration: BoxDecoration(
+            color: selected ? _navy : Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: selected ? _navy : const Color(0xFFE5E7EB)),
+            boxShadow: [
+              BoxShadow(
+                color: selected
+                    ? _navy.withValues(alpha: 0.18)
+                    : Colors.black.withValues(alpha: 0.04),
+                blurRadius: selected ? 10 : 6,
+                offset: Offset(0, selected ? 4 : 2),
+              ),
+            ],
           ),
-        );
-      },
-
-      child: Container(
-        padding: const EdgeInsets.all(18),
-
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
-
-          border: Border.all(
-            color: isSelected ? Colors.black : Colors.grey.shade300,
-            width: 2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 24, color: selected ? Colors.white : const Color(0xFF6B7280)),
+              const SizedBox(height: 6),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: selected ? Colors.white : const Color(0xFF6B7280),
+                ),
+              ),
+            ],
           ),
-        ),
-
-        child: Row(
-          children: [
-
-            Container(
-              height: 65,
-              width: 65,
-
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(14),
-              ),
-
-              child: Icon(
-                icon,
-                size: 32,
-              ),
-            ),
-
-            const SizedBox(width: 18),
-
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-
-                  const SizedBox(height: 6),
-
-                  Text(
-                    subtitle,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Icon(
-              isSelected
-                  ? Icons.check_circle
-                  : Icons.radio_button_unchecked,
-              color: isSelected ? Colors.black : Colors.grey,
-              size: 28,
-            ),
-          ],
         ),
       ),
     );
