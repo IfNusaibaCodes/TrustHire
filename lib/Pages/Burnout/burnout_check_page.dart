@@ -231,17 +231,6 @@ class _BurnoutPageState extends State<BurnoutPage> {
                           },
                         ),
 
-                        // ── SKIP BUTTON ────────────────────
-                        if (!isLastPage)
-                          TextButton(
-                            onPressed: () => _pageController.nextPage(
-                              duration: const Duration(milliseconds: 350),
-                              curve: Curves.easeInOut,
-                            ),
-                            child: const Text('Skip this question',
-                                style: TextStyle(color: textGrey, fontSize: 13)),
-                          ),
-
                       ],
                     ),
                   );
@@ -520,6 +509,8 @@ class _ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String today = _formattedDate();
+
     return Scaffold(
       backgroundColor: bgColor,
       body: SafeArea(
@@ -528,45 +519,96 @@ class _ResultsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ── Header ──────────────────────────────────────
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: primary.withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(Icons.check_circle_rounded, color: primary, size: 30),
+
+              // ── Well Done Card ───────────────────────────────
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(28),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF7C3AED), Color(0xFF6366F1)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  const SizedBox(width: 14),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Check-In Complete!',
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: textDark)),
-                        SizedBox(height: 2),
-                        Text('Here are your personalised suggestions',
-                            style: TextStyle(fontSize: 13, color: Color(0xFF9CA3AF))),
-                      ],
+                  borderRadius: BorderRadius.circular(28),
+                  boxShadow: [
+                    BoxShadow(
+                      color: primary.withOpacity(0.3),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Text('🎉', style: TextStyle(fontSize: 36)),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Well Done!',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 26,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'You completed today\'s burnout check-in.\nTaking care of yourself matters. 💜',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 13,
+                        height: 1.6,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.calendar_today_rounded,
+                              color: Colors.white70, size: 14),
+                          const SizedBox(width: 6),
+                          Text(
+                            today,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 28),
 
               // ── Suggestions label ────────────────────────────
               const Text('Suggestions for you',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textDark)),
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: textDark)),
               const SizedBox(height: 12),
 
               // ── Suggestion cards ─────────────────────────────
               ...suggestions.map((s) => _SuggestionCard(suggestion: s)),
-              const SizedBox(height: 16),
-
-              // ── Consistency badge ────────────────────────────
-              const _ConsistencyBadge(),
               const SizedBox(height: 24),
 
               // ── Done button ──────────────────────────────────
@@ -578,10 +620,13 @@ class _ResultsScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primary,
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)),
                     elevation: 0,
                   ),
-                  child: const Text('Done', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  child: const Text('Done',
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold)),
                 ),
               ),
               const SizedBox(height: 16),
@@ -590,6 +635,19 @@ class _ResultsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _formattedDate() {
+    final now = DateTime.now();
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    const days = [
+      'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+      'Friday', 'Saturday', 'Sunday'
+    ];
+    return '${days[now.weekday - 1]}, ${months[now.month - 1]} ${now.day}';
   }
 }
 
@@ -643,62 +701,6 @@ class _SuggestionCard extends StatelessWidget {
             ),
           ),
           Icon(Icons.chevron_right, color: Colors.grey.shade300, size: 22),
-        ],
-      ),
-    );
-  }
-}
-
-// ── Consistency badge ─────────────────────────────────────────
-class _ConsistencyBadge extends StatelessWidget {
-  const _ConsistencyBadge();
-
-  static const Color primary = Color(0xFF7C3AED);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-            colors: [Color(0xFF7C3AED), Color(0xFF4F46E5)]),
-        borderRadius: BorderRadius.circular(22),
-        boxShadow: [
-          BoxShadow(
-            color: primary.withOpacity(0.3),
-            blurRadius: 18,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          const Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Consistency Pays',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold)),
-                SizedBox(height: 6),
-                Text('Complete 3 more checks\nfor a badge.',
-                    style: TextStyle(
-                        color: Colors.white70, fontSize: 13, height: 1.5)),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white.withOpacity(0.15),
-            ),
-            child: const Icon(Icons.star_rounded,
-                color: Colors.amber, size: 32),
-          ),
         ],
       ),
     );

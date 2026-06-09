@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'planner_controller.dart';
 import 'planner_widgets.dart';
+import '../Burnout/burnout_check_page.dart';
 
 class PlannerPage extends StatefulWidget {
   const PlannerPage({super.key});
@@ -228,6 +229,7 @@ class _PlannerPageState extends State<PlannerPage> {
                           fontSize: 22,
                           fontWeight: FontWeight.bold)),
                   const Spacer(),
+                  const Icon(Icons.search, color: primary),
                 ],
               ),
               const SizedBox(height: 22),
@@ -634,6 +636,10 @@ class _PlannerPageState extends State<PlannerPage> {
               ),
               const SizedBox(height: 16),
 
+              // ── BURNOUT BANNER ────────────────────────
+              const _BurnoutBanner(),
+              const SizedBox(height: 16),
+
               // ── QUOTE CARD ────────────────────────────
               Container(
                 width: double.infinity,
@@ -703,6 +709,94 @@ class _PlannerPageState extends State<PlannerPage> {
             ],
           ),
         )),
+      ),
+    );
+  }
+}
+
+// ── Burnout Banner ────────────────────────────────────────────
+class _BurnoutBanner extends StatelessWidget {
+  const _BurnoutBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const BurnoutPage()),
+      ),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFF7C3AED), Color(0xFF6366F1)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF7C3AED).withOpacity(0.28),
+              blurRadius: 16,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            // ── Icon bubble ───────────────────────────
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: const Text('🧠', style: TextStyle(fontSize: 26)),
+            ),
+            const SizedBox(width: 16),
+
+            // ── Text ──────────────────────────────────
+            const Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Feeling overwhelmed?',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Take a quick burnout check-in\nand get personalised tips.',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 12,
+                      height: 1.5,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // ── Arrow ─────────────────────────────────
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Icon(
+                Icons.arrow_forward_rounded,
+                color: Colors.white,
+                size: 18,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
