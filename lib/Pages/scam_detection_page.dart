@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'scam_detection/red_flags_page.dart';
 
 class ScamDetectorPage extends StatefulWidget {
   const ScamDetectorPage({super.key});
@@ -27,10 +28,7 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
       appBar: AppBar(
         backgroundColor: _navy,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
-          onPressed: () => Navigator.pop(context),
-        ),
+        automaticallyImplyLeading: false,
         title: const Text(
           'Scam Detector',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, letterSpacing: 0.5),
@@ -210,6 +208,63 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   elevation: 0,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // ── Red Flags Guide card ─────────────────────
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const RedFlagsPage()),
+              ),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(18),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: const Color(0xFFE5E7EB)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.04),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.amber.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: const Icon(Icons.warning_amber_rounded,
+                          color: Colors.amber, size: 26),
+                    ),
+                    const SizedBox(width: 14),
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Know the Warning Signs',
+                              style: TextStyle(fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF1A1F36))),
+                          SizedBox(height: 3),
+                          Text('Learn 10 common job scam red flags',
+                              style: TextStyle(fontSize: 12,
+                                  color: Color(0xFF9CA3AF))),
+                        ],
+                      ),
+                    ),
+                    const Icon(Icons.arrow_forward_ios_rounded,
+                        size: 14, color: Color(0xFF9CA3AF)),
+                  ],
                 ),
               ),
             ),
