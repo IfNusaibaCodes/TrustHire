@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Navigation/bottom_navigator.dart';
+import 'package:trust_hire_app/Pages/Login/reset_password_page.dart';
 
 class DeepLinkService {
   static StreamSubscription? _sub;
@@ -31,7 +32,11 @@ class DeepLinkService {
         tokenHash: tokenHash,
         type: otpType,
       );
-      Get.offAll(() => const BottomNavBar());
+      if (type == 'recovery') {
+        Get.offAll(() => const ResetPasswordPage());
+      } else {
+        Get.offAll(() => const BottomNavBar());
+      }
     } catch (e) {
       Get.snackbar(
         'Confirmation Failed',
