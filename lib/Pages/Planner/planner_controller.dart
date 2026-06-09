@@ -68,6 +68,14 @@ class PlannerController extends GetxController {
       tasks.refresh();
     }
     _db.toggleTask(taskId, !current);
+
+    // Update streak when marking a task as done (not when un-doing)
+    final markingDone = !current;
+    if (markingDone) {
+      _db.recordActivityAndGetStreak(_uid, todayDate).then((newStreak) {
+        streakDays.value = newStreak;
+      });
+    }
   }
 
   Future<void> addTask(String title, String priority) async {

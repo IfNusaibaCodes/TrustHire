@@ -46,11 +46,36 @@ class PlannerDatabase {
     return (response?['streak_days'] as int?) ?? 0;
   }
 
-  Future<void> updateStreak(String userId, int days, String date) async {
+  // Called when user marks a task done. Increments streak only once per day.
+  Future<int> recordActivityAndGetStreak(String userId, String today) async {
+    final row = await _client
+        .from('planner_streaks')
+        .select('streak_days, last_date')
+        .eq('user_id', userId)
+        .maybeSingle();
+
+    final lastDate   = row?['last_date']   as String?;
+    final lastStreak = (row?['streak_days'] as int?) ?? 0;
+
+    // Already recorded today — return current streak unchanged
+    if (lastDate == today) return lastStreak;
+
+    final yesterday = DateFormatter.yesterday();
+    final newStreak = (lastDate == yesterday) ? lastStreak + 1 : 1;
+
     await _client.from('planner_streaks').upsert({
       'user_id':     userId,
-      'streak_days': days,
-      'last_date':   date,
+      'streak_days': newStreak,
+      'last_date':   today,
     }, onConflict: 'user_id');
+
+    return newStreak;
+  }
+}
+
+class DateFormatter {
+  static String yesterday() {
+    final d = DateTime.now().subtract(const Duration(days: 1));
+    return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
   }
 }
