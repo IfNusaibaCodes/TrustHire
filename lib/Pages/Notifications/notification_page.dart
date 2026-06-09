@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../admin/admin_service.dart';
+import '../../admin/send_notification_form.dart';
 import 'notification_controller.dart';
 import 'notification_model.dart';
 
-class NotificationPage extends StatelessWidget {
+class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
 
+  @override
+  State<NotificationPage> createState() => _NotificationPageState();
+}
+
+class _NotificationPageState extends State<NotificationPage> {
   static const _bg      = Color(0xFFF5F7FA);
   static const _navy    = Color(0xFF1A1F36);
   static const _primary = Color(0xFF4F6EF7);
@@ -18,12 +25,44 @@ class NotificationPage extends StatelessWidget {
     'tip':       'Tips',
   };
 
+  bool _isAdmin = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAdmin();
+  }
+
+  Future<void> _checkAdmin() async {
+    final admin = await AdminService.isAdmin();
+    if (mounted) setState(() => _isAdmin = admin);
+  }
+
+  void _openSendForm() {
+    final c = Get.find<NotificationController>();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => SendNotificationForm(onSent: c.load),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final c = Get.find<NotificationController>();
 
     return Scaffold(
       backgroundColor: _bg,
+      floatingActionButton: _isAdmin
+          ? FloatingActionButton.extended(
+              onPressed: _openSendForm,
+              backgroundColor: _navy,
+              icon: const Icon(Icons.send_rounded, color: Colors.white),
+              label: const Text('Send Notification',
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+            )
+          : null,
       appBar: AppBar(
         backgroundColor: _navy,
         elevation: 0,
