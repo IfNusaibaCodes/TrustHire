@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../Burnout/burnout_check_page.dart';
 import 'planner_controller.dart';
 import 'planner_widgets.dart';
 

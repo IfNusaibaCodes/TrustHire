@@ -108,7 +108,7 @@ class RedFlagsPage extends StatelessWidget {
                             style: TextStyle(color: Colors.white,
                                 fontSize: 18, fontWeight: FontWeight.w800)),
                         SizedBox(height: 6),
-                        Text('10 patterns used in almost every job scam.',
+                        Text('Patterns used in almost every job scam.',
                             style: TextStyle(color: Colors.white70, fontSize: 13, height: 1.4)),
                       ],
                     ),

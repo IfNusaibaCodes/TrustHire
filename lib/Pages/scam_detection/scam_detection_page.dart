@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'scam_detection/red_flags_page.dart';
+import 'package:trust_hire_app/Pages/scam_detection/red_flags_page.dart';
 
 class ScamDetectorPage extends StatefulWidget {
   const ScamDetectorPage({super.key});
@@ -35,7 +35,7 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.fromLTRB(18, 18, 18, 90),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -256,7 +256,7 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
                                   fontWeight: FontWeight.w700,
                                   color: Color(0xFF1A1F36))),
                           SizedBox(height: 3),
-                          Text('Learn 10 common job scam red flags',
+                          Text('Learn common job scam red flags',
                               style: TextStyle(fontSize: 12,
                                   color: Color(0xFF9CA3AF))),
                         ],
