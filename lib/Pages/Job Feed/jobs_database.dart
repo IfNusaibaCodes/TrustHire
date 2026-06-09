@@ -43,4 +43,12 @@ class JobsDatabaseService {
         .update({'is_trending': value})
         .eq('id', jobId);
   }
+
+  static Future<void> deleteJob(int jobId) async {
+    await _client.from('jobs').delete().eq('id', jobId);
+  }
+
+  static Future<void> updateJob(int jobId, Map<String, dynamic> data) async {
+    await _client.from('jobs').update(data).eq('id', jobId);
+  }
 }

@@ -27,4 +27,16 @@ class FeedbackService {
 
     await _client.from('feedback').insert(model.toInsertMap());
   }
+
+  static Future<List<FeedbackModel>> fetchAllFeedback() async {
+    final data = await _client
+        .from('feedback')
+        .select()
+        .order('created_at', ascending: false);
+    return (data as List).map((e) => FeedbackModel.fromMap(e)).toList();
+  }
+
+  static Future<void> deleteFeedback(String id) async {
+    await _client.from('feedback').delete().eq('id', id);
+  }
 }
