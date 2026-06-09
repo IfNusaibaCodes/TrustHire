@@ -228,7 +228,6 @@ class _PlannerPageState extends State<PlannerPage> {
                           fontSize: 22,
                           fontWeight: FontWeight.bold)),
                   const Spacer(),
-                  const Icon(Icons.search, color: primary),
                 ],
               ),
               const SizedBox(height: 22),
