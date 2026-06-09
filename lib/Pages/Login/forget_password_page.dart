@@ -37,6 +37,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
     try {
       await Supabase.instance.client.auth.resetPasswordForEmail(
         _emailController.text.trim(),
+        redirectTo: 'com.example.trust_hire_app://login-callback/',
       );
       if (mounted) {
         setState(() => _emailSent = true);

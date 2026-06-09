@@ -17,12 +17,12 @@ class AuthService {
     return await _supabase.auth.signUp(
         email: email,
         password: password,
+        emailRedirectTo: 'com.example.trust_hire_app://login-callback/',
         data: {
           'first_name': first_name,
           'last_name': last_name,
-          'phone' : phone
-        }
-
+          'phone' : phone,
+        },
     );
 
   }

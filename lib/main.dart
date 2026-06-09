@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:trust_hire_app/Authentication/Services/deep_link_service.dart';
 import 'package:trust_hire_app/Pages/Burnout/burnout_check_page.dart';
 import 'package:trust_hire_app/Pages/Growth/growth_page.dart';
 import 'package:trust_hire_app/Pages/Guide/work_guide_page.dart';
@@ -15,13 +16,17 @@ import 'package:trust_hire_app/profile/profile_page.dart';
 import 'Pages/Job Feed/job_feed_page.dart';
 import 'Pages/Planner/planner_page.dart';
 
-void main() async{
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
-      url: "https://pgqagkfcbeifyibyyyce.supabase.co",
-      anonKey: "sb_publishable_cWW8hzCCJBzF8k58wHzi8g__Wu-YDmt"
+    url: "https://pgqagkfcbeifyibyyyce.supabase.co",
+    anonKey: "sb_publishable_cWW8hzCCJBzF8k58wHzi8g__Wu-YDmt",
+    authOptions: const FlutterAuthClientOptions(
+      authFlowType: AuthFlowType.pkce,
+    ),
   );
-
   runApp(const MyApp());
+  DeepLinkService.init(); // starts listening after the widget tree is ready
 }
 
 class MyApp extends StatelessWidget {
@@ -30,12 +35,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-
       home: LandingPage(),
-
       theme: TCustomApp.customTheme,
-
-
     );
   }
 }
