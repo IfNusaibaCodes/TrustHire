@@ -38,7 +38,6 @@ class _ProfilePageState extends State<ProfilePage> {
     if ((profile.university ?? '').isNotEmpty) score += 15;
     if ((profile.cvUrl      ?? '').isNotEmpty) score += 20;
     if (skills.isNotEmpty)                     score += 15;
-    // removed: universityIdVerified score += 15
     return score;
   }
 
@@ -48,7 +47,6 @@ class _ProfilePageState extends State<ProfilePage> {
     if (skills.isNotEmpty)                    filled++;
     if ((profile.cvUrl ?? '').isNotEmpty)     filled++;
     if (experiences.isNotEmpty)               filled++;
-    // removed: universityIdVerified filled++
     return filled / 4;
   }
 
@@ -421,20 +419,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                               ),
-                              if (profile.universityIdVerified)
-                                Positioned(
-                                  bottom: 2, right: 2,
-                                  child: Container(
-                                    width: 20, height: 20,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF10B981),
-                                      shape: BoxShape.circle,
-                                      border: Border.all(color: primary, width: 2),
-                                    ),
-                                    child: const Icon(Icons.check,
-                                        size: 11, color: Colors.white),
-                                  ),
-                                ),
                             ],
                           ),
                           const SizedBox(width: 16),
@@ -463,28 +447,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                         fontSize: 13),
                                   ),
                                 const SizedBox(height: 6),
-                                if (profile.universityIdVerified)
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 4),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.15),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: const Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(Icons.verified,
-                                            size: 13, color: Colors.white),
-                                        SizedBox(width: 4),
-                                        Text('Verified Student',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600)),
-                                      ],
-                                    ),
-                                  ),
                               ],
                             ),
                           ),
@@ -511,10 +473,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               _loadAll();
                             },
                           ),
-                          /*
-                          const SizedBox(width: 10),
-                          statCard(Icons.remove_red_eye_outlined,
-                              stats.profileViews.toString(), 'Profile Views'),// no need bcz who's gonna view my profile duhh */
                           const SizedBox(width: 10),
                           statCard(
                             Icons.bookmark_border,
@@ -523,7 +481,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             onTap: () async {
                               await Navigator.push(context,
                                   MaterialPageRoute(builder: (_) => const SavedJobsPage()));
-                              _loadAll(); // ou part reload korbo real time stats
+                              _loadAll(); 
                             },
                           ),
 

@@ -9,7 +9,6 @@ class ProfileModel {
   final String?   studyYear;
   final String?   bio;
   final String?   cvUrl;
-  final bool      universityIdVerified;
   final DateTime? updatedAt;
 
   const ProfileModel({
@@ -23,7 +22,6 @@ class ProfileModel {
     this.studyYear,
     this.bio,
     this.cvUrl,
-    this.universityIdVerified = false,
     this.updatedAt,
   });
 
@@ -38,8 +36,7 @@ class ProfileModel {
       university:           map['university']              as String?,
       studyYear:            map['study_year']              as String?,
       bio:                  map['bio']                     as String?,
-      cvUrl:                map['cv_url']                  as String?,
-      universityIdVerified:(map['university_id_verified']  as bool?) ?? false,
+      cvUrl:     map['cv_url'] as String?,
       updatedAt:            map['updated_at'] != null
           ? DateTime.tryParse(map['updated_at'] as String)
           : null,
@@ -58,7 +55,6 @@ class ProfileModel {
     if (studyYear != null)           map['study_year']             = studyYear;
     if (bio != null)                 map['bio']                    = bio;
     if (cvUrl != null)               map['cv_url']                 = cvUrl;
-    map['university_id_verified'] = universityIdVerified;
     if (updatedAt != null)           map['updated_at']             = updatedAt!.toIso8601String();
     return map;
   }
@@ -74,9 +70,8 @@ class ProfileModel {
       university:           updates['university']             as String? ?? university,
       studyYear:            updates['study_year']             as String? ?? studyYear,
       bio:                  updates['bio']                    as String? ?? bio,
-      cvUrl:                updates['cv_url']                 as String? ?? cvUrl,
-      universityIdVerified: updates['university_id_verified'] as bool?   ?? universityIdVerified,
-      updatedAt:            updatedAt,
+      cvUrl:     updates['cv_url'] as String? ?? cvUrl,
+      updatedAt: updatedAt,
     );
   }
 
@@ -186,13 +181,11 @@ class ExperienceModel {
 class ProfileStats {
   final String? userId;
   final int     appliedCount;
-  final int     profileViews;
   final int     savedCount;
 
   const ProfileStats({
     this.userId,
     this.appliedCount = 0,
-    this.profileViews = 0,
     this.savedCount   = 0,
   });
 
@@ -200,7 +193,6 @@ class ProfileStats {
     return ProfileStats(
       userId:       map['user_id']       as String?,
       appliedCount:(map['applied_count'] as int?) ?? 0,
-      profileViews:(map['profile_views'] as int?) ?? 0,
       savedCount:  (map['saved_count']   as int?) ?? 0,
     );
   }
@@ -208,7 +200,6 @@ class ProfileStats {
   Map<String, dynamic> toMap() {
     final map = <String, dynamic>{
       'applied_count': appliedCount,
-      'profile_views': profileViews,
       'saved_count':   savedCount,
     };
     if (userId != null) map['user_id'] = userId;
