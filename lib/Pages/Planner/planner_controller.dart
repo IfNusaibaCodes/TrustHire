@@ -9,15 +9,21 @@ class PlannerController extends GetxController {
   final PlannerDatabase _db          = PlannerDatabase();
   final AuthService     _authService = AuthService();
 
-  String get _uid => _authService.getCurrentUid() ?? '';
+  // FIX 1: throw if not logged in instead of silently using empty string
+  String get _uid {
+    final uid = _authService.getCurrentUid();
+    if (uid == null || uid.isEmpty) throw Exception('User not logged in');
+    return uid;
+  }
 
   var tasks      = <TaskModel>[].obs;
   var isLoading  = false.obs;
   var streakDays = 0.obs;
   var filter     = 'All'.obs;
 
-  String get todayDate      => DateFormat('yyyy-MM-dd').format(DateTime.now());
-  String get todayFormatted => DateFormat('EEEE, MMM d').format(DateTime.now());
+  // FIX 2: computed once on init so date never changes mid-session
+  late final String todayDate;
+  late final String todayFormatted;
 
   static const List<Map<String, String>> _quotes = [
     {'text': 'The secret of getting ahead is getting started.', 'author': '— Mark Twain'},
@@ -47,6 +53,9 @@ class PlannerController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // FIX 2: set date once here
+    todayDate      = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    todayFormatted = DateFormat('EEEE, MMM d').format(DateTime.now());
     loadTasks();
     loadStreak();
   }
@@ -69,9 +78,10 @@ class PlannerController extends GetxController {
     }
     _db.toggleTask(taskId, !current);
 
-    // Update streak when marking a task as done (not when un-doing)
+    // FIX 3: only call streak update on the FIRST completed task of the session
+    // avoids redundant Supabase calls (backend already guards duplicate days)
     final markingDone = !current;
-    if (markingDone) {
+    if (markingDone && completedCount == 1) {
       _db.recordActivityAndGetStreak(_uid, todayDate).then((newStreak) {
         streakDays.value = newStreak;
       });
@@ -79,7 +89,6 @@ class PlannerController extends GetxController {
   }
 
   Future<void> addTask(String title, String priority) async {
-    // get real UUID from DB then add to local list
     final task = await _db.addTask(_uid, title, priority, todayDate);
     if (task != null) tasks.add(task);
   }
