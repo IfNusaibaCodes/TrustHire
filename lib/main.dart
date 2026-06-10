@@ -22,7 +22,7 @@ void main() async {
     url: "https://pgqagkfcbeifyibyyyce.supabase.co",
     anonKey: "sb_publishable_cWW8hzCCJBzF8k58wHzi8g__Wu-YDmt",
     authOptions: const FlutterAuthClientOptions(
-      authFlowType: AuthFlowType.pkce,
+      authFlowType: AuthFlowType.implicit,
     ),
   );
   runApp(const MyApp());

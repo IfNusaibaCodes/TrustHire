@@ -39,7 +39,8 @@ class DeepLinkService {
   static bool _isAuthUri(Uri uri) =>
       uri.queryParameters.containsKey('code') ||
       uri.queryParameters.containsKey('token_hash') ||
-      uri.fragment.contains('access_token');
+      uri.fragment.contains('access_token') ||
+      uri.fragment.contains('error_code');
 
   static void dispose() {
     _linkSub?.cancel();
