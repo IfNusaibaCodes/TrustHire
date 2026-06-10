@@ -8,6 +8,7 @@ import 'package:trust_hire_app/Pages/Job%20Feed/job_feed_page.dart';
 import 'package:trust_hire_app/Pages/Login/forget_password_page.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
 import 'package:trust_hire_app/profile/profile_page.dart';
+import 'package:trust_hire_app/Pages/scam_detection/scam_detection_page.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import 'package:trust_hire_app/common/styles/spacing_styles.dart';

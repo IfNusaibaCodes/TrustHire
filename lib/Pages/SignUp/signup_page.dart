@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:trust_hire_app/Navigation/bottom_navigator.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import 'package:trust_hire_app/Utilities/Validation/validation.dart';
@@ -61,6 +62,8 @@ class _SignUpPageState extends State<SignUpPage> {
           content: Text("Verification email sent. Please verify your email"),
           backgroundColor: Colors.green,
         ));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => BottomNavBar()));
       }
     } catch(e){
       if(mounted){

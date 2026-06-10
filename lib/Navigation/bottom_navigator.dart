@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trust_hire_app/Pages/Job%20Feed/job_feed_page.dart';
+import 'package:trust_hire_app/Pages/scam_detection/scam_detection_page.dart';
 import 'package:trust_hire_app/Pages/Planner/planner_page.dart';
 import 'package:trust_hire_app/Pages/Growth/growth_page.dart';
 import 'package:trust_hire_app/Pages/Notifications/notification_controller.dart';
 
-import '../Pages/scam_detection/scam_detection_page.dart';
 import '../Utilities/Constants/colors.dart';
 
 class BottomNavBar extends StatefulWidget {

@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Android 13+ runtime permission for showing notifications. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:label="trust_hire_app"
         android:name="${applicationName}"
@@ -33,6 +35,11 @@
                     android:host="login-callback"/>
             </intent-filter>
         </activity>
+        <!-- FCM: channel used for backgrounded/terminated notifications.
+             Must match the channel id created in PushService (high_importance_channel). -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="high_importance_channel" />
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

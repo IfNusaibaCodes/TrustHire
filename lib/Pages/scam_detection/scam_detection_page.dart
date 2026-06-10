@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trust_hire_app/Pages/scam_detection/red_flags_page.dart';
+import 'red_flags_page.dart';
 
 class ScamDetectorPage extends StatefulWidget {
   const ScamDetectorPage({super.key});

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'planner_controller.dart';
 import 'planner_widgets.dart';
-import '../Burnout/burnout_check_page.dart';
 
 class PlannerPage extends StatefulWidget {
   const PlannerPage({super.key});
@@ -55,7 +54,6 @@ class _PlannerPageState extends State<PlannerPage> {
     final c    = Get.find<PlannerController>();
     final ctrl = TextEditingController();
     String selectedPriority = 'Normal';
-
 
     showModalBottomSheet(
       context: context,
@@ -197,41 +195,12 @@ class _PlannerPageState extends State<PlannerPage> {
           ),
         ),
       ),
-    ).whenComplete(() => ctrl.dispose()); // FIX 1: dispose here
-  }
-
-
-  void _confirmDelete(BuildContext context, String taskId) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text('Delete Task?',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
-        content: const Text('This task will be permanently removed.',
-            style: TextStyle(color: Color(0xFF9CA3AF), fontSize: 14)),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel',
-                style: TextStyle(color: Color(0xFF9CA3AF))),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Get.find<PlannerController>().deleteTask(taskId);
-              _snack(context, 'Task removed');
-            },
-            child: const Text('Delete',
-                style: TextStyle(
-                    color: Colors.red, fontWeight: FontWeight.bold)),
-          ),
-        ],
-      ),
     );
   }
 
-
+  // ════════════════════════════════════════════════════════════
+  //  BUILD
+  // ════════════════════════════════════════════════════════════
   @override
   Widget build(BuildContext context) {
     final c = Get.find<PlannerController>();
@@ -248,7 +217,7 @@ class _PlannerPageState extends State<PlannerPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-
+              // ── TOP BAR ─────────────────────────────
               Row(
                 children: [
                   const Icon(Icons.shield, color: primary, size: 28),
@@ -259,12 +228,11 @@ class _PlannerPageState extends State<PlannerPage> {
                           fontSize: 22,
                           fontWeight: FontWeight.bold)),
                   const Spacer(),
-
                 ],
               ),
               const SizedBox(height: 22),
 
-
+              // ── TITLE ────────────────────────────────
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -377,7 +345,7 @@ class _PlannerPageState extends State<PlannerPage> {
               ),
               const SizedBox(height: 20),
 
-
+              // ── FILTER TABS ───────────────────────────
               Row(
                 children: ['All', 'Pending', 'Done'].map((f) {
                   final bool sel = c.filter.value == f;
@@ -412,7 +380,7 @@ class _PlannerPageState extends State<PlannerPage> {
               ),
               const SizedBox(height: 14),
 
-
+              // ── TASK LIST ─────────────────────────────
               if (c.filteredTasks.isEmpty)
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -543,9 +511,11 @@ class _PlannerPageState extends State<PlannerPage> {
                             ),
                           ),
                           const SizedBox(width: 6),
-                          // FIX 2: delete now shows confirmation dialog
                           GestureDetector(
-                            onTap: () => _confirmDelete(context, task.id),
+                            onTap: () {
+                              c.deleteTask(task.id);
+                              _snack(context, 'Task removed');
+                            },
                             child: Container(
                               padding: const EdgeInsets.all(6),
                               decoration: BoxDecoration(
@@ -664,10 +634,6 @@ class _PlannerPageState extends State<PlannerPage> {
               ),
               const SizedBox(height: 16),
 
-              // ── BURNOUT BANNER ────────────────────────
-              const _BurnoutBanner(),
-              const SizedBox(height: 16),
-
               // ── QUOTE CARD ────────────────────────────
               Container(
                 width: double.infinity,
@@ -737,88 +703,6 @@ class _PlannerPageState extends State<PlannerPage> {
             ],
           ),
         )),
-      ),
-    );
-  }
-}
-
-class _BurnoutBanner extends StatelessWidget {
-  const _BurnoutBanner();
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const BurnoutPage()),
-      ),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF7C3AED), Color(0xFF6366F1)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF7C3AED).withOpacity(0.28),
-              blurRadius: 16,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: const Text('🧠', style: TextStyle(fontSize: 26)),
-            ),
-            const SizedBox(width: 16),
-            const Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Feeling overwhelmed?',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    'Take a quick burnout check-in\nand get personalised tips.',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 12,
-                      height: 1.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: const Icon(
-                Icons.arrow_forward_rounded,
-                color: Colors.white,
-                size: 18,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
