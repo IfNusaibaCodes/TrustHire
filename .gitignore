@@ -48,3 +48,7 @@ app.*.map.json
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 **/service-account*.json
+# firebase_options.dart holds the Firebase client apiKey. It's not a true secret,
+# but GitHub secret-scanning flags it — keep it out of the repo. Regenerate with
+# `flutterfire configure` (or copy it in manually) on each machine.
+lib/firebase_options.dart
