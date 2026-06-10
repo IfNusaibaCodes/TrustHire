@@ -132,16 +132,22 @@ class PushService {
   /// Call on sign-in. Stores this device's FCM token against [userId] and keeps
   /// it fresh when FCM rotates it.
   static Future<void> registerToken(String userId) async {
-    final token = await FirebaseMessaging.instance.getToken();
-    if (token != null) await _upsertToken(userId, token);
+    try {
+      final token = await FirebaseMessaging.instance.getToken();
+      if (token != null) await _upsertToken(userId, token);
 
-    await _tokenRefreshSub?.cancel();
-    _tokenRefreshSub =
-        FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
-      // Re-read the current uid in case the session changed mid-stream.
-      final uid = _client.auth.currentUser?.id ?? userId;
-      _upsertToken(uid, newToken);
-    });
+      await _tokenRefreshSub?.cancel();
+      _tokenRefreshSub =
+          FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
+        // Re-read the current uid in case the session changed mid-stream.
+        final uid = _client.auth.currentUser?.id ?? userId;
+        _upsertToken(uid, newToken);
+      });
+    } catch (e) {
+      // Best-effort: Firebase may not be ready yet, or the network is down.
+      // The auth listener retries on the next sign-in / app launch.
+      debugPrint('registerToken failed: $e');
+    }
   }
 
   static Future<void> _upsertToken(String userId, String token) async {

@@ -31,28 +31,33 @@ void main() async {
     ),
   );
 
-  // Firebase + push notifications. Wrapped so a placeholder firebase_options.dart
-  // (before you run `flutterfire configure`) can't brick app launch — the rest
-  // of the app still works, push just stays off until Firebase is configured.
-  try {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    // Tapping a push routes to the notifications screen (GetX nav). Ensure the
-    // controller exists in case the app was launched cold from a notification.
-    PushService.onNotificationTap = (data) {
-      if (!Get.isRegistered<NotificationController>()) {
-        Get.put(NotificationController());
-      }
-      Get.to(() => const NotificationPage());
-    };
-    await PushService.init();
-  } catch (e, st) {
-    debugPrint('Push notifications init skipped: $e\n$st');
-  }
-
   runApp(const MyApp());
-  DeepLinkService.init();
+
+  // Defer heavy startup work until AFTER the first frame so the UI appears
+  // immediately. Blocking the first frame on Firebase + FCM init (it spins up a
+  // background engine and hits the network) caused a cold-start ANR on slower /
+  // aggressive-OEM devices, which the OS resolves by killing the app
+  // ("Lost connection to device"). Firebase is initialized before
+  // DeepLinkService so the auth listener can register the push token safely.
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      // Tapping a push routes to the notifications screen (GetX nav). Ensure the
+      // controller exists in case the app was launched cold from a notification.
+      PushService.onNotificationTap = (data) {
+        if (!Get.isRegistered<NotificationController>()) {
+          Get.put(NotificationController());
+        }
+        Get.to(() => const NotificationPage());
+      };
+      await PushService.init();
+    } catch (e, st) {
+      debugPrint('Push notifications init skipped: $e\n$st');
+    }
+    DeepLinkService.init();
+  });
 }
 
 class MyApp extends StatelessWidget {
