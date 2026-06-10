@@ -167,7 +167,7 @@ class _BurnoutPageState extends State<BurnoutPage> {
             ),
             const SizedBox(height: 12),
 
-            // ── DOT INDICATORS ──────────────────────────────
+            // DOT INDICATORS
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
@@ -188,7 +188,7 @@ class _BurnoutPageState extends State<BurnoutPage> {
             ),
             const SizedBox(height: 14),
 
-            // ── SWIPEABLE QUESTION PAGES ─────────────────────
+            // SWIPEABLE QUESTION PAGES
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
@@ -244,9 +244,7 @@ class _BurnoutPageState extends State<BurnoutPage> {
   }
 }
 
-// ════════════════════════════════════════════════════════════
-//  PRIVATE WIDGETS
-// ════════════════════════════════════════════════════════════
+
 
 // ── Question Card ────────────────────────────────────────────
 class _QuestionCard extends StatelessWidget {
