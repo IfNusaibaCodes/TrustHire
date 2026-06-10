@@ -26,7 +26,7 @@ void main() async {
     ),
   );
   runApp(const MyApp());
-  DeepLinkService.init(); // starts listening after the widget tree is ready
+  DeepLinkService.init();
 }
 
 class MyApp extends StatelessWidget {
