@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Navigation/bottom_navigator.dart';
+import 'package:trust_hire_app/Pages/Login/login_page.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import 'package:trust_hire_app/Utilities/Validation/validation.dart';
@@ -54,14 +55,31 @@ class _SignUpPageState extends State<SignUpPage> {
     if(!_formKey.currentState!.validate()) return;
 
     try{
-      await authService.signUpWithEmailAndPassword(fName, lName, email, phone, password);
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(
-          content: Text("Verification email sent. Please verify your email"),
+      // A leftover session from a previously logged-in user must be cleared
+      // first, otherwise the app keeps showing that old account's profile
+      // after signing up a new one.
+      if (Supabase.instance.client.auth.currentSession != null) {
+        await authService.signOut();
+      }
+
+      final response = await authService.signUpWithEmailAndPassword(
+          fName, lName, email, phone, password);
+      if (!mounted) return;
+
+      // Email confirmation is enabled, so signUp does NOT create a session.
+      // The new user must confirm via the emailed link, then log in. Do not
+      // navigate into the app here — that used to drop the user onto the
+      // still-cached profile of the old account.
+      if (response.session == null) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              "Verification email sent. Please confirm your email, then log in."),
           backgroundColor: Colors.green,
         ));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const LoginPage()));
+      } else {
+        // Confirmation disabled: a session already exists, go to home.
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => BottomNavBar()));
       }
