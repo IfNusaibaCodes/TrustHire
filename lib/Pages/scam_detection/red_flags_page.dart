@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 
 class RedFlagsPage extends StatelessWidget {
   const RedFlagsPage({super.key});
@@ -87,17 +88,9 @@ class RedFlagsPage extends StatelessWidget {
           children: [
 
             // ── Header banner ───────────────────────────
-            Container(
-              width: double.infinity,
+            GradientBannerCard(
               padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [_navy, Color(0xFF4F6EF7)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(20),
-              ),
+              borderRadius: 20,
               child: Row(
                 children: [
                   const Expanded(

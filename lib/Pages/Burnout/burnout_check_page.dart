@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_snackbar.dart';
 import '../../Model/burnout_model.dart';
 
 import 'burnout_db.dart';
@@ -27,10 +29,10 @@ class _BurnoutPageState extends State<BurnoutPage> {
   List<BurnoutSuggestion> get _suggestions => BurnoutData.suggestions;
 
   // ── Theme constants ──────────────────────────────────────
-  static const Color primary  = Color(0xFF7C3AED);
-  static const Color bgColor  = Color(0xFFF8F7FF);
-  static const Color textDark = Color(0xFF1E1B4B);
-  static const Color textGrey = Color(0xFF9CA3AF);
+  static const Color primary  = TColors.appNavy;
+  static const Color bgColor  = TColors.appBackground;
+  static const Color textDark = TColors.appTextDark;
+  static const Color textGrey = TColors.appTextGrey;
 
   // ── Save ─────────────────────────────────────────────────
   Future<void> _saveAllAnswers() async {
@@ -59,15 +61,7 @@ class _BurnoutPageState extends State<BurnoutPage> {
   // ── Snackbar helper ──────────────────────────────────────
   void _showMessage(String msg, {bool isError = false}) {
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(msg, style: const TextStyle(fontWeight: FontWeight.w600)),
-        backgroundColor: isError ? const Color(0xFFEF4444) : const Color(0xFF10B981),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        margin: const EdgeInsets.all(16),
-      ),
-    );
+    showAppSnackBar(context, msg, isError: isError);
   }
 
   @override
@@ -260,9 +254,9 @@ class _QuestionCard extends StatelessWidget {
     required this.onOptionTap,
   });
 
-  static const Color primary = Color(0xFF7C3AED);
-  static const Color textDark = Color(0xFF1E1B4B);
-  static const Color textGrey = Color(0xFF9CA3AF);
+  static const Color primary  = TColors.appNavy;
+  static const Color textDark = TColors.appTextDark;
+  static const Color textGrey = TColors.appTextGrey;
 
   @override
   Widget build(BuildContext context) {
@@ -426,7 +420,7 @@ class _ActionButton extends StatelessWidget {
     required this.onTap,
   });
 
-  static const Color primary = Color(0xFF7C3AED);
+  static const Color primary = TColors.appNavy;
 
   @override
   Widget build(BuildContext context) {
@@ -438,7 +432,7 @@ class _ActionButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
           gradient: answered
               ? const LinearGradient(
-              colors: [Color(0xFF7C3AED), Color(0xFF6366F1)])
+              colors: [Color(0xFF1A1F36), Color(0xFF4F6EF7)])
               : null,
           color: answered ? null : Colors.grey.shade200,
           boxShadow: answered
@@ -501,9 +495,9 @@ class _ResultsScreen extends StatelessWidget {
   final List<BurnoutSuggestion> suggestions;
   const _ResultsScreen({required this.suggestions});
 
-  static const Color primary  = Color(0xFF7C3AED);
-  static const Color bgColor  = Color(0xFFF8F7FF);
-  static const Color textDark = Color(0xFF1E1B4B);
+  static const Color primary  = TColors.appNavy;
+  static const Color bgColor  = TColors.appBackground;
+  static const Color textDark = TColors.appTextDark;
 
   @override
   Widget build(BuildContext context) {
@@ -524,7 +518,7 @@ class _ResultsScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(28),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF7C3AED), Color(0xFF6366F1)],
+                    colors: [Color(0xFF1A1F36), Color(0xFF4F6EF7)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -690,7 +684,7 @@ class _SuggestionCard extends StatelessWidget {
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
-                        color: Color(0xFF1E1B4B))),
+                        color: TColors.appTextDark)),
                 const SizedBox(height: 2),
                 Text(suggestion.subtitle,
                     style: const TextStyle(

@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-
-const Color _primary  = Color(0xFF3B5BDB);
-const Color _bgColor  = Color(0xFFF5F6FA);
-const Color _textDark = Color(0xFF1A1A2E);
-const Color _textGrey = Color(0xFF9CA3AF);
-const Color _navy     = Color(0xFF1A1F36);
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {
   const PrivacyPolicyPage({super.key});
@@ -12,10 +7,10 @@ class PrivacyPolicyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _bgColor,
+      backgroundColor: TColors.appBackground,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: _navy,
+        backgroundColor: TColors.appNavy,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded,
               color: Colors.white, size: 20),
@@ -161,14 +156,14 @@ class _HeroCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [_navy, _primary],
+          colors: [TColors.appNavy, TColors.appPrimary],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(22),
         boxShadow: [
           BoxShadow(
-            color: _navy.withOpacity(0.25),
+            color: TColors.appNavy.withOpacity(0.25),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -258,11 +253,11 @@ class _DateBadge extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: _primary.withOpacity(0.08),
+              color: TColors.appPrimary.withOpacity(0.08),
               borderRadius: BorderRadius.circular(11),
             ),
             child: const Icon(Icons.calendar_today_outlined,
-                size: 18, color: _primary),
+                size: 18, color: TColors.appPrimary),
           ),
           const SizedBox(width: 14),
           const Column(
@@ -273,7 +268,7 @@ class _DateBadge extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: _textDark,
+                  color: TColors.appTextDark,
                   fontFamily: 'Poppins',
                 ),
               ),
@@ -282,7 +277,7 @@ class _DateBadge extends StatelessWidget {
                 _PolicyContent.lastUpdated,
                 style: TextStyle(
                   fontSize: 11,
-                  color: _textGrey,
+                  color: TColors.appTextGrey,
                   fontFamily: 'Poppins',
                 ),
               ),
@@ -335,7 +330,7 @@ class _PolicyCardState extends State<_PolicyCard> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(18),
           border: _open
-              ? Border(left: BorderSide(color: _primary, width: 4))
+              ? Border(left: BorderSide(color: TColors.appPrimary, width: 4))
               : Border(left: BorderSide(color: Colors.transparent, width: 4)),
           boxShadow: [
             BoxShadow(
@@ -356,14 +351,14 @@ class _PolicyCardState extends State<_PolicyCard> {
                   height: 38,
                   decoration: BoxDecoration(
                     color: _open
-                        ? _primary.withOpacity(0.10)
-                        : _bgColor,
+                        ? TColors.appPrimary.withOpacity(0.10)
+                        : TColors.appBackground,
                     borderRadius: BorderRadius.circular(11),
                   ),
                   child: Icon(
                     widget.section.icon,
                     size: 19,
-                    color: _open ? _primary : _textGrey,
+                    color: _open ? TColors.appPrimary : TColors.appTextGrey,
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -374,7 +369,7 @@ class _PolicyCardState extends State<_PolicyCard> {
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'Poppins',
-                      color: _open ? _textDark : const Color(0xFF374151),
+                      color: _open ? TColors.appTextDark : const Color(0xFF374151),
                     ),
                   ),
                 ),
@@ -383,7 +378,7 @@ class _PolicyCardState extends State<_PolicyCard> {
                   duration: const Duration(milliseconds: 220),
                   child: Icon(
                     Icons.keyboard_arrow_down_rounded,
-                    color: _open ? _primary : _textGrey,
+                    color: _open ? TColors.appPrimary : TColors.appTextGrey,
                     size: 22,
                   ),
                 ),
@@ -391,7 +386,7 @@ class _PolicyCardState extends State<_PolicyCard> {
             ),
             if (_open) ...[
               const SizedBox(height: 14),
-              Divider(color: _primary.withOpacity(0.12), height: 1),
+              Divider(color: TColors.appPrimary.withOpacity(0.12), height: 1),
               const SizedBox(height: 12),
               Text(
                 widget.section.body,
@@ -438,11 +433,11 @@ class _RightsCard extends StatelessWidget {
                 width: 38,
                 height: 38,
                 decoration: BoxDecoration(
-                  color: _primary.withOpacity(0.08),
+                  color: TColors.appPrimary.withOpacity(0.08),
                   borderRadius: BorderRadius.circular(11),
                 ),
                 child: const Icon(Icons.gavel_outlined,
-                    size: 19, color: _primary),
+                    size: 19, color: TColors.appPrimary),
               ),
               const SizedBox(width: 12),
               const Text(
@@ -451,7 +446,7 @@ class _RightsCard extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   fontFamily: 'Poppins',
-                  color: _textDark,
+                  color: TColors.appTextDark,
                 ),
               ),
             ],
@@ -463,13 +458,13 @@ class _RightsCard extends StatelessWidget {
               'Under our policy you have the right to:',
               style: TextStyle(
                 fontSize: 12,
-                color: _textGrey,
+                color: TColors.appTextGrey,
                 fontFamily: 'Poppins',
               ),
             ),
           ),
           const SizedBox(height: 14),
-          Divider(color: _primary.withOpacity(0.10), height: 1),
+          Divider(color: TColors.appPrimary.withOpacity(0.10), height: 1),
           const SizedBox(height: 14),
           Wrap(
             spacing: 10,
@@ -493,21 +488,21 @@ class _RightChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
       decoration: BoxDecoration(
-        color: _primary.withOpacity(0.08),
+        color: TColors.appPrimary.withOpacity(0.08),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _primary.withOpacity(0.2)),
+        border: Border.all(color: TColors.appPrimary.withOpacity(0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(data.icon, size: 15, color: _primary),
+          Icon(data.icon, size: 15, color: TColors.appPrimary),
           const SizedBox(width: 7),
           Text(
             data.label,
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: _primary,
+              color: TColors.appPrimary,
               fontFamily: 'Poppins',
             ),
           ),
@@ -526,15 +521,15 @@ class _ContactNote extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _primary.withOpacity(0.06),
+        color: TColors.appPrimary.withOpacity(0.06),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _primary.withOpacity(0.15)),
+        border: Border.all(color: TColors.appPrimary.withOpacity(0.15)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(Icons.mail_outline_rounded,
-              size: 20, color: _primary),
+              size: 20, color: TColors.appPrimary),
           const SizedBox(width: 12),
           const Expanded(
             child: Column(
@@ -545,7 +540,7 @@ class _ContactNote extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: _textDark,
+                    color: TColors.appTextDark,
                     fontFamily: 'Poppins',
                   ),
                 ),
@@ -554,7 +549,7 @@ class _ContactNote extends StatelessWidget {
                   'Reach out to us at:',
                   style: TextStyle(
                     fontSize: 12,
-                    color: _textGrey,
+                    color: TColors.appTextGrey,
                     fontFamily: 'Poppins',
                   ),
                 ),
@@ -564,7 +559,7 @@ class _ContactNote extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
-                    color: _primary,
+                    color: TColors.appPrimary,
                     fontFamily: 'Poppins',
                   ),
                 ),

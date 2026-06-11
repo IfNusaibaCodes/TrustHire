@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:trust_hire_app/Common/Widgets_Login_Signup/auth_info.dart';
 import 'package:trust_hire_app/Navigation/bottom_navigator.dart';
 import 'package:trust_hire_app/Pages/Login/login_page.dart';
-import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import 'package:trust_hire_app/Utilities/Validation/validation.dart';
-import 'package:trust_hire_app/common/styles/spacing_styles.dart';
 
 import '../../Authentication/Services/auth_service.dart';
 import '../../Utilities/Constants/image_strings.dart';
 import '../../Utilities/Constants/size.dart';
 import '../../common/widgets_login_signup/form_divider.dart';
-import '../../common/widgets_login_signup/social_buttons.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -96,7 +93,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
     final size = MediaQuery.of(context).size;
     final height = size.height;
-    final width = size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -132,12 +128,13 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               //Divider
-              TDivider(dividerText: Ttexts.orSignUpWith.capitalize! ),
+              //TDivider(dividerText: Ttexts.orSignUpWith.capitalize! ),
 
               const SizedBox( height: Tsize.spaceBtwSections,),
 
               //Footer
-              const TSocialButton()
+             // const TSocialButton()
+             TAuthInfo(isLogin: false),
 
             ],
 
@@ -224,7 +221,6 @@ class TForm extends StatelessWidget {
             ),
             const SizedBox( height: Tsize.spaceBtwinputfield,),
             TextFormField(
-                //obscureText: true,
                 controller: passwordController,
                 validator: (value) => TValidator.validatePassword(value),
                 decoration: InputDecoration(
@@ -256,7 +252,6 @@ class TSignUpHeader extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
-    final height = size.height;
     final width = size.width;
 
     return Padding(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 
 import '../../Model/job_model.dart';
 import '../../admin/admin_service.dart';
@@ -126,7 +127,16 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    _buildLogoBox(),
+                    CompanyLogo(
+                      logoUrl: job.companyLogo,
+                      companyName: job.companyName,
+                      size: 56,
+                      borderRadius: 14,
+                      background: Colors.white,
+                      showBorder: false,
+                      showShadow: true,
+                      initialsSize: 18,
+                    ),
                     const SizedBox(width: 14),
                     Expanded(
                       child: Column(
@@ -165,53 +175,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
     );
   }
 
-  Widget _buildLogoBox() {
-    final initials = job.companyName != null && job.companyName!.isNotEmpty
-        ? job.companyName!.trim().split(' ').take(2).map((w) => w[0].toUpperCase()).join()
-        : '?';
-
-    return Container(
-      width: 56,
-      height: 56,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: job.companyLogo != null && job.companyLogo!.isNotEmpty
-          ? Image.network(
-        job.companyLogo!,
-        fit: BoxFit.contain,
-        errorBuilder: (_, __, ___) => Center(
-          child: Text(
-            initials,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              color: Color(0xFF4F6EF7),
-            ),
-          ),
-        ),
-      )
-          : Center(
-        child: Text(
-          initials,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w800,
-            color: Color(0xFF4F6EF7),
-          ),
-        ),
-      ),
-    );
-  }
 
   Widget _buildInfoCards() {
     final chips = <_InfoItem>[

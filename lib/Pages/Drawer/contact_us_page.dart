@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//import 'feedback_support_page.dart';
 
 
 class ContactUsPage extends StatelessWidget {
   const ContactUsPage({super.key});
 
   static const _navy = Color(0xFF1A1F36);
-  static const _blue = Color(0xFF4F6EF7);
   static const _bg   = Color(0xFFF5F7FA);
 
   @override
@@ -268,9 +266,6 @@ Widget _EmailCard(BuildContext context) {
 }
 
 class _SocialSection extends StatelessWidget {
-  static const _navy = Color(0xFF1A1F36);
-  static const _blue = Color(0xFF4F6EF7);
-
   @override
   Widget build(BuildContext context) {
     return Column(

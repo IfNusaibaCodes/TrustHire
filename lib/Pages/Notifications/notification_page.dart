@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 import '../../admin/admin_service.dart';
 import '../../admin/send_notification_form.dart';
 import 'notification_controller.dart';
@@ -100,34 +101,14 @@ class _NotificationPageState extends State<NotificationPage> {
       child: Obx(() => SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-          children: _filterLabels.entries.map((entry) {
-            final selected = c.activeFilter.value == entry.key;
-            return Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: GestureDetector(
-                onTap: () => c.setFilter(entry.key),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 180),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-                  decoration: BoxDecoration(
-                    color:  selected ? _navy : const Color(0xFFF9FAFB),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: selected ? _navy : const Color(0xFFE5E7EB),
-                    ),
-                  ),
-                  child: Text(
-                    entry.value,
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: selected ? Colors.white : const Color(0xFF6B7280),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }).toList(),
+          children: _filterLabels.entries.map((entry) => Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: AppFilterChip(
+              label: entry.value,
+              selected: c.activeFilter.value == entry.key,
+              onTap: () => c.setFilter(entry.key),
+            ),
+          )).toList(),
         ),
       )),
     );

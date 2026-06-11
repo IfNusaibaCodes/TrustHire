@@ -4,7 +4,6 @@ class AboutUsPage extends StatelessWidget {
   const AboutUsPage({super.key});
 
   static const _navy = Color(0xFF1A1F36);
-  static const _blue = Color(0xFF4F6EF7);
   static const _bg   = Color(0xFFF5F7FA);
 
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 import '../../Model/job_model.dart';
 import '../../Pages/Job Feed/Saved Jobs/saved_jobs_database.dart';
 import '../../Pages/Job Feed/job_details.dart';
@@ -69,6 +69,8 @@ class _JobCard extends StatefulWidget {
 
 class _JobCardState extends State<_JobCard> {
 
+  
+
   final _savedService = SavedJobsService();
   bool _isSaved   = false;
   bool _isLoading = false;
@@ -123,13 +125,14 @@ class _JobCardState extends State<_JobCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -144,7 +147,7 @@ class _JobCardState extends State<_JobCard> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _CompanyLogo(logoUrl: widget.job.companyLogo, companyName: widget.job.companyName),
+                CompanyLogo(logoUrl: widget.job.companyLogo, companyName: widget.job.companyName),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -240,25 +243,25 @@ class _JobCardState extends State<_JobCard> {
               runSpacing: 8,
               children: [
                 if (widget.job.cityName != null || widget.job.cityCountryName != null)
-                  _MetaChip(
+                  JobInfoChip(
                     icon: Icons.location_on_outlined,
                     label: [widget.job.cityName, widget.job.cityCountryName]
                         .where((e) => e != null)
                         .join(', '),
                   ),
                 if (widget.job.typePrimary != null)
-                  _MetaChip(
+                  JobInfoChip(
                     icon: Icons.access_time_rounded,
                     label: widget.job.typePrimary!,
                   ),
                 if (widget.job.experienceLevel != null)
-                  _MetaChip(
+                  JobInfoChip(
                     icon: Icons.bar_chart_rounded,
                     label: widget.job.experienceLevel!,
                     accent: true,
                   ),
                 if (widget.job.salaryCurrency != null)
-                  _MetaChip(
+                  JobInfoChip(
                     icon: Icons.attach_money_rounded,
                     label: widget.job.salaryCurrency!,
                   ),
@@ -346,100 +349,5 @@ class _JobCardState extends State<_JobCard> {
     if (diff.inDays < 7) return '${diff.inDays}d ago';
     if (diff.inDays < 30) return '${(diff.inDays / 7).floor()}w ago';
     return '${date.day}/${date.month}/${date.year}';
-  }
-}
-
-class _CompanyLogo extends StatelessWidget {
-  final String? logoUrl;
-  final String? companyName;
-
-  const _CompanyLogo({this.logoUrl, this.companyName});
-
-  @override
-  Widget build(BuildContext context) {
-    final initials = companyName != null && companyName!.isNotEmpty
-        ? companyName!.trim().split(' ').take(2).map((w) => w[0].toUpperCase()).join()
-        : '?';
-
-    return Container(
-      width: 48,
-      height: 48,
-      decoration: BoxDecoration(
-        color: const Color(0xFFF0F2FF),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: logoUrl != null && logoUrl!.isNotEmpty
-          ? Image.network(
-        logoUrl!,
-        fit: BoxFit.contain,
-        errorBuilder: (_, __, ___) => Center(
-          child: Text(
-            initials,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF4F6EF7),
-            ),
-          ),
-        ),
-      )
-          : Center(
-        child: Text(
-          initials,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF4F6EF7),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _MetaChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool accent;
-
-  const _MetaChip({
-    required this.icon,
-    required this.label,
-    this.accent = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      decoration: BoxDecoration(
-        color: accent ? const Color(0xFFFFF7ED) : const Color(0xFFF9FAFB),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: accent ? const Color(0xFFFED7AA) : const Color(0xFFE5E7EB),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            size: 13,
-            color: accent ? const Color(0xFFF97316) : const Color(0xFF6B7280),
-          ),
-          const SizedBox(width: 5),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: accent ? const Color(0xFFF97316) : const Color(0xFF6B7280),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

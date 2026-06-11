@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 import '../../../Model/job_model.dart';
 import '../job_details.dart';
 import 'applied_jobs_database.dart';
@@ -141,18 +142,11 @@ class _AppliedJobsPageState extends State<AppliedJobsPage> {
                     child: Row(
                       children: [
                         // company logo
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF0F2FF),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          clipBehavior: Clip.antiAlias,
-                          child: job.companyLogo != null && job.companyLogo!.isNotEmpty
-                              ? Image.network(job.companyLogo!, fit: BoxFit.cover,
-                                  errorBuilder: (_, __, e) => _initial(job))
-                              : _initial(job),
+                        CompanyLogo(
+                          logoUrl: job.companyLogo,
+                          companyName: job.companyName,
+                          size: 50,
+                          showBorder: false,
                         ),
                         const SizedBox(width: 14),
                         Expanded(
@@ -209,16 +203,4 @@ class _AppliedJobsPageState extends State<AppliedJobsPage> {
     );
   }
 
-  Widget _initial(JobModel job) {
-    final initials = job.companyName != null && job.companyName!.isNotEmpty
-        ? job.companyName!.trim().split(' ').take(2).map((e) => e[0].toUpperCase()).join()
-        : '?';
-    return Center(
-      child: Text(initials,
-          style: const TextStyle(
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF4F6EF7),
-              fontSize: 16)),
-    );
-  }
 }

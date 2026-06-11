@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Common/Component/job_item_list.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 import '../../Model/job_model.dart';
 import '../../admin/admin_service.dart';
 import '../../admin/create_job_form.dart';
@@ -176,34 +177,14 @@ class _AllJobsState extends State<AllJobs> {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-          children: _filters.map((f) {
-            final selected = f == _selectedType;
-            return Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: GestureDetector(
-                onTap: () => setState(() => _selectedType = f),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 180),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-                  decoration: BoxDecoration(
-                    color: selected ? const Color(0xFF1A1F36) : const Color(0xFFF9FAFB),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: selected ? const Color(0xFF1A1F36) : const Color(0xFFE5E7EB),
-                    ),
-                  ),
-                  child: Text(
-                    f,
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: selected ? Colors.white : const Color(0xFF6B7280),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }).toList(),
+          children: _filters.map((f) => Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: AppFilterChip(
+              label: f,
+              selected: f == _selectedType,
+              onTap: () => setState(() => _selectedType = f),
+            ),
+          )).toList(),
         ),
       ),
     );

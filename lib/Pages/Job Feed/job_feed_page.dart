@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 
 import '../../Model/job_model.dart';
 import '../../admin/admin_service.dart';
@@ -134,27 +135,7 @@ class _JobFeedPageState extends State<JobFeedPage> {
                       ),
                     );
                   },
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(22),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color(0xFF1A1F36),
-                          Color(0xFF4F6EF7),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha:0.12),
-                          blurRadius: 18,
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
-                    ),
+                  child: GradientBannerCard(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -329,8 +310,8 @@ class _JobFeedPageState extends State<JobFeedPage> {
                       );
                     }
 
-                    // SHOW ONLY 10 JOBS
-                    final trendingJobs = jobs.take(10).toList();
+                  
+                    final trendingJobs = jobs.take(5).toList();
 
                     return ListView.builder(
                       shrinkWrap: true,
@@ -368,24 +349,12 @@ class _JobFeedPageState extends State<JobFeedPage> {
                               children: [
 
                                 // COMPANY LOGO
-                                Container(
-                                  width: 52,
-                                  height: 52,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFF0F2FF),
-                                    borderRadius: BorderRadius.circular(14),
-                                  ),
-                                  clipBehavior: Clip.antiAlias,
-                                  child: job.companyLogo != null &&
-                                      job.companyLogo!.isNotEmpty
-                                      ? Image.network(
-                                    job.companyLogo!,
-                                    fit: BoxFit.cover,
-                                    errorBuilder:
-                                        (_, __, ___) =>
-                                        _buildInitial(job),
-                                  )
-                                      : _buildInitial(job),
+                                CompanyLogo(
+                                  logoUrl: job.companyLogo,
+                                  companyName: job.companyName,
+                                  size: 52,
+                                  borderRadius: 14,
+                                  showBorder: false,
                                 ),
 
                                 const SizedBox(width: 14),
@@ -430,13 +399,13 @@ class _JobFeedPageState extends State<JobFeedPage> {
                                         children: [
 
                                           if (job.cityName != null)
-                                            _JobChip(
+                                            JobInfoChip(
                                               icon: Icons.location_on_outlined,
                                               label: job.cityName!,
                                             ),
 
                                           if (job.typePrimary != null)
-                                            _JobChip(
+                                            JobInfoChip(
                                               icon: Icons.work_outline_rounded,
                                               label: job.typePrimary!,
                                             ),
@@ -470,77 +439,4 @@ class _JobFeedPageState extends State<JobFeedPage> {
     );
   }
 
-  Widget _buildInitial(JobModel job) {
-    final initials =
-    job.companyName != null && job.companyName!.isNotEmpty
-        ? job.companyName!
-        .trim()
-        .split(' ')
-        .take(2)
-        .map((e) => e[0].toUpperCase())
-        .join()
-        : '?';
-
-    return Center(
-      child: Text(
-        initials,
-        style: const TextStyle(
-          fontWeight: FontWeight.w700,
-          color: Color(0xFF4F6EF7),
-          fontSize: 16,
-        ),
-      ),
-    );
-  }
-}
-
-// ================= JOB CHIP =================
-
-class _JobChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const _JobChip({
-    required this.icon,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 6,
-      ),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF9FAFB),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: const Color(0xFFE5E7EB),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-
-          Icon(
-            icon,
-            size: 13,
-            color: const Color(0xFF6B7280),
-          ),
-
-          const SizedBox(width: 5),
-
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF6B7280),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

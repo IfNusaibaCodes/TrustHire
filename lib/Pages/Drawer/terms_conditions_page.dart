@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-
-const Color _primary  = Color(0xFF3B5BDB);
-const Color _bgColor  = Color(0xFFF5F6FA);
-const Color _textDark = Color(0xFF1A1A2E);
-const Color _textGrey = Color(0xFF9CA3AF);
-const Color _navy     = Color(0xFF1A1F36);
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 
 class TermsConditionsPage extends StatelessWidget {
   const TermsConditionsPage({super.key});
@@ -12,10 +7,10 @@ class TermsConditionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _bgColor,
+      backgroundColor: TColors.appBackground,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: _navy,
+        backgroundColor: TColors.appNavy,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded,
               color: Colors.white, size: 20),
@@ -172,14 +167,14 @@ class _HeroCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [_navy, _primary],
+          colors: [TColors.appNavy, TColors.appPrimary],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(22),
         boxShadow: [
           BoxShadow(
-            color: _navy.withOpacity(0.25),
+            color: TColors.appNavy.withOpacity(0.25),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -268,11 +263,11 @@ class _DateBadge extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: _primary.withOpacity(0.08),
+              color: TColors.appPrimary.withOpacity(0.08),
               borderRadius: BorderRadius.circular(11),
             ),
             child: const Icon(Icons.calendar_today_outlined,
-                size: 18, color: _primary),
+                size: 18, color: TColors.appPrimary),
           ),
           const SizedBox(width: 14),
           const Column(
@@ -283,7 +278,7 @@ class _DateBadge extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: _textDark,
+                  color: TColors.appTextDark,
                   fontFamily: 'Poppins',
                 ),
               ),
@@ -291,7 +286,7 @@ class _DateBadge extends StatelessWidget {
               Text(
                 _TcContent.lastUpdated,
                 style: TextStyle(
-                    fontSize: 11, color: _textGrey, fontFamily: 'Poppins'),
+                    fontSize: 11, color: TColors.appTextGrey, fontFamily: 'Poppins'),
               ),
             ],
           ),
@@ -327,21 +322,21 @@ class _IntroCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _primary.withOpacity(0.06),
+        color: TColors.appPrimary.withOpacity(0.06),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _primary.withOpacity(0.15)),
+        border: Border.all(color: TColors.appPrimary.withOpacity(0.15)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.info_outline_rounded, size: 20, color: _primary),
+          Icon(Icons.info_outline_rounded, size: 20, color: TColors.appPrimary),
           const SizedBox(width: 12),
           const Expanded(
             child: Text(
               _TcContent.intro,
               style: TextStyle(
                 fontSize: 13,
-                color: _textDark,
+                color: TColors.appTextDark,
                 fontFamily: 'Poppins',
                 height: 1.65,
               ),
@@ -378,7 +373,7 @@ class _TcSectionCardState extends State<_TcSectionCard> {
           borderRadius: BorderRadius.circular(18),
           border: Border(
             left: BorderSide(
-              color: _open ? _primary : Colors.transparent,
+              color: _open ? TColors.appPrimary : Colors.transparent,
               width: 4,
             ),
           ),
@@ -400,14 +395,14 @@ class _TcSectionCardState extends State<_TcSectionCard> {
                   height: 38,
                   decoration: BoxDecoration(
                     color: _open
-                        ? _primary.withOpacity(0.10)
-                        : _bgColor,
+                        ? TColors.appPrimary.withOpacity(0.10)
+                        : TColors.appBackground,
                     borderRadius: BorderRadius.circular(11),
                   ),
                   child: Icon(
                     widget.section.icon,
                     size: 19,
-                    color: _open ? _primary : _textGrey,
+                    color: _open ? TColors.appPrimary : TColors.appTextGrey,
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -418,7 +413,7 @@ class _TcSectionCardState extends State<_TcSectionCard> {
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'Poppins',
-                      color: _open ? _textDark : const Color(0xFF374151),
+                      color: _open ? TColors.appTextDark : const Color(0xFF374151),
                     ),
                   ),
                 ),
@@ -427,8 +422,8 @@ class _TcSectionCardState extends State<_TcSectionCard> {
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
                     color: _open
-                        ? _primary.withOpacity(0.10)
-                        : _bgColor,
+                        ? TColors.appPrimary.withOpacity(0.10)
+                        : TColors.appBackground,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
@@ -436,7 +431,7 @@ class _TcSectionCardState extends State<_TcSectionCard> {
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: _open ? _primary : _textGrey,
+                      color: _open ? TColors.appPrimary : TColors.appTextGrey,
                       fontFamily: 'Poppins',
                     ),
                   ),
@@ -447,7 +442,7 @@ class _TcSectionCardState extends State<_TcSectionCard> {
                   duration: const Duration(milliseconds: 220),
                   child: Icon(
                     Icons.keyboard_arrow_down_rounded,
-                    color: _open ? _primary : _textGrey,
+                    color: _open ? TColors.appPrimary : TColors.appTextGrey,
                     size: 22,
                   ),
                 ),
@@ -457,7 +452,7 @@ class _TcSectionCardState extends State<_TcSectionCard> {
 
             if (_open) ...[
               const SizedBox(height: 14),
-              Divider(color: _primary.withOpacity(0.12), height: 1),
+              Divider(color: TColors.appPrimary.withOpacity(0.12), height: 1),
               const SizedBox(height: 12),
               ...widget.section.points.asMap().entries.map(
                     (entry) => _NumberedPoint(
@@ -490,7 +485,7 @@ class _NumberedPoint extends StatelessWidget {
             height: 24,
             margin: const EdgeInsets.only(top: 1),
             decoration: BoxDecoration(
-              color: _primary.withOpacity(0.10),
+              color: TColors.appPrimary.withOpacity(0.10),
               borderRadius: BorderRadius.circular(7),
             ),
             child: Center(
@@ -499,7 +494,7 @@ class _NumberedPoint extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
-                  color: _primary,
+                  color: TColors.appPrimary,
                   fontFamily: 'Poppins',
                 ),
               ),
@@ -532,14 +527,14 @@ class _AgreementBanner extends StatelessWidget {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [_navy, _primary.withOpacity(0.85)],
+          colors: [TColors.appNavy, TColors.appPrimary.withOpacity(0.85)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-            color: _navy.withOpacity(0.20),
+            color: TColors.appNavy.withOpacity(0.20),
             blurRadius: 14,
             offset: const Offset(0, 6),
           ),

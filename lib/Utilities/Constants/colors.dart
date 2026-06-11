@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 class TColors {
   TColors._();
 
-  //App Basic Colors
-  static const Color primaryColor = Colors.black;
-  static const Color secondaryColor = Colors.white;
-  static const Color accent = Color(0xFF7DA0CA);
+// App Colors
+  static const Color appPrimary    = Color(0xFF3B5BDB); // brand blue
+  static const Color appNavy        = Color(0xFF1A1F36); // dark headers / app bars
+  static const Color appBlue        = Color(0xFF4F6EF7); // accent blue
+  static const Color appBackground  = Color(0xFFF5F6FA); // page background
+  static const Color appTextDark    = Color(0xFF1A1A2E); // primary text
+  static const Color appTextGrey    = Color(0xFF9CA3AF); // secondary text
+  static const Color appSuccess     = Color(0xFF10B981); // success / done
+  static const Color appError       = Color(0xFFEF4444); // error / delete
 
 
   //Text Colors

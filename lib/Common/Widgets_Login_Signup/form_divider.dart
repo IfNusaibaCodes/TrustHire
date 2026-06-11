@@ -1,13 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:trust_hire_app/Utilities/Constants/colors.dart';
-import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
-import 'package:trust_hire_app/common/styles/spacing_styles.dart';
-
-import '../../Utilities/Constants/image_strings.dart';
-import '../../Utilities/Constants/size.dart';
-
 
 class TDivider extends StatelessWidget {
   const TDivider({

@@ -1,25 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Authentication/Services/deep_link_service.dart';
 import 'package:trust_hire_app/Pages/Notifications/notification_controller.dart';
 import 'package:trust_hire_app/Pages/Notifications/notification_page.dart';
 import 'package:trust_hire_app/Pages/Notifications/push_service.dart';
 import 'package:trust_hire_app/firebase_options.dart';
-import 'package:trust_hire_app/Pages/Burnout/burnout_check_page.dart';
-import 'package:trust_hire_app/Pages/Growth/growth_page.dart';
-import 'package:trust_hire_app/Pages/Guide/work_guide_page.dart';
-import 'package:trust_hire_app/Pages/Job%20Feed/all_jobs.dart';
-import 'package:trust_hire_app/Pages/Login/login_page.dart';
 import 'package:trust_hire_app/Pages/landing_page.dart';
-import 'package:trust_hire_app/Pages/onboarding_page.dart';
-import 'package:trust_hire_app/Pages/SignUp/signup_page.dart';
 import 'package:trust_hire_app/Utilities/Customs/theme.dart';
-import 'package:trust_hire_app/profile/profile_page.dart';
-import 'Pages/Job Feed/job_feed_page.dart';
-import 'Pages/Planner/planner_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

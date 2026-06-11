@@ -13,7 +13,7 @@ class AppLogo extends StatelessWidget {
       width: logoSize,
       height: logoSize,
       decoration: BoxDecoration(
-        color: TColors.primaryColor,
+        color: TColors.appNavy,
         borderRadius: BorderRadius.circular(logoSize * 0.25),
       ),
       child: Icon(

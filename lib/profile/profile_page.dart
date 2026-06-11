@@ -6,7 +6,8 @@ import 'package:trust_hire_app/Pages/Notifications/notification_controller.dart'
 import 'package:trust_hire_app/Pages/Notifications/notification_page.dart';
 import 'package:trust_hire_app/profile/profile_database.dart';
 import 'package:trust_hire_app/profile/profile_models.dart';
-import 'package:trust_hire_app/profile/profile_widgets.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/profile_widgets.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_snackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Pages/Job Feed/Saved Jobs/saved_jobs_page.dart';
@@ -484,16 +485,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               _loadAll(); 
                             },
                           ),
-
-
-                          /*
-                          statCard(Icons.bookmark_border, stats.savedCount.toString(), 'Saved Jobs',
-                              onTap: () => Navigator.push(context,
-                                  MaterialPageRoute(builder: (_) => const SavedJobsPage()))),  fixed one  */
-
-
-                          /*statCard(Icons.bookmark_border,
-                              stats.savedCount.toString(), 'Saved Jobs'),  unfixed */
                         ],
                       ),
                       const SizedBox(height: 14),
@@ -832,12 +823,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _showSnack(String msg, {bool isError = false}) {
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(msg, style: const TextStyle(fontWeight: FontWeight.w600)),
-      backgroundColor: isError ? const Color(0xFFEF4444) : const Color(0xFF10B981),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-      margin: const EdgeInsets.all(16),
-    ));
+    showAppSnackBar(context, msg, isError: isError);
   }
 }

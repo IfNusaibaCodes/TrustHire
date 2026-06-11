@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 
 import '../../Constants/size.dart';
-import '../../Constants/text_strings.dart';
 
 class TTextField {
   TTextField._();

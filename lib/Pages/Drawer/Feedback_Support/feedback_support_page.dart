@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'feedback_database.dart';
-
-
-const Color _primary  = Color(0xFF3B5BDB);
-const Color _bgColor  = Color(0xFFF5F6FA);
-const Color _textDark = Color(0xFF1A1A2E);
-const Color _textGrey = Color(0xFF9CA3AF);
-const Color _navy     = Color(0xFF1A1F36);
 
 const _ratings = [
   ('😍', 'Excellent',        Color(0xFF16A34A)),
@@ -144,10 +138,10 @@ class _FeedbackSupportPageState extends State<FeedbackSupportPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _bgColor,
+      backgroundColor: TColors.appBackground,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: _navy,
+        backgroundColor: TColors.appNavy,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_rounded,
               color: Colors.white, size: 20),
@@ -253,7 +247,7 @@ class _FeedbackSupportPageState extends State<FeedbackSupportPage> {
     style: const TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w700,
-      color: _textDark,
+      color: TColors.appTextDark,
       fontFamily: 'Poppins',
     ),
   );
@@ -274,18 +268,18 @@ class _FeedbackSupportPageState extends State<FeedbackSupportPage> {
       controller: ctrl,
       maxLines: 5,
       style: const TextStyle(
-          fontSize: 13, color: _textDark, fontFamily: 'Poppins'),
+          fontSize: 13, color: TColors.appTextDark, fontFamily: 'Poppins'),
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: const TextStyle(
-            fontSize: 13, color: _textGrey, fontFamily: 'Poppins'),
+            fontSize: 13, color: TColors.appTextGrey, fontFamily: 'Poppins'),
         contentPadding: const EdgeInsets.all(16),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
             borderSide: BorderSide.none),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
-            borderSide: const BorderSide(color: _primary, width: 1.5)),
+            borderSide: const BorderSide(color: TColors.appPrimary, width: 1.5)),
       ),
     ),
   );
@@ -313,11 +307,11 @@ class _FeedbackSupportPageState extends State<FeedbackSupportPage> {
           keyboardType: type,
           validator: validator,
           style: const TextStyle(
-              fontSize: 13, color: _textDark, fontFamily: 'Poppins'),
+              fontSize: 13, color: TColors.appTextDark, fontFamily: 'Poppins'),
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: const TextStyle(
-                fontSize: 13, color: _textGrey, fontFamily: 'Poppins'),
+                fontSize: 13, color: TColors.appTextGrey, fontFamily: 'Poppins'),
             contentPadding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             border: OutlineInputBorder(
@@ -325,7 +319,7 @@ class _FeedbackSupportPageState extends State<FeedbackSupportPage> {
                 borderSide: BorderSide.none),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
-                borderSide: const BorderSide(color: _primary, width: 1.5)),
+                borderSide: const BorderSide(color: TColors.appPrimary, width: 1.5)),
             errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
                 borderSide: const BorderSide(color: Color(0xFFEF4444))),
@@ -343,7 +337,7 @@ class _FeedbackSupportPageState extends State<FeedbackSupportPage> {
         gradient: LinearGradient(
           colors: _submitting
               ? [Colors.grey.shade400, Colors.grey.shade500]
-              : [_navy, _primary],
+              : [TColors.appNavy, TColors.appPrimary],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -352,7 +346,7 @@ class _FeedbackSupportPageState extends State<FeedbackSupportPage> {
             ? []
             : [
           BoxShadow(
-              color: _primary.withOpacity(0.35),
+              color: TColors.appPrimary.withOpacity(0.35),
               blurRadius: 16,
               offset: const Offset(0, 6))
         ],
@@ -397,7 +391,7 @@ class _DropdownTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasValue = value != null && value!.isNotEmpty;
-    final displayColor = ratingColor ?? _primary;
+    final displayColor = ratingColor ?? TColors.appPrimary;
 
     return GestureDetector(
       onTap: onTap,
@@ -423,7 +417,7 @@ class _DropdownTile extends StatelessWidget {
             Icon(
               icon,
               size: 18,
-              color: hasValue ? displayColor : _textGrey,
+              color: hasValue ? displayColor : TColors.appTextGrey,
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -432,7 +426,7 @@ class _DropdownTile extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontFamily: 'Poppins',
-                  color: hasValue ? _textDark : _textGrey,
+                  color: hasValue ? TColors.appTextDark : TColors.appTextGrey,
                   fontWeight: hasValue ? FontWeight.w600 : FontWeight.w400,
                 ),
                 overflow: TextOverflow.ellipsis,
@@ -441,7 +435,7 @@ class _DropdownTile extends StatelessWidget {
             Icon(
               Icons.keyboard_arrow_down_rounded,
               size: 20,
-              color: hasValue ? displayColor : _textGrey,
+              color: hasValue ? displayColor : TColors.appTextGrey,
             ),
           ],
         ),
@@ -492,7 +486,7 @@ class _PickerSheet extends StatelessWidget {
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w800,
-              color: _textDark,
+              color: TColors.appTextDark,
               fontFamily: 'Poppins',
             ),
           ),
@@ -500,7 +494,7 @@ class _PickerSheet extends StatelessWidget {
           const Text(
             'Tap to select your rating',
             style: TextStyle(
-                fontSize: 12, color: _textGrey, fontFamily: 'Poppins'),
+                fontSize: 12, color: TColors.appTextGrey, fontFamily: 'Poppins'),
           ),
           const SizedBox(height: 18),
           Divider(color: Colors.grey.shade100, height: 1),
@@ -536,7 +530,7 @@ class _PickerSheet extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                          color: isSelected ? color : _textDark,
+                          color: isSelected ? color : TColors.appTextDark,
                           fontFamily: 'Poppins',
                         ),
                       ),
@@ -590,7 +584,7 @@ class _FeatureSheet extends StatelessWidget {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w800,
-              color: _textDark,
+              color: TColors.appTextDark,
               fontFamily: 'Poppins',
             ),
           ),
@@ -598,7 +592,7 @@ class _FeatureSheet extends StatelessWidget {
           const Text(
             'Which feature are you giving feedback on?',
             style: TextStyle(
-                fontSize: 12, color: _textGrey, fontFamily: 'Poppins'),
+                fontSize: 12, color: TColors.appTextGrey, fontFamily: 'Poppins'),
           ),
           const SizedBox(height: 18),
           Divider(color: Colors.grey.shade100, height: 1),
@@ -613,10 +607,10 @@ class _FeatureSheet extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(vertical: 4),
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 decoration: BoxDecoration(
-                  color: isSelected ? _primary.withOpacity(0.07) : Colors.transparent,
+                  color: isSelected ? TColors.appPrimary.withOpacity(0.07) : Colors.transparent,
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
-                    color: isSelected ? _primary.withOpacity(0.3) : Colors.transparent,
+                    color: isSelected ? TColors.appPrimary.withOpacity(0.3) : Colors.transparent,
                   ),
                 ),
                 child: Row(
@@ -627,14 +621,14 @@ class _FeatureSheet extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                          color: isSelected ? _primary : _textDark,
+                          color: isSelected ? TColors.appPrimary : TColors.appTextDark,
                           fontFamily: 'Poppins',
                         ),
                       ),
                     ),
                     if (isSelected)
                       const Icon(Icons.check_circle_rounded,
-                          color: _primary, size: 20),
+                          color: TColors.appPrimary, size: 20),
                   ],
                 ),
               ),
@@ -676,7 +670,7 @@ class _SuccessView extends StatelessWidget {
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.w800,
-                color: _textDark,
+                color: TColors.appTextDark,
                 fontFamily: 'Poppins',
               ),
             ),
@@ -685,7 +679,7 @@ class _SuccessView extends StatelessWidget {
               'Thank you for helping us improve TrustHire.\nWe really appreciate your time.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: 13, color: _textGrey,
+                  fontSize: 13, color: TColors.appTextGrey,
                   fontFamily: 'Poppins', height: 1.6),
             ),
             const SizedBox(height: 30),
@@ -695,7 +689,7 @@ class _SuccessView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [_navy, _primary],
+                    colors: [TColors.appNavy, TColors.appPrimary],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -717,7 +711,7 @@ class _SuccessView extends StatelessWidget {
               child: const Text(
                 'Go Back',
                 style: TextStyle(
-                    color: _textGrey,
+                    color: TColors.appTextGrey,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w600),
               ),

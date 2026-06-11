@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Tsize{
 
   //Padding and margin size

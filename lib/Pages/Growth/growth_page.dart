@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/profile/profile_models.dart';
 import 'package:trust_hire_app/Model/job_model.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 import 'growth_database.dart';
 
 class GrowthPage extends StatefulWidget {
@@ -199,20 +200,17 @@ class _GrowthPageState extends State<GrowthPage> {
   }
 
   Widget _kpiCard(String label, String value, IconData icon, Color color, Color bg) {
-    return Container(
+    return AppCard(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2))],
-      ),
+      radius: 18,
       child: Column(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(color: bg, shape: BoxShape.circle),
-            child: Icon(icon, color: color, size: 20),
+          IconBadge(
+            icon: icon,
+            color: color,
+            background: bg,
+            circle: true,
+            dimension: 40,
           ),
           const SizedBox(height: 10),
           Text(value, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: _dark)),
@@ -453,13 +451,11 @@ class _GrowthPageState extends State<GrowthPage> {
                         ],
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                      decoration: BoxDecoration(
-                        color: _green.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Text('Applied', style: TextStyle(fontSize: 10, color: _green, fontWeight: FontWeight.w600)),
+                    const StatusPill(
+                      text: 'Applied',
+                      color: _green,
+                      fontSize: 10,
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     ),
                   ],
                 ),
@@ -470,39 +466,13 @@ class _GrowthPageState extends State<GrowthPage> {
 
   // ─────────────────────────────────────────────────────────── Card Shell
   Widget _card({required String title, required String subtitle, required IconData icon, required Widget child}) {
-    return Container(
-      width: double.infinity,
+    return AppCard(
       padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 2))],
-      ),
+      radius: 20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEEF2FF),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(icon, size: 16, color: _primary),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: _dark)),
-                    Text(subtitle, style: const TextStyle(fontSize: 11, color: _grey)),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          SectionHeader(icon: icon, title: title, subtitle: subtitle),
           const SizedBox(height: 16),
           child,
         ],

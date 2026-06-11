@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 import '../Model/job_model.dart';
 import '../Pages/Job Feed/jobs_database.dart';
 
@@ -115,25 +116,10 @@ class _TrendingJobTileState extends State<_TrendingJobTile> {
       child: Row(
         children: [
           // company initial avatar
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF0F2FF),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Center(
-              child: Text(
-                widget.job.companyName?.isNotEmpty == true
-                    ? widget.job.companyName![0].toUpperCase()
-                    : '?',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF4F6EF7),
-                  fontSize: 16,
-                ),
-              ),
-            ),
+          CompanyLogo(
+            companyName: widget.job.companyName,
+            size: 44,
+            showBorder: false,
           ),
           const SizedBox(width: 12),
           Expanded(

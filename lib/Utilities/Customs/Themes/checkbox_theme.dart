@@ -15,7 +15,7 @@ class TCheckbox {
     }),
     fillColor: MaterialStateProperty.resolveWith((states){
       if(states.contains(MaterialState.selected)){
-        return TColors.primaryColor;
+        return TColors.appNavy;
       }else{
         return Colors.transparent;
       }

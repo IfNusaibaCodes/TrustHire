@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Pages/Job%20Feed/Saved%20Jobs/saved_jobs_database.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 import '../../../Model/job_model.dart';
 import '../job_details.dart';
 
@@ -130,7 +131,7 @@ class _SavedJobsPageState extends State<SavedJobsPage> {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.06),
+                        color: Colors.black.withValues(alpha: 0.06),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -140,23 +141,9 @@ class _SavedJobsPageState extends State<SavedJobsPage> {
                     children: [
 
                       // Company logo
-                      Container(
-                        width: 48, height: 48,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF0F2FF),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                              color: const Color(0xFFE5E7EB)),
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        child: job.companyLogo != null &&
-                            job.companyLogo!.isNotEmpty
-                            ? Image.network(
-                            job.companyLogo!,
-                            fit: BoxFit.contain,
-                            errorBuilder: (_, __, ___) =>
-                                _initials(job))
-                            : _initials(job),
+                      CompanyLogo(
+                        logoUrl: job.companyLogo,
+                        companyName: job.companyName,
                       ),
 
                       const SizedBox(width: 14),
@@ -219,22 +206,4 @@ class _SavedJobsPageState extends State<SavedJobsPage> {
     );
   }
 
-  Widget _initials(JobModel job) {
-    final initials =
-    job.companyName != null && job.companyName!.isNotEmpty
-        ? job.companyName!
-        .trim()
-        .split(' ')
-        .take(2)
-        .map((w) => w[0].toUpperCase())
-        .join()
-        : '?';
-    return Center(
-      child: Text(initials,
-          style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF4F6EF7))),
-    );
-  }
 }

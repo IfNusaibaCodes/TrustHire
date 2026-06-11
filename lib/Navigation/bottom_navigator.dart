@@ -35,6 +35,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: TColors.appBackground,
       extendBody: true,
       body: IndexedStack(
         index: selectedIndex,
@@ -44,7 +45,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: TColors.primaryColor,
+        selectedItemColor: TColors.appNavy,
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.work_outline),   label: 'Jobs'),

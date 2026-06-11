@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
-import 'package:trust_hire_app/Pages/Job%20Feed/job_feed_page.dart';
+import 'package:trust_hire_app/Common/Widgets_Login_Signup/auth_info.dart';
 import 'package:trust_hire_app/Pages/Login/forget_password_page.dart';
-import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
-import 'package:trust_hire_app/profile/profile_page.dart';
-import 'package:trust_hire_app/Pages/scam_detection/scam_detection_page.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import 'package:trust_hire_app/common/styles/spacing_styles.dart';
@@ -18,7 +14,6 @@ import '../../Utilities/Constants/image_strings.dart';
 import '../../Utilities/Constants/size.dart';
 import '../../Utilities/Validation/validation.dart';
 import '../../common/widgets_login_signup/form_divider.dart';
-import '../../common/widgets_login_signup/social_buttons.dart';
 import '../SignUp/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -37,7 +32,6 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-  bool _obscurePassword = true;
 
   @override
   void dispose() {
@@ -85,7 +79,6 @@ class _LoginPageState extends State<LoginPage> {
 
     final size = MediaQuery.of(context).size;
     final height = size.height;
-    final width = size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -120,12 +113,13 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox( height: height*0.01,),
 
             //Divider
-            TDivider(dividerText: Ttexts.orSignInWith.capitalize! ),
+            //TDivider(dividerText: Ttexts.orSignInWith.capitalize! ),
 
             const SizedBox( height: Tsize.spaceBtwSections,),
 
             //Footer
-            const TSocialButton()
+           // const TSocialButton()
+           TAuthInfo(isLogin: true),
 
           ],
 
@@ -234,7 +228,6 @@ class TLoginHeader extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
-    final height = size.height;
     final width = size.width;
 
     return Padding(

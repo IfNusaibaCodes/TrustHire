@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 import 'red_flags_page.dart';
 
 class ScamDetectorPage extends StatefulWidget {
@@ -41,24 +42,7 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
           children: [
 
             // ── Hero card ───────────────────────────────────
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(22),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
-                gradient: const LinearGradient(
-                  colors: [_navy, Color(0xFF4F6EF7)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.12),
-                    blurRadius: 18,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
-              ),
+            GradientBannerCard(
               child: Row(
                 children: [
                   const Expanded(

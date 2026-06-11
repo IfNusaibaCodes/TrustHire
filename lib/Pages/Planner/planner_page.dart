@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_snackbar.dart';
 import 'planner_controller.dart';
 import 'planner_widgets.dart';
 import '../Burnout/burnout_check_page.dart';
@@ -20,13 +22,6 @@ class _PlannerPageState extends State<PlannerPage> {
     }
   }
 
-  // ── THEME ──────────────────────────────────────────────────
-  static const Color primary  = Color(0xFF3B5BDB);
-  static const Color bgColor  = Color(0xFFF5F6FA);
-  static const Color textDark = Color(0xFF1A1A2E);
-  static const Color textGrey = Color(0xFF9CA3AF);
-  static const Color success  = Color(0xFF10B981);
-
   final List<String> priorities = const [
     'High Priority', 'Growth', 'Ready', 'Normal'
   ];
@@ -35,20 +30,13 @@ class _PlannerPageState extends State<PlannerPage> {
     switch (p) {
       case 'High Priority': return const Color(0xFF6366F1);
       case 'Growth':        return const Color(0xFF7C3AED);
-      case 'Ready':         return success;
-      default:              return primary;
+      case 'Ready':         return TColors.appSuccess;
+      default:              return TColors.appPrimary;
     }
   }
 
   void _snack(BuildContext context, String msg, {bool isError = false}) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(msg,
-          style: const TextStyle(fontWeight: FontWeight.w600)),
-      backgroundColor: isError ? const Color(0xFFEF4444) : success,
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-      margin: const EdgeInsets.all(16),
-    ));
+    showAppSnackBar(context, msg, isError: isError);
   }
 
   void _showAddTask(BuildContext context) {
@@ -85,10 +73,10 @@ class _PlannerPageState extends State<PlannerPage> {
               const SizedBox(height: 20),
               const Text('New Task',
                   style: TextStyle(fontSize: 20,
-                      fontWeight: FontWeight.bold, color: textDark)),
+                      fontWeight: FontWeight.bold, color: TColors.appTextDark)),
               const SizedBox(height: 4),
               const Text('What do you want to accomplish today?',
-                  style: TextStyle(fontSize: 13, color: textGrey)),
+                  style: TextStyle(fontSize: 13, color: TColors.appTextGrey)),
               const SizedBox(height: 16),
               TextField(
                 controller: ctrl,
@@ -99,7 +87,7 @@ class _PlannerPageState extends State<PlannerPage> {
                   filled: true,
                   fillColor: Colors.grey.shade50,
                   prefixIcon: const Icon(Icons.edit_outlined,
-                      color: primary, size: 20),
+                      color: TColors.appPrimary, size: 20),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
                     borderSide: BorderSide(color: Colors.grey.shade200),
@@ -110,14 +98,14 @@ class _PlannerPageState extends State<PlannerPage> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
-                    borderSide: const BorderSide(color: primary, width: 2),
+                    borderSide: const BorderSide(color: TColors.appPrimary, width: 2),
                   ),
                 ),
               ),
               const SizedBox(height: 18),
               const Text('Set Priority',
                   style: TextStyle(fontSize: 13,
-                      fontWeight: FontWeight.w700, color: textDark)),
+                      fontWeight: FontWeight.w700, color: TColors.appTextDark)),
               const SizedBox(height: 10),
               Wrap(
                 spacing: 8, runSpacing: 8,
@@ -174,7 +162,7 @@ class _PlannerPageState extends State<PlannerPage> {
                     messenger.showSnackBar(SnackBar(
                       content: const Text('Task added ✅',
                           style: TextStyle(fontWeight: FontWeight.w600)),
-                      backgroundColor: success,
+                      backgroundColor: TColors.appSuccess,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14)),
@@ -182,7 +170,7 @@ class _PlannerPageState extends State<PlannerPage> {
                     ));
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primary,
+                    backgroundColor: TColors.appPrimary,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14)),
@@ -237,10 +225,10 @@ class _PlannerPageState extends State<PlannerPage> {
     final c = Get.find<PlannerController>();
 
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: TColors.appBackground,
       body: SafeArea(
         child: Obx(() => c.isLoading.value
-            ? const Center(child: CircularProgressIndicator(color: primary))
+            ? const Center(child: CircularProgressIndicator(color: TColors.appPrimary))
             : SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
               horizontal: 20, vertical: 16),
@@ -251,11 +239,11 @@ class _PlannerPageState extends State<PlannerPage> {
 
               Row(
                 children: [
-                  const Icon(Icons.shield, color: primary, size: 28),
+                  const Icon(Icons.shield, color: TColors.appPrimary, size: 28),
                   const SizedBox(width: 6),
                   const Text('TrustHire',
                       style: TextStyle(
-                          color: primary,
+                          color: TColors.appPrimary,
                           fontSize: 22,
                           fontWeight: FontWeight.bold)),
                   const Spacer(),
@@ -275,11 +263,11 @@ class _PlannerPageState extends State<PlannerPage> {
                           style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.bold,
-                              color: textDark)),
+                              color: TColors.appTextDark)),
                       const SizedBox(height: 2),
                       Text(c.todayFormatted,
                           style: const TextStyle(
-                              color: textGrey, fontSize: 13)),
+                              color: TColors.appTextGrey, fontSize: 13)),
                     ],
                   ),
                   const Spacer(),
@@ -287,13 +275,13 @@ class _PlannerPageState extends State<PlannerPage> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: primary.withOpacity(0.1),
+                      color: TColors.appPrimary.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       '${c.tasks.length} tasks',
                       style: const TextStyle(
-                          color: primary,
+                          color: TColors.appPrimary,
                           fontWeight: FontWeight.bold,
                           fontSize: 12),
                     ),
@@ -307,14 +295,14 @@ class _PlannerPageState extends State<PlannerPage> {
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF3B5BDB), Color(0xFF4C6EF5)],
+                    colors: [Color(0xFF1A1F36), Color(0xFF4F6EF7)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: primary.withOpacity(0.25),
+                      color: const Color(0xFF1A1F36).withOpacity(0.25),
                       blurRadius: 14,
                       offset: const Offset(0, 6),
                     ),
@@ -389,12 +377,12 @@ class _PlannerPageState extends State<PlannerPage> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 18, vertical: 8),
                       decoration: BoxDecoration(
-                        color: sel ? primary : Colors.white,
+                        color: sel ? TColors.appPrimary : Colors.white,
                         borderRadius: BorderRadius.circular(22),
                         boxShadow: sel
                             ? [
                           BoxShadow(
-                              color: primary.withOpacity(0.3),
+                              color: TColors.appPrimary.withOpacity(0.3),
                               blurRadius: 8,
                               offset: const Offset(0, 3))
                         ]
@@ -404,7 +392,7 @@ class _PlannerPageState extends State<PlannerPage> {
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: sel ? Colors.white : textGrey,
+                            color: sel ? Colors.white : TColors.appTextGrey,
                           )),
                     ),
                   );
@@ -430,7 +418,7 @@ class _PlannerPageState extends State<PlannerPage> {
                               : Icons.check_circle_outline,
                           size: 52,
                           color: c.filter.value == 'Done'
-                              ? success
+                              ? TColors.appSuccess
                               : Colors.grey.shade300,
                         ),
                         const SizedBox(height: 12),
@@ -442,7 +430,7 @@ class _PlannerPageState extends State<PlannerPage> {
                               : 'No tasks yet.\nTap + to get started.',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                              color: textGrey,
+                              color: TColors.appTextGrey,
                               fontSize: 14,
                               height: 1.5),
                         ),
@@ -514,7 +502,7 @@ class _PlannerPageState extends State<PlannerPage> {
                           fontWeight: FontWeight.w600,
                           color: isDone
                               ? Colors.grey.shade400
-                              : textDark,
+                              : TColors.appTextDark,
                           decoration: isDone
                               ? TextDecoration.lineThrough
                               : null,
@@ -573,10 +561,10 @@ class _PlannerPageState extends State<PlannerPage> {
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
-                    color: primary.withOpacity(0.06),
+                    color: TColors.appPrimary.withOpacity(0.06),
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
-                      color: primary.withOpacity(0.25),
+                      color: TColors.appPrimary.withOpacity(0.25),
                       width: 1.5,
                     ),
                   ),
@@ -584,11 +572,11 @@ class _PlannerPageState extends State<PlannerPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.add_circle_outline,
-                          color: primary, size: 20),
+                          color: TColors.appPrimary, size: 20),
                       SizedBox(width: 8),
                       Text('Add task',
                           style: TextStyle(
-                              color: primary,
+                              color: TColors.appPrimary,
                               fontWeight: FontWeight.w700,
                               fontSize: 14)),
                     ],
@@ -631,7 +619,7 @@ class _PlannerPageState extends State<PlannerPage> {
                               style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
-                                  color: textDark)),
+                                  color: TColors.appTextDark)),
                           const SizedBox(height: 3),
                           Text(
                             c.streakDays.value >= 3
@@ -640,8 +628,8 @@ class _PlannerPageState extends State<PlannerPage> {
                             style: TextStyle(
                               fontSize: 12,
                               color: c.streakDays.value >= 3
-                                  ? success
-                                  : textGrey,
+                                  ? TColors.appSuccess
+                                  : TColors.appTextGrey,
                             ),
                           ),
                         ],
@@ -653,10 +641,10 @@ class _PlannerPageState extends State<PlannerPage> {
                             style: const TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.w900,
-                                color: textDark)),
+                                color: TColors.appTextDark)),
                         const Text('days',
                             style: TextStyle(
-                                fontSize: 11, color: textGrey)),
+                                fontSize: 11, color: TColors.appTextGrey)),
                       ],
                     ),
                   ],
@@ -676,7 +664,7 @@ class _PlannerPageState extends State<PlannerPage> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: primary.withOpacity(0.1),
+                    color: TColors.appPrimary.withOpacity(0.1),
                   ),
                   boxShadow: [
                     BoxShadow(
@@ -694,19 +682,19 @@ class _PlannerPageState extends State<PlannerPage> {
                         Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: primary.withOpacity(0.08),
+                            color: TColors.appPrimary.withOpacity(0.08),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Icon(
                               Icons.format_quote_rounded,
-                              color: primary, size: 18),
+                              color: TColors.appPrimary, size: 18),
                         ),
                         const SizedBox(width: 8),
                         const Text('Daily Motivation',
                             style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
-                                color: textDark)),
+                                color: TColors.appTextDark)),
                       ],
                     ),
                     const SizedBox(height: 14),
@@ -715,7 +703,7 @@ class _PlannerPageState extends State<PlannerPage> {
                       style: const TextStyle(
                         fontSize: 15,
                         fontStyle: FontStyle.italic,
-                        color: textDark,
+                        color: TColors.appTextDark,
                         height: 1.5,
                       ),
                     ),
@@ -727,7 +715,7 @@ class _PlannerPageState extends State<PlannerPage> {
                         style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
-                            color: primary),
+                            color: TColors.appPrimary),
                       ),
                     ),
                   ],
@@ -757,14 +745,14 @@ class _BurnoutBanner extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
-            colors: [Color(0xFF7C3AED), Color(0xFF6366F1)],
+            colors: [Color(0xFF1A1F36), Color(0xFF4F6EF7)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF7C3AED).withOpacity(0.28),
+              color: const Color(0xFF1A1F36).withOpacity(0.28),
               blurRadius: 16,
               offset: const Offset(0, 6),
             ),
