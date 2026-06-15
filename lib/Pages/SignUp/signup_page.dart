@@ -6,12 +6,11 @@ import 'package:trust_hire_app/Common/Widgets_Login_Signup/auth_info.dart';
 import 'package:trust_hire_app/Navigation/bottom_navigator.dart';
 import 'package:trust_hire_app/Pages/Login/login_page.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
 import 'package:trust_hire_app/Utilities/Validation/validation.dart';
 
 import '../../Authentication/Services/auth_service.dart';
-import '../../Utilities/Constants/image_strings.dart';
 import '../../Utilities/Constants/size.dart';
-import '../../common/widgets_login_signup/form_divider.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -262,14 +261,7 @@ class TSignUpHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius: 35,
-                backgroundColor: Colors.white,
-                child: CircleAvatar(
-                  radius: 35,
-                  backgroundImage: AssetImage(Timages.appLogo),
-                ),
-              ),
+              AppLogo(),
               SizedBox( width: width*0.01),
               Text(Ttexts.AppName, style: Theme.of(context).textTheme.headlineLarge,),
             ],

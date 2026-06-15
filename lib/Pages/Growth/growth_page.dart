@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:trust_hire_app/profile/profile_models.dart';
 import 'package:trust_hire_app/Model/job_model.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/trust_hire_app_bar.dart';
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'growth_database.dart';
 
 class GrowthPage extends StatefulWidget {
@@ -13,12 +15,6 @@ class GrowthPage extends StatefulWidget {
 }
 
 class _GrowthPageState extends State<GrowthPage> {
-  static const _bg      = Color(0xFFF0F4FF);
-  static const _primary = Color(0xFF3B5BDB);
-  static const _dark    = Color(0xFF1A1A2E);
-  static const _grey    = Color(0xFF9CA3AF);
-  static const _green   = Color(0xFF10B981);
-  static const _orange  = Color(0xFFF59E0B);
   static const _weeklyGoal = 5;
 
   late Future<_GrowthData> _future;
@@ -65,7 +61,8 @@ class _GrowthPageState extends State<GrowthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _bg,
+      backgroundColor: TColors.appBackgroundBlue,
+      appBar: const TrustHireAppBar(title: 'Growth'),
       body: FutureBuilder<_GrowthData>(
         future: _future,
         builder: (context, snap) {
@@ -118,15 +115,23 @@ class _GrowthPageState extends State<GrowthPage> {
 
     return SliverToBoxAdapter(
       child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
+        margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
             colors: [Color(0xFF1A1F36), Color(0xFF2D3A8C)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(28)),
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF1A1F36).withValues(alpha: 0.25),
+              blurRadius: 16,
+              offset: const Offset(0, 8),
+            ),
+          ],
         ),
-        padding: const EdgeInsets.fromLTRB(20, 56, 20, 28),
+        padding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
         child: Row(
           children: [
             // Avatar
@@ -134,7 +139,7 @@ class _GrowthPageState extends State<GrowthPage> {
               width: 54,
               height: 54,
               decoration: BoxDecoration(
-                color: _primary,
+                color: TColors.appBlue,
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white24, width: 2),
               ),
@@ -165,17 +170,17 @@ class _GrowthPageState extends State<GrowthPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: _green.withValues(alpha: 0.2),
+                color: TColors.appSuccess.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: _green.withValues(alpha: 0.4)),
+                border: Border.all(color: TColors.appSuccess.withValues(alpha: 0.4)),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.local_fire_department_rounded, color: _green, size: 16),
+                  const Icon(Icons.local_fire_department_rounded, color: TColors.appSuccess, size: 16),
                   const SizedBox(width: 4),
                   Text(
                     '${d.streak}d',
-                    style: const TextStyle(color: _green, fontSize: 13, fontWeight: FontWeight.w700),
+                    style: const TextStyle(color: TColors.appSuccess, fontSize: 13, fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
@@ -190,34 +195,12 @@ class _GrowthPageState extends State<GrowthPage> {
   Widget _kpiRow(_GrowthData d) {
     return Row(
       children: [
-        Expanded(child: _kpiCard('Applied', d.stats.appliedCount.toString(), Icons.send_rounded, _primary, const Color(0xFFEEF2FF))),
+        Expanded(child: StatCard(label: 'Applied', value: d.stats.appliedCount.toString(), icon: Icons.send_rounded, color: TColors.appBlue, background: const Color(0xFFEEF2FF))),
         const SizedBox(width: 12),
-        Expanded(child: _kpiCard('Saved', d.stats.savedCount.toString(), Icons.bookmark_rounded, _orange, const Color(0xFFFFF8EB))),
+        Expanded(child: StatCard(label: 'Saved', value: d.stats.savedCount.toString(), icon: Icons.bookmark_rounded, color: TColors.appAmber, background: const Color(0xFFFFF8EB))),
         const SizedBox(width: 12),
-        Expanded(child: _kpiCard('This Week', '${d.appliedThisWeek}/$_weeklyGoal', Icons.calendar_today_rounded, _green, const Color(0xFFECFDF5))),
+        Expanded(child: StatCard(label: 'This Week', value: '${d.appliedThisWeek}/$_weeklyGoal', icon: Icons.calendar_today_rounded, color: TColors.appSuccess, background: const Color(0xFFECFDF5))),
       ],
-    );
-  }
-
-  Widget _kpiCard(String label, String value, IconData icon, Color color, Color bg) {
-    return AppCard(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
-      radius: 18,
-      child: Column(
-        children: [
-          IconBadge(
-            icon: icon,
-            color: color,
-            background: bg,
-            circle: true,
-            dimension: 40,
-          ),
-          const SizedBox(height: 10),
-          Text(value, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: _dark)),
-          const SizedBox(height: 2),
-          Text(label, style: const TextStyle(fontSize: 11, color: _grey)),
-        ],
-      ),
     );
   }
 
@@ -227,7 +210,7 @@ class _GrowthPageState extends State<GrowthPage> {
     final todayIndex = DateTime.now().weekday - 1;
     final maxVal = d.weeklyActivity.fold(0, max);
 
-    return _card(
+    return SectionCard(
       title: 'Weekly Activity',
       subtitle: 'Applications this week',
       icon: Icons.bar_chart_rounded,
@@ -244,14 +227,14 @@ class _GrowthPageState extends State<GrowthPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 if (count > 0)
-                  Text('$count', style: TextStyle(fontSize: 9, color: isToday ? _primary : _grey, fontWeight: FontWeight.w600)),
+                  Text('$count', style: TextStyle(fontSize: 9, color: isToday ? TColors.appBlue : TColors.appTextGrey, fontWeight: FontWeight.w600)),
                 const SizedBox(height: 3),
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 400),
                   width: 28,
                   height: barH,
                   decoration: BoxDecoration(
-                    color: isToday ? _primary : (count > 0 ? _primary.withValues(alpha: 0.3) : const Color(0xFFE8ECF8)),
+                    color: isToday ? TColors.appBlue : (count > 0 ? TColors.appBlue.withValues(alpha: 0.3) : const Color(0xFFE8ECF8)),
                     borderRadius: BorderRadius.circular(6),
                   ),
                 ),
@@ -261,7 +244,7 @@ class _GrowthPageState extends State<GrowthPage> {
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: isToday ? FontWeight.w700 : FontWeight.w400,
-                    color: isToday ? _primary : _grey,
+                    color: isToday ? TColors.appBlue : TColors.appTextGrey,
                   ),
                 ),
               ],
@@ -282,7 +265,7 @@ class _GrowthPageState extends State<GrowthPage> {
       ('Experience added', d.experienceCount > 0),
     ];
 
-    return _card(
+    return SectionCard(
       title: 'Profile Strength',
       subtitle: '$pct% complete',
       icon: Icons.person_outline_rounded,
@@ -303,15 +286,15 @@ class _GrowthPageState extends State<GrowthPage> {
                     value: pct / 100,
                     strokeWidth: 9,
                     backgroundColor: const Color(0xFFEEF0F8),
-                    valueColor: AlwaysStoppedAnimation(pct == 100 ? _green : _primary),
+                    valueColor: AlwaysStoppedAnimation(pct == 100 ? TColors.appSuccess : TColors.appBlue),
                     strokeCap: StrokeCap.round,
                   ),
                 ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('$pct%', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: pct == 100 ? _green : _dark)),
-                    Text('score', style: const TextStyle(fontSize: 10, color: _grey)),
+                    Text('$pct%', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: pct == 100 ? TColors.appSuccess : TColors.appTextDark)),
+                    Text('score', style: const TextStyle(fontSize: 10, color: TColors.appTextGrey)),
                   ],
                 ),
               ],
@@ -327,10 +310,10 @@ class _GrowthPageState extends State<GrowthPage> {
                     Icon(
                       c.$2 ? Icons.check_circle_rounded : Icons.radio_button_unchecked,
                       size: 15,
-                      color: c.$2 ? _green : _grey,
+                      color: c.$2 ? TColors.appSuccess : TColors.appTextGrey,
                     ),
                     const SizedBox(width: 7),
-                    Text(c.$1, style: TextStyle(fontSize: 12, color: c.$2 ? _dark : _grey)),
+                    Text(c.$1, style: TextStyle(fontSize: 12, color: c.$2 ? TColors.appTextDark : TColors.appTextGrey)),
                   ],
                 ),
               )).toList(),
@@ -344,14 +327,14 @@ class _GrowthPageState extends State<GrowthPage> {
   // ─────────────────────────────────────────────────────────── Achievements
   Widget _achievements(_GrowthData d, int pct) {
     final badges = [
-      _Badge('First Apply',      Icons.rocket_launch_rounded,  d.stats.appliedCount >= 1,  _primary),
-      _Badge('5 Jobs Saved',     Icons.bookmark_rounded,       d.stats.savedCount >= 5,    _orange),
+      _Badge('First Apply',      Icons.rocket_launch_rounded,  d.stats.appliedCount >= 1,  TColors.appBlue),
+      _Badge('5 Jobs Saved',     Icons.bookmark_rounded,       d.stats.savedCount >= 5,    TColors.appAmber),
       _Badge('10 Applications',  Icons.send_rounded,           d.stats.appliedCount >= 10, const Color(0xFF8B5CF6)),
-      _Badge('7-Day Streak',     Icons.local_fire_department_rounded, d.streak >= 7,       _green),
+      _Badge('7-Day Streak',     Icons.local_fire_department_rounded, d.streak >= 7,       TColors.appSuccess),
       _Badge('Profile Complete', Icons.verified_rounded,        pct == 100,                 const Color(0xFFEC4899)),
     ];
 
-    return _card(
+    return SectionCard(
       title: 'Achievements',
       subtitle: '${badges.where((b) => b.earned).length} / ${badges.length} earned',
       icon: Icons.emoji_events_outlined,
@@ -376,7 +359,7 @@ class _GrowthPageState extends State<GrowthPage> {
                     ),
                     child: Icon(
                       b.icon,
-                      color: b.earned ? b.color : _grey,
+                      color: b.earned ? b.color : TColors.appTextGrey,
                       size: 24,
                     ),
                   ),
@@ -389,7 +372,7 @@ class _GrowthPageState extends State<GrowthPage> {
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: b.earned ? FontWeight.w600 : FontWeight.w400,
-                        color: b.earned ? _dark : _grey,
+                        color: b.earned ? TColors.appTextDark : TColors.appTextGrey,
                       ),
                     ),
                   ),
@@ -404,7 +387,7 @@ class _GrowthPageState extends State<GrowthPage> {
 
   // ─────────────────────────────────────────────────────────── Recent Applied
   Widget _recentApplied(_GrowthData d) {
-    return _card(
+    return SectionCard(
       title: 'Recent Applications',
       subtitle: 'Last ${d.recentApplied.length} applied',
       icon: Icons.work_history_outlined,
@@ -413,9 +396,9 @@ class _GrowthPageState extends State<GrowthPage> {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Row(
                 children: [
-                  Icon(Icons.inbox_outlined, color: _grey, size: 18),
+                  Icon(Icons.inbox_outlined, color: TColors.appTextGrey, size: 18),
                   const SizedBox(width: 8),
-                  Text('No applications yet', style: TextStyle(color: _grey, fontSize: 13)),
+                  Text('No applications yet', style: TextStyle(color: TColors.appTextGrey, fontSize: 13)),
                 ],
               ),
             )
@@ -431,7 +414,7 @@ class _GrowthPageState extends State<GrowthPage> {
                         color: const Color(0xFFEEF2FF),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Icon(Icons.business_rounded, size: 20, color: _primary),
+                      child: const Icon(Icons.business_rounded, size: 20, color: TColors.appBlue),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -440,20 +423,20 @@ class _GrowthPageState extends State<GrowthPage> {
                         children: [
                           Text(
                             job.title ?? 'Untitled',
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: _dark),
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: TColors.appTextDark),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             job.companyName ?? 'Unknown',
-                            style: const TextStyle(fontSize: 11, color: _grey),
+                            style: const TextStyle(fontSize: 11, color: TColors.appTextGrey),
                           ),
                         ],
                       ),
                     ),
                     const StatusPill(
                       text: 'Applied',
-                      color: _green,
+                      color: TColors.appSuccess,
                       fontSize: 10,
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     ),
@@ -464,21 +447,6 @@ class _GrowthPageState extends State<GrowthPage> {
     );
   }
 
-  // ─────────────────────────────────────────────────────────── Card Shell
-  Widget _card({required String title, required String subtitle, required IconData icon, required Widget child}) {
-    return AppCard(
-      padding: const EdgeInsets.all(18),
-      radius: 20,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SectionHeader(icon: icon, title: title, subtitle: subtitle),
-          const SizedBox(height: 16),
-          child,
-        ],
-      ),
-    );
-  }
 }
 
 // ─────────────────────────────────────────────────────────── Data classes

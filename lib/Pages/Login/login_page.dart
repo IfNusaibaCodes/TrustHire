@@ -7,13 +7,12 @@ import 'package:trust_hire_app/Common/Widgets_Login_Signup/auth_info.dart';
 import 'package:trust_hire_app/Pages/Login/forget_password_page.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
 import 'package:trust_hire_app/common/styles/spacing_styles.dart';
 
 import '../../Navigation/bottom_navigator.dart';
-import '../../Utilities/Constants/image_strings.dart';
 import '../../Utilities/Constants/size.dart';
 import '../../Utilities/Validation/validation.dart';
-import '../../common/widgets_login_signup/form_divider.dart';
 import '../SignUp/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -238,6 +237,8 @@ class TLoginHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              AppLogo(),
+            /*
               CircleAvatar(
                 radius: 35,
                 backgroundColor: Colors.white,
@@ -245,7 +246,7 @@ class TLoginHeader extends StatelessWidget {
                   radius: 35,
                   backgroundImage: AssetImage(Timages.appLogo),
                 ),
-              ),
+              ), */
               SizedBox( width: width*0.01),
               Text(Ttexts.AppName, style: Theme.of(context).textTheme.headlineLarge,),
             ],

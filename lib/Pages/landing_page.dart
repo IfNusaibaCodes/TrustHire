@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Pages/Login/login_page.dart';
 import 'package:trust_hire_app/Pages/SignUp/signup_page.dart';
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -8,7 +10,7 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1A1F36),
+      backgroundColor: TColors.appBackground , // const Color(0xFF4F6EF7),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
@@ -17,7 +19,8 @@ class LandingPage extends StatelessWidget {
               const Spacer(flex: 2),
 
               // Logo
-              Container(
+              AppLogo(),
+             /* Container(
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
@@ -29,7 +32,7 @@ class LandingPage extends StatelessWidget {
                   color: Colors.white,
                   size: 40,
                 ),
-              ),
+              ), */
 
               const SizedBox(height: 28),
 
@@ -37,7 +40,7 @@ class LandingPage extends StatelessWidget {
               const Text(
                 'Trust Hire',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: TColors.appNavy,
                   fontSize: 36,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0.5,
@@ -51,7 +54,7 @@ class LandingPage extends StatelessWidget {
                 'Find trusted jobs and build\nyour career with confidence.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white60,
+                  color: TColors.appNavy,
                   fontSize: 16,
                   height: 1.6,
                 ),
@@ -69,7 +72,7 @@ class LandingPage extends StatelessWidget {
                     MaterialPageRoute(builder: (_) => const SignUpPage()),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4F6EF7),
+                    backgroundColor: TColors.appNavy,
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
@@ -95,9 +98,9 @@ class LandingPage extends StatelessWidget {
                     MaterialPageRoute(builder: (_) => const LoginPage()),
                   ),
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
+                    foregroundColor: TColors.appNavy,
                     backgroundColor: Colors.transparent,
-                    side: const BorderSide(color: Colors.white38, width: 1.5),
+                    side: const BorderSide(color:TColors.appNavy, width: 1.5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
@@ -107,7 +110,7 @@ class LandingPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: TColors.appNavy,
                     ),
                   ),
                 ),

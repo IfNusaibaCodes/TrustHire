@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 
 class TOutlinedButton {
   TOutlinedButton._();
@@ -8,7 +9,7 @@ class TOutlinedButton {
   static final lightOutlinedButtonTheme = OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         elevation: 0,
-        foregroundColor: Colors.black,
+        foregroundColor:   TColors.appNavy, // Colors.black,
         backgroundColor: Colors.white,
         disabledForegroundColor: Colors.grey,
         disabledBackgroundColor: Colors.grey,

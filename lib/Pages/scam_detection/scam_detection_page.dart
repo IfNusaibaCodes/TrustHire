@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/trust_hire_app_bar.dart';
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'red_flags_page.dart';
 
 class ScamDetectorPage extends StatefulWidget {
@@ -10,9 +12,6 @@ class ScamDetectorPage extends StatefulWidget {
 }
 
 class _ScamDetectorPageState extends State<ScamDetectorPage> {
-  static const _navy    = Color(0xFF1A1F36);
-  static const _bg      = Color(0xFFF5F7FA);
-
   int _method = 0;
   final _textCtrl = TextEditingController();
 
@@ -25,16 +24,8 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _bg,
-      appBar: AppBar(
-        backgroundColor: _navy,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: const Text(
-          'Scam Detector',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, letterSpacing: 0.5),
-        ),
-      ),
+      backgroundColor: TColors.appScaffoldBg,
+      appBar: const TrustHireAppBar(title: 'Scam Detector'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(18, 18, 18, 90),
         child: Column(
@@ -77,19 +68,19 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
 
             // ── Input method ─────────────────────────────────
             const Text('Choose input method',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: _navy)),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: TColors.appNavy)),
             const SizedBox(height: 14),
 
             Row(
               children: [
-                _MethodChip(
+                OptionCard(
                   icon: Icons.description_outlined,
                   label: 'Paste Text',
                   selected: _method == 0,
                   onTap: () => setState(() => _method = 0),
                 ),
                 const SizedBox(width: 12),
-                _MethodChip(
+                OptionCard(
                   icon: Icons.image_outlined,
                   label: 'Screenshot',
                   selected: _method == 1,
@@ -141,7 +132,7 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
             ] else ...[
               GestureDetector(
                 onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Image picker coming soon')),
+                  const SnackBar(content: Text('New Feature Coming Soon!')),
                 ),
                 child: Container(
                   width: double.infinity,
@@ -188,7 +179,7 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
                 label: const Text('Analyze for Scams',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: _navy,
+                  backgroundColor: TColors.appNavy,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   elevation: 0,
@@ -255,65 +246,6 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
 
             const SizedBox(height: 24),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-// ── Method chip ────────────────────────────────────────────────
-class _MethodChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  const _MethodChip({
-    required this.icon,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  static const _navy = Color(0xFF1A1F36);
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          decoration: BoxDecoration(
-            color: selected ? _navy : Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: selected ? _navy : const Color(0xFFE5E7EB)),
-            boxShadow: [
-              BoxShadow(
-                color: selected
-                    ? _navy.withValues(alpha: 0.18)
-                    : Colors.black.withValues(alpha: 0.04),
-                blurRadius: selected ? 10 : 6,
-                offset: Offset(0, selected ? 4 : 2),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 24, color: selected ? Colors.white : const Color(0xFF6B7280)),
-              const SizedBox(height: 6),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: selected ? Colors.white : const Color(0xFF6B7280),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_snackbar.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/trust_hire_app_bar.dart';
 import 'planner_controller.dart';
 import 'planner_widgets.dart';
 import '../Burnout/burnout_check_page.dart';
@@ -226,6 +227,7 @@ class _PlannerPageState extends State<PlannerPage> {
 
     return Scaffold(
       backgroundColor: TColors.appBackground,
+      appBar: const TrustHireAppBar(title: 'Planner'),
       body: SafeArea(
         child: Obx(() => c.isLoading.value
             ? const Center(child: CircularProgressIndicator(color: TColors.appPrimary))
@@ -235,23 +237,6 @@ class _PlannerPageState extends State<PlannerPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-
-              Row(
-                children: [
-                  const Icon(Icons.shield, color: TColors.appPrimary, size: 28),
-                  const SizedBox(width: 6),
-                  const Text('TrustHire',
-                      style: TextStyle(
-                          color: TColors.appPrimary,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold)),
-                  const Spacer(),
-
-                ],
-              ),
-              const SizedBox(height: 22),
-
 
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,

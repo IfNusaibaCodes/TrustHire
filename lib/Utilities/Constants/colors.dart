@@ -8,10 +8,13 @@ class TColors {
   static const Color appNavy        = Color(0xFF1A1F36); // dark headers / app bars
   static const Color appBlue        = Color(0xFF4F6EF7); // accent blue
   static const Color appBackground  = Color(0xFFF5F6FA); // page background
+  static const Color appScaffoldBg  = Color(0xFFF5F7FA); // scaffold background (feed, notifications)
   static const Color appTextDark    = Color(0xFF1A1A2E); // primary text
   static const Color appTextGrey    = Color(0xFF9CA3AF); // secondary text
   static const Color appSuccess     = Color(0xFF10B981); // success / done
   static const Color appError       = Color(0xFFEF4444); // error / delete
+  static const Color appAmber       = Color(0xFFF59E0B); // amber / highlight (saved)
+  static const Color appBackgroundBlue = Color(0xFFF0F4FF); // soft blue page background
 
 
   //Text Colors

@@ -170,25 +170,11 @@ class _AllJobsState extends State<AllJobs> {
   }
 
   // ── Filter chips row ──────────────────────────────────────────
-  Widget _filterChips() {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: _filters.map((f) => Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: AppFilterChip(
-              label: f,
-              selected: f == _selectedType,
-              onTap: () => setState(() => _selectedType = f),
-            ),
-          )).toList(),
-        ),
-      ),
-    );
-  }
+  Widget _filterChips() => FilterChipsRow<String>(
+        values: _filters,
+        selected: _selectedType,
+        onSelected: (f) => setState(() => _selectedType = f),
+      );
 
   // ── Body: loading / error / list ──────────────────────────────
   Widget _body() {

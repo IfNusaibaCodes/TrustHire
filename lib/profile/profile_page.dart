@@ -8,6 +8,7 @@ import 'package:trust_hire_app/profile/profile_database.dart';
 import 'package:trust_hire_app/profile/profile_models.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/profile_widgets.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_snackbar.dart';
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Pages/Job Feed/Saved Jobs/saved_jobs_page.dart';
@@ -330,7 +331,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 // ── Header ──────────────────────────────────────────
                 Container(
                   width: double.infinity,
-                  color: primary,
+                  color: TColors.appNavy,
                   padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
                   child: Column(
                     children: [

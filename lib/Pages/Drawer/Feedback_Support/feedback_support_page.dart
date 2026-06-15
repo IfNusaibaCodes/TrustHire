@@ -4,7 +4,7 @@ import 'feedback_database.dart';
 
 const _ratings = [
   ('😍', 'Excellent',        Color(0xFF16A34A)),
-  ('😊', 'Very Good',        Color(0xFF3B5BDB)),
+  ('😊', 'Very Good',        Color(0xFF4F6EF7)),
   ('🙂', 'Good',             Color(0xFF0EA5E9)),
   ('😐', 'Satisfactory',     Color(0xFFF59E0B)),
   ('😞', 'Not Satisfactory', Color(0xFFEF4444)),

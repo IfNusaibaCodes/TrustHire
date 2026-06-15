@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 
 class TElevatedButton {
   TElevatedButton._();
@@ -9,7 +10,7 @@ static final lightElevatedButtonTheme = ElevatedButtonThemeData(
   style: ElevatedButton.styleFrom(
     elevation: 0,
     foregroundColor: Colors.white,
-    backgroundColor: Colors.black,
+    backgroundColor: TColors.appNavy, //Colors.black,
     disabledForegroundColor: Colors.grey,
     disabledBackgroundColor: Colors.grey,
     side: const BorderSide(color: Colors.black),

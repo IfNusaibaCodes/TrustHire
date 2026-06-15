@@ -1,12 +1,15 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 
-const Color primary  = Color(0xFF3B5BDB);
-const Color bgColor  = Color(0xFFF5F6FA);
-const Color textDark = Color(0xFF1A1A2E);
-const Color textGrey = Color(0xFF9CA3AF);
-const Color success  = Color(0xFF10B981);
+// Sourced from the central colour palette (colors.dart) so the profile page
+// and its helper widgets stay consistent with the rest of the app.
+const Color primary  = TColors.appBlue;        // 0xFF4F6EF7
+const Color bgColor  = TColors.appBackground;  // 0xFFF5F6FA
+const Color textDark = TColors.appTextDark;    // 0xFF1A1A2E
+const Color textGrey = TColors.appTextGrey;    // 0xFF9CA3AF
+const Color success  = TColors.appSuccess;     // 0xFF10B981
 
 // ── White card wrapper ───────────────────────────────────────
 Widget profileCard({required Widget child}) {
