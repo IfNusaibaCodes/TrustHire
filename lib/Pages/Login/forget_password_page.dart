@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
-import 'package:trust_hire_app/Utilities/Constants/image_strings.dart';
 import 'package:trust_hire_app/Utilities/Constants/size.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import 'package:trust_hire_app/Utilities/Validation/validation.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
 import 'package:trust_hire_app/common/styles/spacing_styles.dart';
 
 import '../Login/login_page.dart';
@@ -123,14 +123,7 @@ class _RequestView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 35,
-                    backgroundColor: Colors.white,
-                    child: CircleAvatar(
-                      radius: 35,
-                      backgroundImage: AssetImage(Timages.appLogo),
-                    ),
-                  ),
+                  const AppLogo(),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                   Text(
                     Ttexts.AppName,
@@ -257,14 +250,7 @@ class _SuccessView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    radius: 35,
-                    backgroundColor: Colors.white,
-                    child: CircleAvatar(
-                      radius: 35,
-                      backgroundImage: AssetImage(Timages.appLogo),
-                    ),
-                  ),
+                  const AppLogo(),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.01),
                   Text(
                     Ttexts.AppName,
@@ -290,7 +276,7 @@ class _SuccessView extends StatelessWidget {
           width:  80,
           height: 80,
           decoration: BoxDecoration(
-            color:       TColors.success.withOpacity(0.1),
+            color:       TColors.success.withValues(alpha: 0.1),
             shape:       BoxShape.circle,
           ),
           child: const Icon(

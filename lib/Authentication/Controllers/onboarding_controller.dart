@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trust_hire_app/Pages/Login/login_page.dart';
+import 'package:trust_hire_app/Pages/landing_page.dart';
 
 class OnBoardingController extends GetxController{
   static OnBoardingController get instance => Get.find();
@@ -22,7 +22,7 @@ class OnBoardingController extends GetxController{
   //Update current index and jump to next page
   void nextPage(){
     if(currentPageIndex.value==2){
-      Get.offAll( const LoginPage());
+      Get.offAll(const LandingPage());
     }
     else{
       int page = currentPageIndex.value + 1;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/image_strings.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 
@@ -42,14 +43,14 @@ class OnBoardingPage extends StatelessWidget {
                 controller: d_controller.pageController,
                 onDotClicked: d_controller.dotNavigatorClick,
                 count: 3,
-                effect: ExpandingDotsEffect(activeDotColor: Colors.black, dotHeight: 6),)),
+                effect: ExpandingDotsEffect(activeDotColor: TColors.appNavy, dotHeight: 6),)),
 
           Positioned(
               right: 24,
               bottom: kBottomNavigationBarHeight,
               child: ElevatedButton(onPressed: () => OnBoardingController.instance.nextPage(),
                   style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(), backgroundColor: Colors.black,foregroundColor: Colors.white
+                    shape: const CircleBorder(), backgroundColor: TColors.appNavy,foregroundColor: Colors.white
                   ),
                   child: Icon(Iconsax.arrow_right_3)))
         ],

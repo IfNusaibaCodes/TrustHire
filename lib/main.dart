@@ -6,8 +6,9 @@ import 'package:trust_hire_app/Authentication/Services/deep_link_service.dart';
 import 'package:trust_hire_app/Pages/Notifications/notification_controller.dart';
 import 'package:trust_hire_app/Pages/Notifications/notification_page.dart';
 import 'package:trust_hire_app/Pages/Notifications/push_service.dart';
-import 'package:trust_hire_app/firebase_options.dart';
 import 'package:trust_hire_app/Pages/landing_page.dart';
+import 'package:trust_hire_app/firebase_options.dart';
+import 'package:trust_hire_app/Pages/splash_page.dart';
 import 'package:trust_hire_app/Utilities/Customs/theme.dart';
 
 void main() async {
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: LandingPage(),
+      home:  LandingPage(),
       theme: TCustomApp.customTheme,
     );
   }
