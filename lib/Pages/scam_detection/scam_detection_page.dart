@@ -3,6 +3,7 @@ import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widg
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/trust_hire_app_bar.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'red_flags_page.dart';
+import 'scam_analyzer.dart';
 
 class ScamDetectorPage extends StatefulWidget {
   const ScamDetectorPage({super.key});
@@ -14,6 +15,17 @@ class ScamDetectorPage extends StatefulWidget {
 class _ScamDetectorPageState extends State<ScamDetectorPage> {
   int _method = 0;
   final _textCtrl = TextEditingController();
+  ScamResult? _result;
+
+  void _analyze() {
+    final text = _textCtrl.text.trim();
+    if (text.isEmpty) {
+      showAppSnackBar(context, 'Paste a job post to analyze.',
+          background: TColors.appBlue);
+      return;
+    }
+    setState(() => _result = ScamAnalyzer.analyze(text));
+  }
 
   @override
   void dispose() {
@@ -25,14 +37,12 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: TColors.appScaffoldBg,
-      appBar: const TrustHireAppBar(title: 'Scam Detector'),
+      appBar: const TrustHireAppBar(title: 'Detect Scam'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(18, 18, 18, 90),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            // ── Hero card ───────────────────────────────────
             GradientBannerCard(
               child: Row(
                 children: [
@@ -131,9 +141,9 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
               ),
             ] else ...[
               GestureDetector(
-                onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('New Feature Coming Soon!')),
-                ),
+                onTap: () => showAppSnackBar(
+                    context, 'New Feature Coming Soon! Stay Tuned!',
+                    background: TColors.appBlue),
                 child: Container(
                   width: double.infinity,
                   height: 140,
@@ -172,9 +182,10 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
               width: double.infinity,
               height: 54,
               child: ElevatedButton.icon(
-                onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Analyzing for scams...')),
-                ),
+                onPressed: _method == 0
+                    ? _analyze
+                    : () => showAppSnackBar(context, 'Analyzing for scams...',
+                        background: TColors.appBlue),
                 icon: const Icon(Icons.shield_rounded, size: 20),
                 label: const Text('Analyze for Scams',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
@@ -188,6 +199,17 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
             ),
 
             const SizedBox(height: 16),
+
+            // ── Analysis result (text input only) ────────
+            if (_method == 0 && _result != null) ...[
+              ScamResultCard(
+                score: _result!.score,
+                riskLevel: _result!.riskLevel,
+                issues: _result!.issues,
+                positives: _result!.positives,
+              ),
+              const SizedBox(height: 16),
+            ],
 
             // ── Red Flags Guide card ─────────────────────
             GestureDetector(

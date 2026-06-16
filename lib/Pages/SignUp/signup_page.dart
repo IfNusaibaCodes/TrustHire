@@ -51,9 +51,6 @@ class _SignUpPageState extends State<SignUpPage> {
     if(!_formKey.currentState!.validate()) return;
 
     try{
-      // A leftover session from a previously logged-in user must be cleared
-      // first, otherwise the app keeps showing that old account's profile
-      // after signing up a new one.
       if (Supabase.instance.client.auth.currentSession != null) {
         await authService.signOut();
       }
@@ -61,11 +58,6 @@ class _SignUpPageState extends State<SignUpPage> {
       final response = await authService.signUpWithEmailAndPassword(
           fName, lName, email, phone, password);
       if (!mounted) return;
-
-      // Email confirmation is enabled, so signUp does NOT create a session.
-      // The new user must confirm via the emailed link, then log in. Do not
-      // navigate into the app here — that used to drop the user onto the
-      // still-cached profile of the old account.
       if (response.session == null) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
@@ -75,7 +67,6 @@ class _SignUpPageState extends State<SignUpPage> {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const LoginPage()));
       } else {
-        // Confirmation disabled: a session already exists, go to home.
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => BottomNavBar()));
       }

@@ -11,10 +11,10 @@ class GrowthPage extends StatefulWidget {
   const GrowthPage({super.key});
 
   @override
-  State<GrowthPage> createState() => _GrowthPageState();
+  State<GrowthPage> createState() => GrowthPageState();
 }
 
-class _GrowthPageState extends State<GrowthPage> {
+class GrowthPageState extends State<GrowthPage> {
   static const _weeklyGoal = 5;
 
   late Future<_GrowthData> _future;
@@ -23,6 +23,13 @@ class _GrowthPageState extends State<GrowthPage> {
   void initState() {
     super.initState();
     _future = _load();
+  }
+
+  /// Re-fetches all stats. Called when the Growth tab becomes visible again,
+  /// since this page is kept alive inside the bottom nav's IndexedStack.
+  void reload() {
+    if (!mounted) return;
+    setState(() { _future = _load(); });
   }
 
   Future<_GrowthData> _load() async {
@@ -62,7 +69,7 @@ class _GrowthPageState extends State<GrowthPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: TColors.appBackgroundBlue,
-      appBar: const TrustHireAppBar(title: 'Growth'),
+      appBar: const TrustHireAppBar(title: 'Your Growth'),
       body: FutureBuilder<_GrowthData>(
         future: _future,
         builder: (context, snap) {
@@ -75,8 +82,15 @@ class _GrowthPageState extends State<GrowthPage> {
           final d   = snap.data!;
           final pct = _completion(d);
           return RefreshIndicator(
-            onRefresh: () async => setState(() { _future = _load(); }),
+            onRefresh: () async {
+              final data = _load();
+              setState(() { _future = data; });
+              await data;
+            },
             child: CustomScrollView(
+              // Always scrollable so pull-to-refresh works even when the
+              // content fits on screen without overflowing.
+              physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 _header(d),
                 SliverPadding(

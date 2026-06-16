@@ -19,17 +19,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   int selectedIndex = 0;
 
+  final _growthKey = GlobalKey<GrowthPageState>();
+
   @override
   void initState() {
     super.initState();
     Get.put(NotificationController());
   }
 
-  final pageData = [
+  late final pageData = [
     JobFeedPage(),
     ScamDetectorPage(),
     PlannerPage(),
-    GrowthPage(),
+    GrowthPage(key: _growthKey),
   ];
 
   @override
@@ -42,11 +44,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
         children: pageData,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: TColors.white,
+        elevation: 8,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: TColors.appNavy,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: TColors.appPrimary,
+        unselectedItemColor: TColors.appTextGrey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.work_outline),   label: 'Jobs'),
           BottomNavigationBarItem(icon: Icon(Icons.scanner), label: 'Detect Scam'),
@@ -58,6 +62,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
           setState(() {
             selectedIndex = setValue;
           });
+          // Growth tab is kept alive in the IndexedStack, so refresh its
+          // stats each time it's opened to reflect new applied/saved jobs.
+          if (setValue == 3) {
+            _growthKey.currentState?.reload();
+          }
         },
       ),
     );

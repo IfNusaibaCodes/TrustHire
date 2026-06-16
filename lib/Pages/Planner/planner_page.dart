@@ -227,7 +227,7 @@ class _PlannerPageState extends State<PlannerPage> {
 
     return Scaffold(
       backgroundColor: TColors.appBackground,
-      appBar: const TrustHireAppBar(title: 'Planner'),
+      appBar: const TrustHireAppBar(title: 'Your Daily Plan'),
       body: SafeArea(
         child: Obx(() => c.isLoading.value
             ? const Center(child: CircularProgressIndicator(color: TColors.appPrimary))

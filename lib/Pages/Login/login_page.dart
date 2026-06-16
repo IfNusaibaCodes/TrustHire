@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
@@ -59,6 +60,13 @@ class _LoginPageState extends State<LoginPage> {
         ));
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => BottomNavBar()));
+      }
+    } on AuthException catch(e){
+      if(mounted){
+        final message = e.message.toLowerCase().contains('invalid login credentials')
+            ? "Incorrect Password!"
+            : e.message;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message),backgroundColor: TColors.error,));
       }
     } catch(e){
       if(mounted){

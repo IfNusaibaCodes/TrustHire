@@ -17,3 +17,4 @@ export 'filter_chips_row.dart';
 export 'compact_job_card.dart';
 export 'notification_card.dart';
 export 'option_card.dart';
+export 'scam_result_card.dart';
