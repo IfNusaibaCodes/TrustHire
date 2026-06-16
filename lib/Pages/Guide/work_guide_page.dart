@@ -5,6 +5,8 @@ import 'package:trust_hire_app/Pages/Guide/work_guide_db.dart';
 import 'package:trust_hire_app/Utilities/Constants/image_strings.dart';
 import 'package:trust_hire_app/Utilities/Constants/size.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/gradient_banner_card.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/trust_hire_app_bar.dart';
 
 class RemoteWorkGuidePage extends StatefulWidget {
   const RemoteWorkGuidePage({super.key});
@@ -41,7 +43,13 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF5F5F5),
+      backgroundColor: const Color(0xFFF5F7FA),
+
+      appBar: const TrustHireAppBar(
+        title: "Work Guide",
+        showLogo: true,
+        showBack: true,
+      ),
 
       body: SafeArea(
         child: SingleChildScrollView(
@@ -50,11 +58,6 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              /// JOB GUARD HEADER
-              _buildJobGuardHeader(),
-
-              const SizedBox(height: 20),
 
               /// PROGRESS CARD
               _buildProgressCard(),
@@ -80,38 +83,11 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
     );
   }
 
-  // ─── JOB GUARD HEADER ────────────────────────────────────────────────────────
-  Widget _buildJobGuardHeader() {
-    return Row(
-      children: [
-        BackButton(
-            onPressed: (){
-              Navigator.pop(context);
-            }
-        ),
-        const Spacer(),    // ono fix koris
-        const Text(
-          'TrustHire',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.blueAccent,
-          ),
-        ),
-        const Spacer(),
-      ],
-    );
-  }
-
   // ─── PROGRESS CARD ───────────────────────────────────────────────────────────
   Widget _buildProgressCard() {
-    return Container(
-      width: double.infinity,
+    return GradientBannerCard(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(18),
-      ),
+      borderRadius: 18,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -261,10 +237,10 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
-                        color: isRead ? Colors.black : Colors.transparent,
+                        color: isRead ? const Color(0xFF4F6EF7) : Colors.transparent,
                         borderRadius: BorderRadius.circular(30),
                         border: Border.all(
-                          color: isRead ? Colors.black : Colors.grey.shade400,
+                          color: isRead ? const Color(0xFF4F6EF7) : Colors.grey.shade400,
                           width: 1.5,
                         ),
                       ),

@@ -7,6 +7,7 @@ import 'package:trust_hire_app/Pages/Notifications/notification_page.dart';
 import 'package:trust_hire_app/profile/profile_database.dart';
 import 'package:trust_hire_app/profile/profile_models.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/profile_widgets.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_snackbar.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -343,13 +344,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               }
                           ),
                           const SizedBox(width: 6),
-                          const Icon(Icons.shield, color: Colors.white, size: 26),
-                          const SizedBox(width: 6),
-                          const Text('TrustHire',
+                          const AppLogo(iconSize: 18),
+                          const SizedBox(width: 10),
+                          const Text('Trust Hire',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.bold)),
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5)),
                           const Spacer(),
                           Obx(() {
                             final c = Get.find<NotificationController>();

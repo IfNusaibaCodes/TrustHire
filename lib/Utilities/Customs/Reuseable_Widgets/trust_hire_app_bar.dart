@@ -24,11 +24,16 @@ class TrustHireAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// (used by Job Feed).
   final bool showDrawer;
 
+  /// When true, shows a back arrow on the left that pops the current route
+  /// (used by pushed sub-pages like the Work Guide).
+  final bool showBack;
+
   const TrustHireAppBar({
     super.key,
     required this.title,
     this.showLogo = false,
     this.showDrawer = false,
+    this.showBack = false,
   });
 
   @override
@@ -36,11 +41,12 @@ class TrustHireAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool hasLeading = showDrawer || showBack;
     return AppBar(
       elevation: 0,
       backgroundColor: TColors.appNavy,
-      automaticallyImplyLeading: showDrawer,
-      titleSpacing: showDrawer ? 0 : null,
+      automaticallyImplyLeading: hasLeading,
+      titleSpacing: hasLeading ? 0 : null,
       leading: showDrawer
           ? Builder(
               builder: (ctx) => IconButton(
@@ -48,7 +54,12 @@ class TrustHireAppBar extends StatelessWidget implements PreferredSizeWidget {
                 icon: const Icon(Icons.menu_rounded, color: Colors.white),
               ),
             )
-          : null,
+          : showBack
+              ? IconButton(
+                  onPressed: () => Navigator.of(context).maybePop(),
+                  icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
+                )
+              : null,
       title: Row(
         children: [
           if (showLogo) ...[
