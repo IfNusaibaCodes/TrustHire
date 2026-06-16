@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
+import 'package:trust_hire_app/Utilities/Constants/responsive.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_snackbar.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/trust_hire_app_bar.dart';
 import 'planner_controller.dart';
@@ -223,6 +224,7 @@ class _PlannerPageState extends State<PlannerPage> {
 
   @override
   Widget build(BuildContext context) {
+     Responsive().init(context); 
     final c = Get.find<PlannerController>();
 
     return Scaffold(
@@ -338,11 +340,15 @@ class _PlannerPageState extends State<PlannerPage> {
                         const Text('🔥',
                             style: TextStyle(fontSize: 16)),
                         const SizedBox(width: 4),
-                        Text('${c.streakDays.value} day streak',
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12)),
+                        Flexible(
+                          child: Text('${c.streakDays.value} day streak',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12)),
+                        ),
                       ],
                     ),
                   ],
