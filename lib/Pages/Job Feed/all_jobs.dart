@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trust_hire_app/Common/Component/job_item_list.dart';
+import 'package:trust_hire_app/Pages/Job%20Feed/job_item_list.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 import '../../Model/job_model.dart';
 import '../../admin/admin_service.dart';
@@ -14,7 +14,7 @@ class AllJobs extends StatefulWidget {
 }
 
 class _AllJobsState extends State<AllJobs> {
-  // ── State ────────────────────────────────────────────────────
+
   List<JobModel> _allJobs      = [];
   String         _searchQuery  = '';
   String         _selectedType = 'All';
@@ -26,19 +26,19 @@ class _AllJobsState extends State<AllJobs> {
 
   static const _filters = ['All', 'Full-time', 'Part-time', 'Remote', 'Recent'];
 
-  // ── Filtering logic (single place) ───────────────────────────
+
   List<JobModel> get _filteredJobs {
     var list = _allJobs;
 
-    // Step A — chip filter
+
     if (_selectedType == 'Remote') {
       list = list.where((j) => j.hasRemote == true).toList();
     } else if (_selectedType == 'Recent') {
       final cutoff = DateTime.now().subtract(const Duration(days: 7));
       list = list.where((j) => j.published != null && j.published!.isAfter(cutoff)).toList();
     } else if (_selectedType != 'All') {
-      // Normalize both sides: remove dashes, underscores, spaces so
-      // "Full-time" matches "full_time", "Full Time", "fulltime", etc.
+
+
       String normalize(String s) =>
           s.toLowerCase().replaceAll(RegExp(r'[-_\s]'), '');
       final key = normalize(_selectedType);
@@ -47,7 +47,7 @@ class _AllJobsState extends State<AllJobs> {
       ).toList();
     }
 
-    // Step B — text filter (substring, case-insensitive, OR across fields)
+
     final q = _searchQuery.trim().toLowerCase();
     if (q.isNotEmpty) {
       list = list.where((j) =>
@@ -61,7 +61,7 @@ class _AllJobsState extends State<AllJobs> {
     return list;
   }
 
-  // ── Lifecycle ─────────────────────────────────────────────────
+
   @override
   void initState() {
     super.initState();
@@ -99,7 +99,7 @@ class _AllJobsState extends State<AllJobs> {
     );
   }
 
-  // ── Build ─────────────────────────────────────────────────────
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,14 +170,14 @@ class _AllJobsState extends State<AllJobs> {
     );
   }
 
-  // ── Filter chips row ──────────────────────────────────────────
+
   Widget _filterChips() => FilterChipsRow<String>(
         values: _filters,
         selected: _selectedType,
         onSelected: (f) => setState(() => _selectedType = f),
       );
 
-  // ── Body: loading / error / list ──────────────────────────────
+
   Widget _body() {
     if (_isLoading) {
       return const Center(child: CircularProgressIndicator(color: Color(0xFF4F6EF7)));
@@ -218,7 +218,7 @@ class _AllJobsState extends State<AllJobs> {
     return JobItemList(jobs: results);
   }
 
-  // ── Empty search state ────────────────────────────────────────
+
   Widget _emptySearch() {
     return Center(
       child: Column(

@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trust_hire_app/Pages/Notifications/notification_model.dart';
+import 'package:trust_hire_app/Model/notification_model.dart';
 
-/// A single notification row: a tinted type icon, title (bold when unread),
-/// body preview, relative timestamp, and an unread highlight/dot.
-///
-/// Example:
-/// ```dart
-/// NotificationCard(notif: item, onTap: () => controller.markRead(item.id))
-/// ```
 class NotificationCard extends StatelessWidget {
   final NotificationModel notif;
   final VoidCallback onTap;

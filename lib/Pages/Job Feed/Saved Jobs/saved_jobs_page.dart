@@ -14,7 +14,7 @@ class SavedJobsPage extends StatefulWidget {
 class _SavedJobsPageState extends State<SavedJobsPage> {
   final _service = SavedJobsService();
 
-  List<JobModel> _jobs      = [];   // ← declared here
+  List<JobModel> _jobs      = [];   
   bool           _isLoading = true;
 
   @override

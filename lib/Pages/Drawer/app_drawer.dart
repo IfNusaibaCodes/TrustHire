@@ -7,7 +7,6 @@ import 'contact_us_page.dart';
 import 'Feedback_Support/feedback_support_page.dart';
 import 'privacy_policy_page.dart';
 import 'terms_conditions_page.dart';
-import '../Guide/work_guide_page.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
@@ -44,7 +43,6 @@ class _AppDrawerState extends State<AppDrawer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // ── Header ──────────────────────────────────────
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 24, 20, 8),
               child: Row(
@@ -71,11 +69,10 @@ class _AppDrawerState extends State<AppDrawer> {
               child: Divider(color: Colors.white12, height: 1),
             ),
 
-            // ── General items ────────────────────────────────
-            _DrawerItem(
-              icon: Icons.public_outlined,
-              label: 'Remote Work Guide',
-              onTap: () => _push(const RemoteWorkGuidePage()),
+              _DrawerItem(
+              icon: Icons.feedback_outlined,
+              label: 'Feedback & Support',
+              onTap: () => _push(const FeedbackSupportPage()),
             ),
             _DrawerItem(
               icon: Icons.info_outline_rounded,
@@ -87,11 +84,7 @@ class _AppDrawerState extends State<AppDrawer> {
               label: 'Contact Us',
               onTap: () => _push(const ContactUsPage()),
             ),
-            _DrawerItem(
-              icon: Icons.feedback_outlined,
-              label: 'Feedback & Support',
-              onTap: () => _push(const FeedbackSupportPage()),
-            ),
+          
             _DrawerItem(
               icon: Icons.lock_outline_rounded,
               label: 'Privacy Policy',
@@ -103,7 +96,6 @@ class _AppDrawerState extends State<AppDrawer> {
               onTap: () => _push(const TermsConditionsPage()),
             ),
 
-            // ── Admin section ────────────────────────────────
             if (_isAdmin) ...[
               const Padding(
                 padding: EdgeInsets.fromLTRB(20, 16, 20, 8),

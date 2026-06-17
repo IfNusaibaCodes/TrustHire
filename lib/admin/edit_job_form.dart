@@ -117,8 +117,6 @@ class _EditJobFormState extends State<EditJobForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-
-              // ── Header ─────────────────────────────────────
               Row(
                 children: [
                   const Text('Edit Job',
@@ -192,8 +190,7 @@ class _EditJobFormState extends State<EditJobForm> {
       ),
     );
   }
-
-  // ── Helpers ────────────────────────────────────────────────
+  
   Widget _label(String text) => Padding(
     padding: const EdgeInsets.only(bottom: 8, top: 4),
     child: Text(text, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700,

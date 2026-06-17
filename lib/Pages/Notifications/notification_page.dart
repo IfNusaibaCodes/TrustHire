@@ -4,7 +4,7 @@ import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widg
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import '../../admin/admin_service.dart';
 import '../../admin/send_notification_form.dart';
-import 'notification_controller.dart';
+import '../../Authentication/Controllers/notification_controller.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});

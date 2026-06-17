@@ -617,7 +617,6 @@ class _VersionBadge extends StatelessWidget {
   }
 }
 
-//data models
 class _ValueItem {
   final IconData icon;
   final String   title;

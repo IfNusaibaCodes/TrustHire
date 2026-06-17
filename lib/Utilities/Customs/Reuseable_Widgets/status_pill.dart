@@ -1,23 +1,11 @@
 import 'package:flutter/material.dart';
 
-/// A small rounded label (optionally with a leading icon) on a tinted
-/// background — e.g. "Remote", "Applied", "3 tasks", priority tags.
-///
-/// Examples:
-/// ```dart
-/// StatusPill(text: 'Remote', color: TColors.appBlue);
-/// StatusPill(text: 'Applied', color: TColors.appSuccess, icon: Icons.check);
-/// StatusPill(text: 'High', color: red, filled: true); // solid background
-/// ```
+
 class StatusPill extends StatelessWidget {
   final String text;
   final Color color;
   final IconData? icon;
-
-  /// When true the background is the solid [color] and the text is white;
-  /// otherwise the background is [color] tinted and the text is [color].
   final bool filled;
-
   final double fontSize;
   final EdgeInsetsGeometry padding;
   final double radius;

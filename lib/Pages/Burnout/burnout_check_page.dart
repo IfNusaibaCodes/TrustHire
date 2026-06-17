@@ -14,27 +14,22 @@ class BurnoutPage extends StatefulWidget {
 
 class _BurnoutPageState extends State<BurnoutPage> {
 
-  // ── Dependencies ─────────────────────────────────────────
   final BurnoutRepository _repository = BurnoutRepository();
 
-  // ── State ────────────────────────────────────────────────
   final Map<int, int> selectedAnswers = {};
   final PageController _pageController = PageController();
   int currentPage = 0;
   bool isSaving   = false;
   bool _submitted = false;
 
-  // ── Short-hands ──────────────────────────────────────────
   List<BurnoutQuestion>  get _questions   => BurnoutData.questions;
   List<BurnoutSuggestion> get _suggestions => BurnoutData.suggestions;
 
-  // ── Theme constants ──────────────────────────────────────
   static const Color primary  = TColors.appNavy;
   static const Color bgColor  = TColors.appBackground;
   static const Color textDark = TColors.appTextDark;
   static const Color textGrey = TColors.appTextGrey;
 
-  // ── Save ─────────────────────────────────────────────────
   Future<void> _saveAllAnswers() async {
     if (selectedAnswers.length < _questions.length) {
       _showMessage('Please answer all questions!', isError: true);
@@ -58,7 +53,6 @@ class _BurnoutPageState extends State<BurnoutPage> {
     if (mounted) setState(() => isSaving = false);
   }
 
-  // ── Snackbar helper ──────────────────────────────────────
   void _showMessage(String msg, {bool isError = false}) {
     if (!mounted) return;
     showAppSnackBar(context, msg, isError: isError);
@@ -70,9 +64,6 @@ class _BurnoutPageState extends State<BurnoutPage> {
     super.dispose();
   }
 
-  // ════════════════════════════════════════════════════════
-  //  BUILD
-  // ════════════════════════════════════════════════════════
   @override
   Widget build(BuildContext context) {
     if (_submitted) return _ResultsScreen(suggestions: _suggestions);
@@ -83,7 +74,6 @@ class _BurnoutPageState extends State<BurnoutPage> {
         child: Column(
           children: [
 
-            // ── TOP BAR ─────────────────────────────────────
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 14, 20, 0),
               child: Row(
@@ -127,7 +117,6 @@ class _BurnoutPageState extends State<BurnoutPage> {
             ),
             const SizedBox(height: 16),
 
-            // ── PROGRESS BAR ────────────────────────────────
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -161,7 +150,6 @@ class _BurnoutPageState extends State<BurnoutPage> {
             ),
             const SizedBox(height: 12),
 
-            // DOT INDICATORS
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
@@ -182,7 +170,6 @@ class _BurnoutPageState extends State<BurnoutPage> {
             ),
             const SizedBox(height: 14),
 
-            // SWIPEABLE QUESTION PAGES
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
@@ -198,7 +185,6 @@ class _BurnoutPageState extends State<BurnoutPage> {
                     child: Column(
                       children: [
 
-                        // ── QUESTION CARD ──────────────────
                         _QuestionCard(
                           question: q,
                           pageIndex: pageIndex,
@@ -208,7 +194,6 @@ class _BurnoutPageState extends State<BurnoutPage> {
                         ),
                         const SizedBox(height: 18),
 
-                        // ── NEXT / SUBMIT BUTTON ───────────
                         _ActionButton(
                           answered: answered,
                           isLastPage: isLastPage,
@@ -240,7 +225,6 @@ class _BurnoutPageState extends State<BurnoutPage> {
 
 
 
-// ── Question Card ────────────────────────────────────────────
 class _QuestionCard extends StatelessWidget {
   final BurnoutQuestion question;
   final int pageIndex;
@@ -276,7 +260,6 @@ class _QuestionCard extends StatelessWidget {
       child: Column(
         children: [
 
-          // ── Illustration ──────────────────────────────────
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
             child: Container(
@@ -295,7 +278,6 @@ class _QuestionCard extends StatelessWidget {
             ),
           ),
 
-          // ── Question text ─────────────────────────────────
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 22, 24, 6),
             child: Text(
@@ -312,7 +294,6 @@ class _QuestionCard extends StatelessWidget {
               style: TextStyle(fontSize: 12, color: textGrey)),
           const SizedBox(height: 22),
 
-          // ── Options (2×2 grid) ────────────────────────────
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: GridView.count(
@@ -339,7 +320,6 @@ class _QuestionCard extends StatelessWidget {
   }
 }
 
-// ── Single option chip ────────────────────────────────────────
 class _OptionChip extends StatelessWidget {
   final BurnoutOption option;
   final bool isSelected;
@@ -406,7 +386,6 @@ class _OptionChip extends StatelessWidget {
   }
 }
 
-// ── Next / Submit button ──────────────────────────────────────
 class _ActionButton extends StatelessWidget {
   final bool answered;
   final bool isLastPage;
@@ -490,7 +469,6 @@ class _ActionButton extends StatelessWidget {
   }
 }
 
-// ── Results screen (shown after successful submission) ─────────
 class _ResultsScreen extends StatelessWidget {
   final List<BurnoutSuggestion> suggestions;
   const _ResultsScreen({required this.suggestions});
@@ -512,7 +490,6 @@ class _ResultsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              // ── Well Done Card ───────────────────────────────
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(28),
@@ -591,7 +568,6 @@ class _ResultsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 28),
 
-              // ── Suggestions label ────────────────────────────
               const Text('Suggestions for you',
                   style: TextStyle(
                       fontSize: 18,
@@ -599,11 +575,9 @@ class _ResultsScreen extends StatelessWidget {
                       color: textDark)),
               const SizedBox(height: 12),
 
-              // ── Suggestion cards ─────────────────────────────
               ...suggestions.map((s) => _SuggestionCard(suggestion: s)),
               const SizedBox(height: 24),
 
-              // ── Done button ──────────────────────────────────
               SizedBox(
                 width: double.infinity,
                 height: 52,
@@ -643,7 +617,6 @@ class _ResultsScreen extends StatelessWidget {
   }
 }
 
-// ── Suggestion card ───────────────────────────────────────────
 class _SuggestionCard extends StatelessWidget {
   final BurnoutSuggestion suggestion;
   const _SuggestionCard({required this.suggestion});

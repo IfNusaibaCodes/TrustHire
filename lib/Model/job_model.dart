@@ -205,7 +205,7 @@ class JobModel {
 
 
   static int? _parseInt(dynamic v) =>
-      v == null ? null : int.tryParse(v.toString());   //helper help korbe
+      v == null ? null : int.tryParse(v.toString()); 
 
   static String? _parseStr(dynamic v) => v?.toString();
 }

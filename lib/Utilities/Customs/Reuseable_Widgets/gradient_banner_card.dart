@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Full-width gradient card with the app's navy→blue gradient and drop shadow.
-/// Used in the job feed hero card, scam detector, and red flags page.
 class GradientBannerCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;

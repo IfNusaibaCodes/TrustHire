@@ -585,7 +585,6 @@ class _AgreementBanner extends StatelessWidget {
   }
 }
 
-//data models
 class _SectionData {
   final IconData     icon;
   final String       title;

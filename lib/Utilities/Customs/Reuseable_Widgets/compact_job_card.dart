@@ -3,18 +3,7 @@ import 'package:trust_hire_app/Model/job_model.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/company_logo.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/job_info_chip.dart';
 
-/// A compact job summary tile: company logo + company name + title, a couple of
-/// [JobInfoChip]s (location / type) and a trailing chevron. Used in the trending
-/// list on the job feed. Pass [onTap] to handle navigation.
-///
-/// Example:
-/// ```dart
-/// CompactJobCard(
-///   job: job,
-///   onTap: () => Navigator.push(context,
-///       MaterialPageRoute(builder: (_) => JobDetailsPage(job: job))),
-/// )
-/// ```
+
 class CompactJobCard extends StatelessWidget {
   final JobModel job;
   final VoidCallback? onTap;
@@ -42,7 +31,6 @@ class CompactJobCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // COMPANY LOGO
             CompanyLogo(
               logoUrl: job.companyLogo,
               companyName: job.companyName,
@@ -53,7 +41,6 @@ class CompactJobCard extends StatelessWidget {
 
             const SizedBox(width: 14),
 
-            // JOB DETAILS
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,19 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 
-/// Displays the outcome of a scam analysis: a safety score + risk level header,
-/// followed by detected issues and positive signs. Colour adapts to [riskLevel]
-/// ('High Risk' / 'Medium Risk' / anything else = low risk).
-///
-/// Example:
-/// ```dart
-/// ScamResultCard(
-///   score: 70,
-///   riskLevel: 'Medium Risk',
-///   issues: ['Requests upfront payment'],
-///   positives: ['Has company website'],
-/// )
-/// ```
 class ScamResultCard extends StatelessWidget {
   final int score;
   final String riskLevel;
@@ -32,11 +19,15 @@ class ScamResultCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final highRisk = riskLevel == 'High Risk';
     final mediumRisk = riskLevel == 'Medium Risk';
-    final color = highRisk
-        ? TColors.appError
-        : mediumRisk
-            ? TColors.appAmber
-            : TColors.appSuccess;
+    final neutral =
+        riskLevel == 'Not Enough Info' || riskLevel == 'Unknown';
+    final color = neutral
+        ? const Color(0xFF6B7280)
+        : highRisk
+            ? TColors.appError
+            : mediumRisk
+                ? TColors.appAmber
+                : TColors.appSuccess;
 
     return Container(
       width: double.infinity,
@@ -64,11 +55,13 @@ class ScamResultCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Icon(
-                  highRisk
-                      ? Icons.dangerous_rounded
-                      : mediumRisk
-                          ? Icons.warning_amber_rounded
-                          : Icons.verified_rounded,
+                  neutral
+                      ? Icons.help_outline_rounded
+                      : highRisk
+                          ? Icons.dangerous_rounded
+                          : mediumRisk
+                              ? Icons.warning_amber_rounded
+                              : Icons.verified_rounded,
                   color: color,
                   size: 26,
                 ),
@@ -77,7 +70,7 @@ class ScamResultCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('$score% Safe',
+                  Text(neutral ? 'Unable to Score' : '$score% Safe',
                       style: TextStyle(
                           fontSize: 22, fontWeight: FontWeight.w800, color: color)),
                   Text(riskLevel,
@@ -88,7 +81,10 @@ class ScamResultCard extends StatelessWidget {
             ],
           ),
           for (final issue in issues)
-            _line(Icons.cancel_rounded, TColors.appError, issue),
+            _line(
+                neutral ? Icons.info_outline_rounded : Icons.cancel_rounded,
+                neutral ? const Color(0xFF6B7280) : TColors.appError,
+                issue),
           for (final sign in positives)
             _line(Icons.check_circle_rounded, TColors.appSuccess, sign),
         ],

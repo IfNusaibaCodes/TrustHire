@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 
-/// Shows the app's standard floating, rounded snackbar.
-///
-/// Replaces the identical hand-written `SnackBar(... behavior: floating ...)`
-/// blocks scattered across the pages.
-///
-/// ```dart
-/// showAppSnackBar(context, 'Task added ✅');
-/// showAppSnackBar(context, 'Error: $e', isError: true);
-/// showAppSnackBar(context, 'Email copied', background: TColors.appNavy);
-/// ```
+
 void showAppSnackBar(
   BuildContext context,
   String message, {

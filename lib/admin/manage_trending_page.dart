@@ -115,7 +115,6 @@ class _TrendingJobTileState extends State<_TrendingJobTile> {
       ),
       child: Row(
         children: [
-          // company initial avatar
           CompanyLogo(
             companyName: widget.job.companyName,
             size: 44,

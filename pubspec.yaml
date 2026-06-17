@@ -53,6 +53,29 @@ dev_dependencies:
 
   flutter_lints: ^6.0.0
 
+  # Tooling to generate the app launcher icon (see tool/generate_app_icon.dart).
+  image: ^4.3.0
+  flutter_launcher_icons: ^0.14.4
+
+
+#-------APP LAUNCHER ICON----------#
+# Run: dart run flutter_launcher_icons
+flutter_launcher_icons:
+  image_path: "assets/images/LogoImages/app_icon.png"
+  android: true
+  adaptive_icon_background: "#1E2A60"
+  adaptive_icon_foreground: "assets/images/LogoImages/app_icon_foreground.png"
+  ios: true
+  remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: "assets/images/LogoImages/app_icon.png"
+    background_color: "#1E2A60"
+    theme_color: "#1E2A60"
+  windows:
+    generate: true
+    image_path: "assets/images/LogoImages/app_icon.png"
+
 
 flutter:
   uses-material-design: true

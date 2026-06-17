@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:trust_hire_app/profile/profile_models.dart';
+import 'package:trust_hire_app/Model/profile_models.dart';
 import 'package:trust_hire_app/Model/job_model.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/trust_hire_app_bar.dart';
@@ -25,8 +25,6 @@ class GrowthPageState extends State<GrowthPage> {
     _future = _load();
   }
 
-  /// Re-fetches all stats. Called when the Growth tab becomes visible again,
-  /// since this page is kept alive inside the bottom nav's IndexedStack.
   void reload() {
     if (!mounted) return;
     setState(() { _future = _load(); });
@@ -88,8 +86,6 @@ class GrowthPageState extends State<GrowthPage> {
               await data;
             },
             child: CustomScrollView(
-              // Always scrollable so pull-to-refresh works even when the
-              // content fits on screen without overflowing.
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 _header(d),
@@ -118,7 +114,6 @@ class GrowthPageState extends State<GrowthPage> {
     );
   }
 
-  // ─────────────────────────────────────────────────────────── Header
   Widget _header(_GrowthData d) {
     final name = (d.profile.firstName ?? '').isNotEmpty
         ? d.profile.firstName!
@@ -205,7 +200,6 @@ class GrowthPageState extends State<GrowthPage> {
     );
   }
 
-  // ─────────────────────────────────────────────────────────── KPI Row
   Widget _kpiRow(_GrowthData d) {
     return Row(
       children: [
@@ -218,7 +212,6 @@ class GrowthPageState extends State<GrowthPage> {
     );
   }
 
-  // ─────────────────────────────────────────────────────────── Weekly Chart
   Widget _weeklyChart(_GrowthData d) {
     const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
     final todayIndex = DateTime.now().weekday - 1;
@@ -269,7 +262,6 @@ class GrowthPageState extends State<GrowthPage> {
     );
   }
 
-  // ─────────────────────────────────────────────────────────── Profile Strength
   Widget _profileStrength(_GrowthData d, int pct) {
     final checks = [
       ('Name added',       (d.profile.firstName ?? '').isNotEmpty),
@@ -338,7 +330,6 @@ class GrowthPageState extends State<GrowthPage> {
     );
   }
 
-  // ─────────────────────────────────────────────────────────── Achievements
   Widget _achievements(_GrowthData d, int pct) {
     final badges = [
       _Badge('First Apply',      Icons.rocket_launch_rounded,  d.stats.appliedCount >= 1,  TColors.appBlue),
@@ -399,7 +390,6 @@ class GrowthPageState extends State<GrowthPage> {
     );
   }
 
-  // ─────────────────────────────────────────────────────────── Recent Applied
   Widget _recentApplied(_GrowthData d) {
     return SectionCard(
       title: 'Recent Applications',
@@ -463,7 +453,6 @@ class GrowthPageState extends State<GrowthPage> {
 
 }
 
-// ─────────────────────────────────────────────────────────── Data classes
 class _GrowthData {
   final ProfileStats   stats;
   final int            streak;

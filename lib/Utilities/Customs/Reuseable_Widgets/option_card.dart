@@ -1,28 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 
-/// A selectable, vertical option card: an icon above a label, with a solid
-/// [color] fill + shadow when [selected]. Designed to sit inside a [Row]
-/// (it wraps itself in [Expanded]) as a segmented choice — e.g. the
-/// "Paste Text / Screenshot" input-method toggle.
-///
-/// Example:
-/// ```dart
-/// Row(children: [
-///   OptionCard(icon: Icons.description_outlined, label: 'Paste Text',
-///       selected: method == 0, onTap: () => setMethod(0)),
-///   const SizedBox(width: 12),
-///   OptionCard(icon: Icons.image_outlined, label: 'Screenshot',
-///       selected: method == 1, onTap: () => setMethod(1)),
-/// ])
-/// ```
 class OptionCard extends StatelessWidget {
   final IconData icon;
   final String label;
   final bool selected;
   final VoidCallback onTap;
-
-  /// Accent / fill colour when [selected].
   final Color color;
 
   const OptionCard({

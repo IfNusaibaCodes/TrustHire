@@ -61,9 +61,9 @@ class ContactUsPage extends StatelessWidget {
 }
 
 class _ContactContent {
-  static const email       = 'trusthire.team@gmail.com';  //email change korbo
-  static const facebookUrl = 'https://facebook.com/trusthire';   // update when you have a page
-  static const linkedinUrl = 'https://linkedin.com/company/trusthire'; //pore add korbo
+  static const email       = 'trusthire.team@gmail.com'; 
+  static const facebookUrl = 'https://facebook.com/trusthire';  
+  static const linkedinUrl = 'https://linkedin.com/company/trusthire'; 
   static const responseTime = 'We typically respond within 24–48 hours.';
   static const availability = 'Available Sunday to Thursday';
 }

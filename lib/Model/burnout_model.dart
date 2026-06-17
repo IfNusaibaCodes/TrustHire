@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// ── ANSWER OPTION ────────────────────────────────────────────
 class BurnoutOption {
   final IconData icon;
   final String label;
@@ -13,7 +12,6 @@ class BurnoutOption {
   });
 }
 
-// ── SINGLE QUESTION ──────────────────────────────────────────
 class BurnoutQuestion {
   final int questionNumber;
   final String question;
@@ -30,7 +28,6 @@ class BurnoutQuestion {
   });
 }
 
-// ── SUGGESTION CARD ──────────────────────────────────────────
 class BurnoutSuggestion {
   final IconData icon;
   final Color color;
@@ -45,9 +42,8 @@ class BurnoutSuggestion {
   });
 }
 
-// ── SUBMITTED RECORD (maps to Supabase row) ──────────────────
 class BurnoutRecord {
-  final String? id;           // uuid — null before insert
+  final String? id;          
   final String userId;
   final int questionNumber;
   final String questionText;
@@ -63,7 +59,6 @@ class BurnoutRecord {
     this.createdAt,
   });
 
-  /// Convert to JSON for Supabase insert.
   Map<String, dynamic> toJson() => {
     'user_id': userId,
     'question_number': questionNumber,
@@ -71,7 +66,6 @@ class BurnoutRecord {
     'answer': answer,
   };
 
-  /// Build from Supabase row JSON.
   factory BurnoutRecord.fromJson(Map<String, dynamic> json) => BurnoutRecord(
     id: json['id'] as String?,
     userId: json['user_id'] as String,
@@ -84,12 +78,9 @@ class BurnoutRecord {
   );
 }
 
-// ── STATIC DATA ───────────────────────────────────────────────
-//  All questions and suggestions live here so the UI and
-//  repository never hard-code content.
-// ─────────────────────────────────────────────────────────────
+
 class BurnoutData {
-  BurnoutData._(); // non-instantiable
+  BurnoutData._(); 
 
   static const List<BurnoutQuestion> questions = [
     BurnoutQuestion(

@@ -6,6 +6,7 @@ import '../../Model/job_model.dart';
 import '../../admin/admin_service.dart';
 import '../../admin/manage_trending_page.dart';
 import '../Drawer/app_drawer.dart';
+import '../Guide/work_guide_page.dart';
 import 'all_jobs.dart';
 import 'job_details.dart';
 import 'jobs_database.dart';
@@ -264,6 +265,73 @@ class _JobFeedPageState extends State<JobFeedPage> {
                       },
                     );
                   },
+                ),
+
+                const SizedBox(height: 30),
+
+                GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const RemoteWorkGuidePage(),
+                    ),
+                  ),
+                  child: GradientBannerCard(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 18,
+                    ),
+                    borderRadius: 20,
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: const Text('🏡', style: TextStyle(fontSize: 26)),
+                        ),
+                        const SizedBox(width: 16),
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Remote Work Guide',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                'Tips to stay productive and\nthrive while working remotely.',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 12,
+                                  height: 1.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Icon(
+                            Icons.arrow_forward_rounded,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

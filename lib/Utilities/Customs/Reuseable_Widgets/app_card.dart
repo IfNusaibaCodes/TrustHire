@@ -1,27 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Constants/size.dart';
 
-/// A white, rounded container with a soft drop shadow — the base "card"
-/// used all over the app (profile, growth, planner, notifications, job feed…).
-///
-/// Examples:
-/// ```dart
-/// AppCard(child: Text('Hi'));                       // plain white card
-/// AppCard(radius: 20, child: ...);                  // bigger corners
-/// AppCard(accentColor: TColors.appPrimary, child: ...); // left colour bar
-/// AppCard(onTap: () {}, child: ...);                // tappable card
-/// ```
 class AppCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
   final double radius;
   final Color color;
 
-  /// When set, draws a coloured bar on the left edge instead of [border].
   final Color? accentColor;
   final double accentWidth;
 
-  /// A full border (ignored when [accentColor] is provided).
   final BoxBorder? border;
 
   final bool shadow;

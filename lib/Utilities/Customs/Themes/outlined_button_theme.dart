@@ -5,7 +5,6 @@ class TOutlinedButton {
   TOutlinedButton._();
 
 
-//Light Theme
   static final lightOutlinedButtonTheme = OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         elevation: 0,

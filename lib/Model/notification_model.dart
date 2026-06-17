@@ -41,8 +41,6 @@ class NotificationModel {
     );
   }
 
-  // null target field = applies to everyone.
-  // Non-null target field = only applies if user's attribute matches.
   bool matchesAudience({
     String? userRole,
     String? university,

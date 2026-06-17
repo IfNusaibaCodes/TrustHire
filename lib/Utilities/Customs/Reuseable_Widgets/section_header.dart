@@ -2,26 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/icon_badge.dart';
 
-/// A header row: a tinted [IconBadge] + title (+ optional subtitle) and an
-/// optional trailing action ("See all", "Edit", …).
-///
-/// Example:
-/// ```dart
-/// SectionHeader(
-///   icon: Icons.bar_chart_rounded,
-///   title: 'Weekly Activity',
-///   subtitle: 'Applications this week',
-/// )
-/// ```
+
 class SectionHeader extends StatelessWidget {
   final IconData icon;
   final String title;
   final String? subtitle;
-
-  /// Accent colour for the icon badge (and the action).
   final Color color;
-
-  /// Optional trailing action.
   final String? actionLabel;
   final IconData? actionIcon;
   final VoidCallback? onAction;

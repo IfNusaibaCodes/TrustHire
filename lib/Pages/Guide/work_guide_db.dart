@@ -13,7 +13,6 @@ class WorkGuideDatabase {
     return uid;
   }
 
-  // GET user progress
   Future<Map<String, bool>> fetchProgress() async {
     final uid = _getRequiredUid();
     final data = await client
@@ -30,7 +29,6 @@ class WorkGuideDatabase {
     return result;
   }
 
-  // TOGGLE READ STATUS
   Future<void> toggle({
     required String sectionKey,
     required bool isRead,

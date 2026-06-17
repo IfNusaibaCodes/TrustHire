@@ -15,7 +15,6 @@ class Responsive {
 
     if (screenWidth <= 375) return (width / 375) * screenWidth;
     
-    // For larger screens, we scale up by only 10% of the difference
     double scale = 1.0 + (screenWidth - 375) / 375 * 0.1;
     return width * scale.clamp(1.0, 1.3);
   }

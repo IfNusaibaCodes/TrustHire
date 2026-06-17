@@ -1,17 +1,12 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 
-// Sourced from the central colour palette (colors.dart) so the profile page
-// and its helper widgets stay consistent with the rest of the app.
-const Color primary  = TColors.appBlue;        // 0xFF4F6EF7
-const Color bgColor  = TColors.appBackground;  // 0xFFF5F6FA
-const Color textDark = TColors.appTextDark;    // 0xFF1A1A2E
-const Color textGrey = TColors.appTextGrey;    // 0xFF9CA3AF
-const Color success  = TColors.appSuccess;     // 0xFF10B981
+const Color primary  = TColors.appBlue;       
+const Color bgColor  = TColors.appBackground;  
+const Color textDark = TColors.appTextDark;    
+const Color textGrey = TColors.appTextGrey;    
+const Color success  = TColors.appSuccess;     
 
-// ── White card wrapper ───────────────────────────────────────
 Widget profileCard({required Widget child}) {
   return Container(
     width: double.infinity,
@@ -30,7 +25,6 @@ Widget profileCard({required Widget child}) {
   );
 }
 
-// ── Stat card (Applied / Views / Saved) ─────────────────────
 Widget statCard(IconData icon, String value, String label,
     {VoidCallback? onTap}) {
   return Expanded(
@@ -68,7 +62,6 @@ Widget statCard(IconData icon, String value, String label,
   );
 }
 
-// ── Section header row ───────────────────────────────────────
 Widget sectionHeader({
   required IconData icon,
   required String title,
@@ -104,7 +97,6 @@ Widget sectionHeader({
   );
 }
 
-// ── Info row (icon + text) ───────────────────────────────────
 Widget infoRow(IconData icon, String value) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 5),
@@ -120,7 +112,6 @@ Widget infoRow(IconData icon, String value) {
   );
 }
 
-// ── Completeness step row ────────────────────────────────────
 Widget completenessStep(String label, bool done) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 5),
@@ -142,7 +133,6 @@ Widget completenessStep(String label, bool done) {
   );
 }
 
-// ── Reusable text field ──────────────────────────────────────
 Widget profileField(
     String label,
     TextEditingController ctrl,
@@ -186,7 +176,6 @@ Widget profileField(
   );
 }
 
-// ── Primary button ───────────────────────────────────────────
 Widget primaryButton(String label, VoidCallback onTap) {
   return SizedBox(
     width: double.infinity,
@@ -205,7 +194,6 @@ Widget primaryButton(String label, VoidCallback onTap) {
   );
 }
 
-// ── Bottom sheet wrapper ─────────────────────────────────────
 Widget bottomSheetWrapper({
   required BuildContext context,
   required String title,

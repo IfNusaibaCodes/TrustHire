@@ -1,29 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 
-/// A tappable pill with a selected / unselected state — used for filter rows
-/// ("All / Pending / Done"), priority pickers, input-method toggles, etc.
-///
-/// Example:
-/// ```dart
-/// SelectableChip(
-///   label: 'Pending',
-///   selected: filter == 'Pending',
-///   onTap: () => setFilter('Pending'),
-/// )
-/// ```
+
 class SelectableChip extends StatelessWidget {
   final String label;
   final bool selected;
   final VoidCallback onTap;
-
-  /// Accent colour when selected.
   final Color color;
-
-  /// Optional leading icon, or a small coloured dot when [showDot] is true.
   final IconData? icon;
   final bool showDot;
-
   final EdgeInsetsGeometry padding;
 
   const SelectableChip({

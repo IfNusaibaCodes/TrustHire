@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Animated filter chip with a solid navy selected state.
-/// Used in horizontal filter rows (job feed, notifications).
 class AppFilterChip extends StatelessWidget {
   final String label;
   final bool selected;

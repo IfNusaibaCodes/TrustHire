@@ -118,7 +118,6 @@ class _JobManagementPageState extends State<JobManagementPage> {
       ),
       body: Column(
         children: [
-          // ── Search bar ─────────────────────────────────────
           Container(
             color: Colors.white,
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
@@ -139,7 +138,6 @@ class _JobManagementPageState extends State<JobManagementPage> {
             ),
           ),
 
-          // ── List ───────────────────────────────────────────
           Expanded(
             child: _loading
                 ? const Center(child: CircularProgressIndicator(color: _primary))
@@ -168,7 +166,6 @@ class _JobManagementPageState extends State<JobManagementPage> {
   }
 }
 
-// ── Job tile ───────────────────────────────────────────────────
 class _JobTile extends StatelessWidget {
   final JobModel     job;
   final VoidCallback onDelete;

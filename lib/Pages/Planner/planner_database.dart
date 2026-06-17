@@ -1,5 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'planner_model.dart';
+import '../../Model/planner_model.dart';
 
 class PlannerDatabase {
   static final _client = Supabase.instance.client;
@@ -46,7 +46,6 @@ class PlannerDatabase {
     return (response?['streak_days'] as int?) ?? 0;
   }
 
-  // Called when user marks a task done. Increments streak only once per day.
   Future<int> recordActivityAndGetStreak(String userId, String today) async {
     final row = await _client
         .from('planner_streaks')
@@ -57,7 +56,6 @@ class PlannerDatabase {
     final lastDate   = row?['last_date']   as String?;
     final lastStreak = (row?['streak_days'] as int?) ?? 0;
 
-    // Already recorded today — return current streak unchanged
     if (lastDate == today) return lastStreak;
 
     final yesterday = DateFormatter.yesterday();

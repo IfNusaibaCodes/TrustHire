@@ -60,9 +60,6 @@ class PrivacyPolicyPage extends StatelessWidget {
   }
 }
 
-// ═════════════════════════════════════════════════════════════════════════════
-// CONTENT  ← update text here only
-// ═════════════════════════════════════════════════════════════════════════════
 
 class _PolicyContent {
   static const effectiveDate = 'Effective: January 1, 2026';
@@ -572,7 +569,6 @@ class _ContactNote extends StatelessWidget {
   }
 }
 
-//data models
 class _SectionData {
   final IconData icon;
   final String   title;

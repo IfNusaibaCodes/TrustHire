@@ -5,10 +5,11 @@ import 'package:iconsax/iconsax.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/Common/Widgets_Login_Signup/auth_info.dart';
-import 'package:trust_hire_app/Pages/Login/forget_password_page.dart';
+import 'package:trust_hire_app/Pages/forget_password_page.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
+import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_snackbar.dart';
 import 'package:trust_hire_app/common/styles/spacing_styles.dart';
 
 import '../../Navigation/bottom_navigator.dart';
@@ -52,12 +53,7 @@ class _LoginPageState extends State<LoginPage> {
 
       await authService.signInWithEmailAndPassword(email, password);
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(
-          content: Text("Login Successful"),
-          backgroundColor: Colors.green,
-        ));
+        showAppSnackBar(context, "Login Successful");
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => BottomNavBar()));
       }
@@ -66,11 +62,11 @@ class _LoginPageState extends State<LoginPage> {
         final message = e.message.toLowerCase().contains('invalid login credentials')
             ? "Incorrect Password!"
             : e.message;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message),backgroundColor: TColors.error,));
+        showAppSnackBar(context, message, isError: true);
       }
     } catch(e){
       if(mounted){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: $e"),backgroundColor: TColors.error,));
+        showAppSnackBar(context, "Error: $e", isError: true);
       }
     }finally{
       if(mounted){
@@ -105,12 +101,10 @@ class _LoginPageState extends State<LoginPage> {
 
             SizedBox( height: height*0.03,),
 
-            //Logo, Title, SubTitle
             const TLoginHeader(),
 
             SizedBox( height: height*0.03,),
 
-            //Form
             TForm(
               formKey: _formKey,
               emailController: _emailController,
@@ -119,13 +113,8 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox( height: height*0.01,),
 
-            //Divider
-            //TDivider(dividerText: Ttexts.orSignInWith.capitalize! ),
-
             const SizedBox( height: Tsize.spaceBtwSections,),
 
-            //Footer
-           // const TSocialButton()
            TAuthInfo(isLogin: true),
 
           ],
@@ -137,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 
-class TForm extends StatelessWidget {
+class TForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController emailController;
   final TextEditingController passwordController;
@@ -153,16 +142,23 @@ class TForm extends StatelessWidget {
   });
 
   @override
+  State<TForm> createState() => _TFormState();
+}
+
+class _TFormState extends State<TForm> {
+  bool _obscurePassword = true;
+
+  @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: widget.formKey,
       child:
       Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
             TextFormField(
-              controller: emailController,
+              controller: widget.emailController,
                 validator: (value) => TValidator.validateEmail(value),
                 decoration: InputDecoration(
                     prefixIcon : Icon(Icons.mail_outline_rounded),
@@ -175,10 +171,15 @@ class TForm extends StatelessWidget {
             const SizedBox( height: Tsize.spaceBtwinputfield,),
 
             TextFormField(
-              controller: passwordController,
+              controller: widget.passwordController,
+                obscureText: _obscurePassword,
                 validator: (value) => TValidator.validatePassword(value),
                 decoration: InputDecoration(
-                    prefixIcon : Icon(Iconsax.password_check), labelText: Ttexts.password,  suffixIcon: Icon(Iconsax.eye_slash),
+                    prefixIcon : Icon(Iconsax.password_check), labelText: Ttexts.password,
+                    suffixIcon: IconButton(
+                      icon: Icon(_obscurePassword ? Iconsax.eye_slash : Iconsax.eye),
+                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                    ),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20))
                 )
@@ -196,7 +197,7 @@ class TForm extends StatelessWidget {
                 child: Text(
                   'Forgot Password?',
                   style: GoogleFonts.inter(
-                    color:  Colors.black,
+                    color:  TColors.appNavy,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
@@ -207,7 +208,7 @@ class TForm extends StatelessWidget {
 
             SizedBox(width: double.infinity, child: ElevatedButton(
                 onPressed: (){
-                  onLogin();
+                  widget.onLogin();
                 },
                 child: Text(Ttexts.login))),
             const SizedBox(height:  Tsize.spaceBtwItems,),
@@ -246,15 +247,6 @@ class TLoginHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AppLogo(),
-            /*
-              CircleAvatar(
-                radius: 35,
-                backgroundColor: Colors.white,
-                child: CircleAvatar(
-                  radius: 35,
-                  backgroundImage: AssetImage(Timages.appLogo),
-                ),
-              ), */
               SizedBox( width: width*0.01),
               Text(Ttexts.AppName, style: Theme.of(context).textTheme.headlineLarge,),
             ],

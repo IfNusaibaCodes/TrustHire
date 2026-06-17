@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
-import 'package:trust_hire_app/profile/profile_models.dart';
+import 'package:trust_hire_app/Model/profile_models.dart';
 
 class ProfileDatabase {
   final client      = Supabase.instance.client;

@@ -87,7 +87,6 @@ class RedFlagsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // ── Header banner ───────────────────────────
             GradientBannerCard(
               padding: const EdgeInsets.all(20),
               borderRadius: 20,
@@ -122,7 +121,6 @@ class RedFlagsPage extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // ── Flag cards ──────────────────────────────
             ...List.generate(_flags.length, (i) => _FlagCard(
               number: i + 1,
               flag: _flags[i],
@@ -136,7 +134,6 @@ class RedFlagsPage extends StatelessWidget {
   }
 }
 
-// ── Data class ─────────────────────────────────────────────────
 class _RedFlag {
   final IconData icon;
   final Color    color;
@@ -146,7 +143,6 @@ class _RedFlag {
       required this.title, required this.desc});
 }
 
-// ── Flag card ──────────────────────────────────────────────────
 class _FlagCard extends StatelessWidget {
   final int      number;
   final _RedFlag flag;

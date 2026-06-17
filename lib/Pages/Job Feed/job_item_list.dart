@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 import '../../Model/job_model.dart';
-import '../../Pages/Job Feed/Saved Jobs/saved_jobs_database.dart';
-import '../../Pages/Job Feed/job_details.dart';
+import 'Saved Jobs/saved_jobs_database.dart';
+import 'job_details.dart';
 
 class JobItemList extends StatelessWidget {
   final List<JobModel> jobs;
@@ -16,7 +16,6 @@ class JobItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ── CHANGED: removed Scaffold + AppBar, returns content directly ──
     return isLoading
         ? const Center(
       child: CircularProgressIndicator(color: Color(0xFF4F6EF7)),
@@ -285,7 +284,6 @@ class _JobCardState extends State<_JobCard> {
 
             const SizedBox(height: 16),
 
-            // Footer: published date + view more button
             Row(
               children: [
                 if (widget.job.published != null)

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Small icon + label chip used to display job metadata (location, type, experience, salary).
-/// [accent] switches to an orange variant for highlighted fields (e.g. experience level).
 class JobInfoChip extends StatelessWidget {
   final IconData icon;
   final String label;

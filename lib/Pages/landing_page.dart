@@ -10,33 +10,16 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TColors.appBackground , // const Color(0xFF4F6EF7),
+      backgroundColor: TColors.appBackground , 
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
           child: Column(
             children: [
               const Spacer(flex: 2),
-
-              // Logo
               AppLogo(),
-             /* Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF4F6EF7),
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: const Icon(
-                  Icons.work_outline_rounded,
-                  color: Colors.white,
-                  size: 40,
-                ),
-              ), */
-
               const SizedBox(height: 28),
 
-              // Title
               const Text(
                 'Trust Hire',
                 style: TextStyle(
@@ -49,7 +32,6 @@ class LandingPage extends StatelessWidget {
 
               const SizedBox(height: 12),
 
-              // Subtitle
               const Text(
                 'Find trusted jobs and build\nyour career with confidence.',
                 textAlign: TextAlign.center,
@@ -62,7 +44,6 @@ class LandingPage extends StatelessWidget {
 
               const Spacer(flex: 3),
 
-              // Sign Up button
               SizedBox(
                 width: double.infinity,
                 height: 54,
@@ -88,7 +69,6 @@ class LandingPage extends StatelessWidget {
 
               const SizedBox(height: 14),
 
-              // Login button
               SizedBox(
                 width: double.infinity,
                 height: 54,

@@ -1,15 +1,15 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
-import 'planner_model.dart';
-import 'planner_database.dart';
+import '../../Model/planner_model.dart';
+import '../../Pages/Planner/planner_database.dart';
 
 class PlannerController extends GetxController {
 
   final PlannerDatabase _db          = PlannerDatabase();
   final AuthService     _authService = AuthService();
 
-  // FIX 1: throw if not logged in instead of silently using empty string
+
   String get _uid {
     final uid = _authService.getCurrentUid();
     if (uid == null || uid.isEmpty) throw Exception('User not logged in');
@@ -21,7 +21,7 @@ class PlannerController extends GetxController {
   var streakDays = 0.obs;
   var filter     = 'All'.obs;
 
-  // FIX 2: computed once on init so date never changes mid-session
+
   late final String todayDate;
   late final String todayFormatted;
 
@@ -53,7 +53,6 @@ class PlannerController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // FIX 2: set date once here
     todayDate      = DateFormat('yyyy-MM-dd').format(DateTime.now());
     todayFormatted = DateFormat('EEEE, MMM d').format(DateTime.now());
     loadTasks();
@@ -78,8 +77,6 @@ class PlannerController extends GetxController {
     }
     _db.toggleTask(taskId, !current);
 
-    // FIX 3: only call streak update on the FIRST completed task of the session
-    // avoids redundant Supabase calls (backend already guards duplicate days)
     final markingDone = !current;
     if (markingDone && completedCount == 1) {
       _db.recordActivityAndGetStreak(_uid, todayDate).then((newStreak) {

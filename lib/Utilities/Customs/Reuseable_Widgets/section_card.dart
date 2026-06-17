@@ -2,19 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_card.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/section_header.dart';
 
-/// An [AppCard] with a [SectionHeader] (icon + title + subtitle) on top and a
-/// [child] body underneath — the standard "titled card" used on the growth,
-/// planner and other dashboard-style pages.
-///
-/// Example:
-/// ```dart
-/// SectionCard(
-///   icon: Icons.bar_chart_rounded,
-///   title: 'Weekly Activity',
-///   subtitle: 'Applications this week',
-///   child: MyChart(),
-/// )
-/// ```
 class SectionCard extends StatelessWidget {
   final String title;
   final String subtitle;

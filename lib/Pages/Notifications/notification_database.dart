@@ -1,5 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'notification_model.dart';
+import '../../Model/notification_model.dart';
 
 class NotificationService {
   static final _client = Supabase.instance.client;

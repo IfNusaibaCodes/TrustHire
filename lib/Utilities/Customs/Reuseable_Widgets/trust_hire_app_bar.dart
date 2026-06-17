@@ -1,31 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
-import 'package:trust_hire_app/Pages/Notifications/notification_controller.dart';
+import 'package:trust_hire_app/Authentication/Controllers/notification_controller.dart';
 import 'package:trust_hire_app/Pages/Notifications/notification_page.dart';
 import 'package:trust_hire_app/profile/profile_page.dart';
 import 'app_logo.dart';
 
-/// Shared app bar used across the main tab pages (Job Feed, Scam Detector,
-/// Planner, Growth).
-///
-/// - Job Feed passes [showLogo] + [showDrawer] to get the app logo, title and
-///   the left-side drawer button.
-/// - Other pages pass a [title] (page name) and get the same right-side
-///   notifications + profile actions.
+
 class TrustHireAppBar extends StatelessWidget implements PreferredSizeWidget {
-  /// Title text shown next to / instead of the logo.
   final String title;
-
-  /// When true, shows the [AppLogo] before the title (used by Job Feed).
   final bool showLogo;
-
-  /// When true, shows the hamburger menu on the left that opens the drawer
-  /// (used by Job Feed).
   final bool showDrawer;
-
-  /// When true, shows a back arrow on the left that pops the current route
-  /// (used by pushed sub-pages like the Work Guide).
   final bool showBack;
 
   const TrustHireAppBar({
@@ -85,8 +70,6 @@ class TrustHireAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-/// Notifications bell with an unread-count badge (badge only shown when the
-/// [NotificationController] is registered and there are unread items).
 class _NotificationsAction extends StatelessWidget {
   const _NotificationsAction();
 
@@ -143,7 +126,6 @@ class _NotificationsAction extends StatelessWidget {
   }
 }
 
-/// Rounded profile button on the right side.
 class _ProfileAction extends StatelessWidget {
   const _ProfileAction();
 

@@ -46,7 +46,7 @@ class SavedJobsService {
       {'user_id': uid, 'job_id': jobId},
       onConflict: 'user_id, job_id',
     );
-    // ── increment saved_count in profile_stats ──
+
     await _updateSavedCount(1);
   }
 
@@ -57,7 +57,7 @@ class SavedJobsService {
         .delete()
         .eq('user_id', uid)
         .eq('job_id', jobId);
-    // ── decrement saved_count in profile_stats ──
+
     await _updateSavedCount(-1);
   }
 
@@ -71,11 +71,11 @@ class SavedJobsService {
     }
   }
 
-  // ── increments or decrements saved_count, never goes below 0 ──
+
   Future<void> _updateSavedCount(int delta) async {
     final uid = _getUid();
 
-    // fetch current count first
+
     final response = await _client
         .from('profile_stats')
         .select('saved_count')

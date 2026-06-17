@@ -4,8 +4,8 @@ import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/responsive.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_snackbar.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/trust_hire_app_bar.dart';
-import 'planner_controller.dart';
-import 'planner_widgets.dart';
+import '../../Authentication/Controllers/planner_controller.dart';
+import '../../Utilities/Customs/Reuseable_Widgets/planner_widgets.dart';
 import '../Burnout/burnout_check_page.dart';
 
 class PlannerPage extends StatefulWidget {
@@ -277,7 +277,6 @@ class _PlannerPageState extends State<PlannerPage> {
               ),
               const SizedBox(height: 16),
 
-              // ── PROGRESS CARD ─────────────────────────
               Container(
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
@@ -545,7 +544,6 @@ class _PlannerPageState extends State<PlannerPage> {
                 }),
               const SizedBox(height: 6),
 
-              // ── ADD TASK BUTTON ───────────────────────
               GestureDetector(
                 onTap: () => _showAddTask(context),
                 child: Container(
@@ -576,7 +574,6 @@ class _PlannerPageState extends State<PlannerPage> {
               ),
               const SizedBox(height: 20),
 
-              // ── STREAK CARD ───────────────────────────
               Container(
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
@@ -643,11 +640,9 @@ class _PlannerPageState extends State<PlannerPage> {
               ),
               const SizedBox(height: 16),
 
-              // ── BURNOUT BANNER ────────────────────────
               const _BurnoutBanner(),
               const SizedBox(height: 16),
 
-              // ── QUOTE CARD ────────────────────────────
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(22),

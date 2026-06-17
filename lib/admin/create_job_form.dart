@@ -133,7 +133,6 @@ class _CreateJobFormState extends State<CreateJobForm> {
             mainAxisSize: MainAxisSize.min,
             children: [
 
-              // ── Header row: title + close button ──────────────
               Row(
                 children: [
                   const Text(
@@ -156,7 +155,6 @@ class _CreateJobFormState extends State<CreateJobForm> {
               ),
               const SizedBox(height: 20),
 
-              // ── Job info ───────────────────────────────────────
               _sectionLabel('Job Info'),
               _field(_titleCtrl,   'Job Title',        required: true),
               _field(_appUrlCtrl,  'Application URL',  required: true),
@@ -176,25 +174,25 @@ class _CreateJobFormState extends State<CreateJobForm> {
               _sectionLabel('Experience Level'),
               _dropdown(_expLevel, _expLevels, (v) => setState(() => _expLevel = v!)),
 
-              // ── Location ───────────────────────────────────────
+              // Location 
               _sectionLabel('City & Country'),
               _field(_cityCtrl,    'City'),
               _field(_countryCtrl, 'Country'),
 
-              // ── Company info ───────────────────────────────────
+              // Company info 
               _sectionLabel('Company Info'),
               _field(_companyCtrl,  'Company Name',       required: true),
               _field(_logoCtrl,     'Company Logo URL'),
               _field(_websiteCtrl,  'Company Website URL'),
               _field(_linkedinCtrl, 'Company LinkedIn URL'),
 
-              // ── Toggles ────────────────────────────────────────
+              // Toggles 
               _sectionLabel('Options'),
               _toggle('Remote available',   _hasRemote,  (v) => setState(() => _hasRemote  = v)),
               _toggle('Mark as Trending',   _isTrending, (v) => setState(() => _isTrending = v)),
               _toggle('Company is Agency',  _isAgency,   (v) => setState(() => _isAgency   = v)),
 
-              // ── Description ────────────────────────────────────
+              // Description 
               _sectionLabel('Description'),
               _field(_descCtrl, 'Job description (optional)', maxLines: 4),
 
@@ -222,7 +220,6 @@ class _CreateJobFormState extends State<CreateJobForm> {
     );
   }
 
-  // ── Helpers ────────────────────────────────────────────────────────────────
 
   Widget _sectionLabel(String label) => Padding(
     padding: const EdgeInsets.only(bottom: 8, top: 4),
@@ -276,7 +273,6 @@ class _CreateJobFormState extends State<CreateJobForm> {
     );
   }
 
-  // Nullable dropdown with a "None" option
   Widget _dropdownNullable(String? value, List<String> items, void Function(String?) onChanged) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),

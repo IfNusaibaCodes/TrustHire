@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/Pages/landing_page.dart';
-import 'package:trust_hire_app/Pages/Notifications/notification_controller.dart';
+import 'package:trust_hire_app/Authentication/Controllers/notification_controller.dart';
 import 'package:trust_hire_app/Pages/Notifications/notification_page.dart';
 import 'package:trust_hire_app/profile/profile_database.dart';
-import 'package:trust_hire_app/profile/profile_models.dart';
+import 'package:trust_hire_app/Model/profile_models.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/profile_widgets.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_snackbar.dart';
@@ -254,7 +254,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  // ── ONLY THIS METHOD WAS CHANGED ─────────────────────────────────────────
+
   void _showCvDialog() {
     final controller = TextEditingController(
       text: profile.cvUrl ?? '',
@@ -300,7 +300,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-  // ─────────────────────────────────────────────────────────────────────────
+
 
   Future<void> _openCvLink() async {
     final url = profile.cvUrl ?? '';
@@ -331,7 +331,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Column(
               children: [
 
-                // ── Header ──────────────────────────────────────────
+
                 Container(
                   width: double.infinity,
                   color: TColors.appNavy,
@@ -495,7 +495,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       const SizedBox(height: 14),
 
-                      // ── Completeness ───────────────────────────────
+
                       profileCard(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -526,19 +526,19 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                           const SizedBox(height: 12),
-                          // ← profile.firstName instead of _firstName
+
                           completenessStep('Basic info added',
                               (profile.firstName ?? '').isNotEmpty),
                           completenessStep('Bio added',           (profile.bio ?? '').isNotEmpty),
                           completenessStep('Skills added',        skills.isNotEmpty),
                           completenessStep('Upload CV / Resume',  (profile.cvUrl ?? '').isNotEmpty),
                           completenessStep('Add work experience', experiences.isNotEmpty),
-                          // removed: completenessStep('Link university ID', ...)
+
                         ],
                       )),
                       const SizedBox(height: 14),
 
-                      // ── Basic Info ─────────────────────────────────
+
                       profileCard(child: Column(
                         children: [
                           sectionHeader(
@@ -549,7 +549,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             onAction: _showEditSheet,
                           ),
                           const SizedBox(height: 10),
-                          // ← profile.email instead of _email
+
                           infoRow(Icons.mail_outline,
                               (profile.email ?? '').isEmpty ? '—' : profile.email!),
                           infoRow(Icons.phone_outlined,
@@ -570,7 +570,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       )),
                       const SizedBox(height: 14),
 
-                      // ── Skills ─────────────────────────────────────
+
                       profileCard(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -637,7 +637,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       )),
                       const SizedBox(height: 14),
 
-                      // ── Experience ─────────────────────────────────
+
                       profileCard(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -702,7 +702,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       )),
                       const SizedBox(height: 14),
 
-                      // ── Trust Score ────────────────────────────────
+
                       profileCard(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -766,7 +766,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       )),
                       const SizedBox(height: 14),
 
-                      // ── Resume / CV ────────────────────────────────
+
                       profileCard(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

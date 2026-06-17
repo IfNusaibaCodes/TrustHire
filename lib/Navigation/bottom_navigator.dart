@@ -4,7 +4,7 @@ import 'package:trust_hire_app/Pages/Job%20Feed/job_feed_page.dart';
 import 'package:trust_hire_app/Pages/scam_detection/scam_detection_page.dart';
 import 'package:trust_hire_app/Pages/Planner/planner_page.dart';
 import 'package:trust_hire_app/Pages/Growth/growth_page.dart';
-import 'package:trust_hire_app/Pages/Notifications/notification_controller.dart';
+import 'package:trust_hire_app/Authentication/Controllers/notification_controller.dart';
 
 import '../Utilities/Constants/colors.dart';
 
@@ -62,8 +62,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
           setState(() {
             selectedIndex = setValue;
           });
-          // Growth tab is kept alive in the IndexedStack, so refresh its
-          // stats each time it's opened to reflect new applied/saved jobs.
           if (setValue == 3) {
             _growthKey.currentState?.reload();
           }

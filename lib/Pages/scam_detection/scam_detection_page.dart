@@ -76,7 +76,6 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
 
             const SizedBox(height: 28),
 
-            // ── Input method ─────────────────────────────────
             const Text('Choose input method',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: TColors.appNavy)),
             const SizedBox(height: 14),
@@ -101,7 +100,6 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
 
             const SizedBox(height: 20),
 
-            // ── Input area ───────────────────────────────────
             if (_method == 0) ...[
               Container(
                 decoration: BoxDecoration(
@@ -177,7 +175,6 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
 
             const SizedBox(height: 24),
 
-            // ── Analyze button ───────────────────────────────
             SizedBox(
               width: double.infinity,
               height: 54,
@@ -200,7 +197,6 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
 
             const SizedBox(height: 16),
 
-            // ── Analysis result (text input only) ────────
             if (_method == 0 && _result != null) ...[
               ScamResultCard(
                 score: _result!.score,
@@ -211,7 +207,6 @@ class _ScamDetectorPageState extends State<ScamDetectorPage> {
               const SizedBox(height: 16),
             ],
 
-            // ── Red Flags Guide card ─────────────────────
             GestureDetector(
               onTap: () => Navigator.push(
                 context,

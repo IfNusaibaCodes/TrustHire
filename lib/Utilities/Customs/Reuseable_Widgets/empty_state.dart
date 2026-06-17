@@ -1,17 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 
-/// A centred "nothing here yet" placeholder: an icon, a title and an
-/// optional message. Used for empty lists / error states.
-///
-/// Example:
-/// ```dart
-/// EmptyState(
-///   icon: Icons.notifications_off_outlined,
-///   title: 'No notifications',
-///   message: "You're all caught up!",
-/// )
-/// ```
 class EmptyState extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -19,7 +8,6 @@ class EmptyState extends StatelessWidget {
   final Color iconColor;
   final double iconSize;
 
-  /// Optional action button (e.g. "Retry").
   final String? actionLabel;
   final VoidCallback? onAction;
 

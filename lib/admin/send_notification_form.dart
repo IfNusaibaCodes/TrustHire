@@ -96,8 +96,6 @@ class _SendNotificationFormState extends State<SendNotificationForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-
-              // ── Header ─────────────────────────────────────────
               Row(
                 children: [
                   const Text(
@@ -120,12 +118,10 @@ class _SendNotificationFormState extends State<SendNotificationForm> {
               ),
               const SizedBox(height: 20),
 
-              // ── Content ────────────────────────────────────────
               _sectionLabel('Message'),
               _field(_titleCtrl, 'Title', required: true),
               _field(_bodyCtrl,  'Body',  required: true, maxLines: 3),
 
-              // ── Type ───────────────────────────────────────────
               _sectionLabel('Notification Type'),
               Container(
                 margin: const EdgeInsets.only(bottom: 16),
@@ -154,7 +150,6 @@ class _SendNotificationFormState extends State<SendNotificationForm> {
                 ),
               ),
 
-              // ── Audience (optional) ────────────────────────────
               _sectionLabel('Target Audience (leave blank = everyone)'),
               Container(
                 margin: const EdgeInsets.only(bottom: 14),

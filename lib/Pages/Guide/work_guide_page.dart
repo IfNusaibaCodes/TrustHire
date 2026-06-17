@@ -59,17 +59,14 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              /// PROGRESS CARD
               _buildProgressCard(),
 
               const SizedBox(height: 20),
 
-              /// HERO BANNER
               _buildHeroBanner(),
 
               const SizedBox(height: 25),
 
-              /// SECTION LIST
               ...List.generate(
                 GuideSections.all.length,
                     (i) => _buildSectionCard(i),
@@ -83,7 +80,6 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
     );
   }
 
-  // ─── PROGRESS CARD ───────────────────────────────────────────────────────────
   Widget _buildProgressCard() {
     return GradientBannerCard(
       padding: const EdgeInsets.all(20),
@@ -128,7 +124,6 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
     );
   }
 
-  // ─── HERO BANNER ─────────────────────────────────────────────────────────────
   Widget _buildHeroBanner() {
     return Container(
       width: double.infinity,
@@ -148,7 +143,6 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
     );
   }
 
-  // ─── SECTION CARD ─────────────────────────────────────────────────────────────
   Widget _buildSectionCard(int index) {
     final section = GuideSections.all[index];
     final isRead  = _isReadMap[section.key] ?? false;
@@ -205,7 +199,6 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
                     ),
                   ),
 
-                  // Read / Mark as Read button
                   GestureDetector(
                     onTap: () async {
                       //final uid = authService.getCurrentUid();
@@ -217,13 +210,11 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
                       });
 
                       try {
-                        // 4. Fire the updated boolean to your database service
                         await WorkGuideDatabase().toggle(
                           sectionKey: section.key,
                           isRead: newValue,
                         );
                       } catch (e) {
-                        // Fallback: If network fails, revert the checkmark state back
                         setState(() {
                           _isReadMap[section.key] = isRead;
                         });
@@ -233,7 +224,7 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
                       }
 
                     },
-                    /////
+
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
@@ -269,7 +260,6 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
 
                   const SizedBox(width: 8),
 
-                  // Expand / collapse arrow
                   GestureDetector(
                     onTap: () => setState(() => _isExpanded[index] = !_isExpanded[index]),
                     child: Icon(
@@ -281,7 +271,6 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
               ),
             ),
 
-            /// EXPANDED BODY
             if (isOpen)
               Container(
                 width: double.infinity,
@@ -291,7 +280,7 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
                   color: const Color(0xffF0F4FF),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                // ── ONLY THIS PART CHANGED ──
+
                 child: index == 0
                     ? _buildSetupTips()
                     : Column(
@@ -317,7 +306,7 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
     );
   }
 
-  // ─── SETUP TIPS ──────────────────────────────────────────────────────────────
+
   Widget _buildSetupTips() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

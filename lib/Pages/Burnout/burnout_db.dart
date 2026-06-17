@@ -15,7 +15,6 @@ class BurnoutRepository {
   }
 
 
-  //insert
   Future<void> saveAnswers({
     required List<BurnoutQuestion> questions,
     required Map<int, int> selectedAnswers,
@@ -41,7 +40,6 @@ class BurnoutRepository {
     await client.from('burnout_checks').insert(rows);
   }
 
-  // ── FETCH: load all past check-ins for the current user ──
   Future<List<BurnoutRecord>> fetchHistory() async {
     final uid = _getRequiredUid();
     final response = await client
@@ -55,7 +53,6 @@ class BurnoutRepository {
         .toList();
   }
 
-  // ── FETCH: check-ins for a specific date ─────────────────
   Future<List<BurnoutRecord>> fetchByDate(DateTime date) async {
     final uid = _getRequiredUid();
     final from = DateTime(date.year, date.month, date.day);
@@ -74,7 +71,6 @@ class BurnoutRepository {
         .toList();
   }
 
-  // ── DELETE: remove a check-in by id ──────────────────────
   Future<void> deleteRecord(String id) async {
     final uid = _getRequiredUid();
     await client

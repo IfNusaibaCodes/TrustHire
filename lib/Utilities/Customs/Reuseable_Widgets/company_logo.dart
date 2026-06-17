@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Displays a company logo from a URL, or falls back to initials from [companyName].
-///
-/// Used across job cards, trending list, applied/saved job lists, and job details.
 class CompanyLogo extends StatelessWidget {
   final String? logoUrl;
   final String? companyName;
@@ -48,7 +45,7 @@ class CompanyLogo extends StatelessWidget {
           ? Image.network(
               logoUrl!,
               fit: BoxFit.contain,
-              webHtmlElementStrategy: WebHtmlElementStrategy.fallback,  //when run in chrome then this helps to load logo
+              webHtmlElementStrategy: WebHtmlElementStrategy.fallback, 
               errorBuilder: (context, error, stackTrace) => _buildInitials(),
             )
           : _buildInitials(),

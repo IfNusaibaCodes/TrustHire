@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Pages/Drawer/Feedback_Support/feedback_database.dart';
-import '../Pages/Drawer/Feedback_Support/feedback_model.dart';
+import '../Model/feedback_model.dart';
 
 class FeedbackInboxPage extends StatefulWidget {
   const FeedbackInboxPage({super.key});
@@ -16,7 +16,7 @@ class _FeedbackInboxPageState extends State<FeedbackInboxPage> {
 
   List<FeedbackModel> _all      = [];
   bool                _loading  = true;
-  String?             _filter;   // null = All
+  String?             _filter;   
 
   @override
   void initState() {
@@ -100,7 +100,6 @@ class _FeedbackInboxPageState extends State<FeedbackInboxPage> {
       ),
       body: Column(
         children: [
-          // ── Filter chips ────────────────────────────────────
           if (!_loading && _all.isNotEmpty)
             Container(
               color: Colors.white,
@@ -125,7 +124,7 @@ class _FeedbackInboxPageState extends State<FeedbackInboxPage> {
               ),
             ),
 
-          // ── List ───────────────────────────────────────────
+
           Expanded(
             child: _loading
                 ? const Center(child: CircularProgressIndicator(color: _primary))
@@ -166,7 +165,7 @@ class _FeedbackInboxPageState extends State<FeedbackInboxPage> {
   }
 }
 
-// ── Filter chip ────────────────────────────────────────────────
+
 class _FilterChip extends StatelessWidget {
   final String label;
   final bool selected;
@@ -199,7 +198,7 @@ class _FilterChip extends StatelessWidget {
   }
 }
 
-// ── Feedback card ──────────────────────────────────────────────
+
 class _FeedbackCard extends StatelessWidget {
   final FeedbackModel item;
   final VoidCallback  onDelete;
@@ -242,7 +241,7 @@ class _FeedbackCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
-          // ── Header row ─────────────────────────────────────
+  
           Row(
             children: [
               Container(
@@ -276,7 +275,7 @@ class _FeedbackCard extends StatelessWidget {
             ],
           ),
 
-          // ── Problem ─────────────────────────────────────────
+
           if (item.problem?.isNotEmpty == true) ...[
             const SizedBox(height: 10),
             const Text('Problem', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700,
@@ -285,7 +284,6 @@ class _FeedbackCard extends StatelessWidget {
             Text(item.problem!, style: const TextStyle(fontSize: 14, color: _navy, height: 1.4)),
           ],
 
-          // ── Suggestion ──────────────────────────────────────
           if (item.suggestion?.isNotEmpty == true) ...[
             const SizedBox(height: 10),
             const Text('Suggestion', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700,
@@ -294,7 +292,6 @@ class _FeedbackCard extends StatelessWidget {
             Text(item.suggestion!, style: const TextStyle(fontSize: 14, color: _navy, height: 1.4)),
           ],
 
-          // ── Contact info ────────────────────────────────────
           if (item.email?.isNotEmpty == true || item.phone?.isNotEmpty == true) ...[
             const SizedBox(height: 10),
             const Divider(height: 1, color: Color(0xFFF0F0F0)),

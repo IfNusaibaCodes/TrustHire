@@ -1,5 +1,3 @@
-// Barrel file — import this to get all shared UI widgets at once:
-// import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 export 'app_card.dart';
 export 'icon_badge.dart';
 export 'section_header.dart';

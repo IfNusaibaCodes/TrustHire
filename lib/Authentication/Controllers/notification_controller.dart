@@ -3,8 +3,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/admin/admin_service.dart';
 import 'package:trust_hire_app/profile/profile_database.dart';
-import 'notification_model.dart';
-import 'notification_database.dart';
+import '../../Model/notification_model.dart';
+import '../../Pages/Notifications/notification_database.dart';
 
 class NotificationController extends GetxController {
   final _authService = AuthService();
@@ -12,18 +12,15 @@ class NotificationController extends GetxController {
 
   String get _uid => _authService.getCurrentUid() ?? '';
 
-  // ── Internal cache (plain list — not obs) ────────────────────
   List<NotificationModel> _all = [];
 
-  // ── Observable state ─────────────────────────────────────────
   var isLoading    = false.obs;
   var hasError     = false.obs;
-  var activeFilter = Rxn<String>(); // null = All
-  var _tick        = 0.obs;         // incremented to trigger Obx rebuilds
+  var activeFilter = Rxn<String>(); 
+  var _tick        = 0.obs;         
 
   RealtimeChannel? _channel;
 
-  // ── Computed getters (Obx reads _tick to subscribe) ──────────
   List<NotificationModel> get filtered {
     _tick.value; // subscribe
     final f = activeFilter.value;
@@ -36,7 +33,6 @@ class NotificationController extends GetxController {
     return _all.where((n) => !n.isRead).length;
   }
 
-  // ── Lifecycle ─────────────────────────────────────────────────
   @override
   void onInit() {
     super.onInit();
@@ -50,7 +46,6 @@ class NotificationController extends GetxController {
     super.onClose();
   }
 
-  // ── Load ──────────────────────────────────────────────────────
   Future<void> load() async {
     isLoading.value = true;
     hasError.value  = false;
@@ -77,13 +72,11 @@ class NotificationController extends GetxController {
     _channel = NotificationService.subscribeToInserts(load);
   }
 
-  // ── Filter ────────────────────────────────────────────────────
   void setFilter(String? type) {
     activeFilter.value = type;
     _tick.value++;
   }
 
-  // ── Mark read (optimistic) ────────────────────────────────────
   Future<void> markRead(String id) async {
     final i = _all.indexWhere((n) => n.id == id);
     if (i == -1 || _all[i].isRead) return;
@@ -99,7 +92,6 @@ class NotificationController extends GetxController {
     }
   }
 
-  // ── Mark all read (optimistic) ────────────────────────────────
   Future<void> markAllRead() async {
     final unreadIds = _all.where((n) => !n.isRead).map((n) => n.id).toList();
     if (unreadIds.isEmpty) return;

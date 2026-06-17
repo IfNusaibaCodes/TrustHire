@@ -3,19 +3,7 @@ import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_card.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/icon_badge.dart';
 
-/// A compact KPI/stat card: a circular [IconBadge] over a bold [value] and a
-/// small [label], wrapped in an [AppCard]. Typically placed in a Row of three.
-///
-/// Example:
-/// ```dart
-/// StatCard(
-///   label: 'Applied',
-///   value: '12',
-///   icon: Icons.send_rounded,
-///   color: TColors.appBlue,
-///   background: const Color(0xFFEEF2FF),
-/// )
-/// ```
+
 class StatCard extends StatelessWidget {
   final String label;
   final String value;

@@ -8,7 +8,7 @@ import 'package:trust_hire_app/Utilities/Validation/validation.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
 import 'package:trust_hire_app/common/styles/spacing_styles.dart';
 
-import '../Login/login_page.dart';
+import 'Login/login_page.dart';
 
 class ForgetPasswordPage extends StatefulWidget {
   const ForgetPasswordPage({super.key});
@@ -92,7 +92,6 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
 }
 
 
-// ── Step 1: Enter email ────────────────────────────────────────────────────
 class _RequestView extends StatelessWidget {
   final double                   height;
   final GlobalKey<FormState>     formKey;
@@ -114,7 +113,6 @@ class _RequestView extends StatelessWidget {
       children: [
         SizedBox(height: height * 0.03),
 
-        // ── Header (same style as login/signup) ──────────────────
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -144,7 +142,6 @@ class _RequestView extends StatelessWidget {
 
         SizedBox(height: height * 0.03),
 
-        // ── Subtitle ─────────────────────────────────────────────
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
@@ -158,7 +155,6 @@ class _RequestView extends StatelessWidget {
 
         SizedBox(height: height * 0.04),
 
-        // ── Form ─────────────────────────────────────────────────
         Form(
           key: formKey,
           child: Padding(
@@ -198,7 +194,6 @@ class _RequestView extends StatelessWidget {
 
                 const SizedBox(height: Tsize.spaceBtwItems),
 
-                // Back to login
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton(
@@ -223,7 +218,6 @@ class _RequestView extends StatelessWidget {
 }
 
 
-// ── Step 2: Success screen ─────────────────────────────────────────────────
 class _SuccessView extends StatelessWidget {
   final String       email;
   final VoidCallback onBackToLogin;
@@ -241,7 +235,6 @@ class _SuccessView extends StatelessWidget {
       children: [
         SizedBox(height: height * 0.03),
 
-        // ── Header ────────────────────────────────────────────────
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -271,7 +264,6 @@ class _SuccessView extends StatelessWidget {
 
         SizedBox(height: height * 0.05),
 
-        // ── Success icon ─────────────────────────────────────────
         Container(
           width:  80,
           height: 80,
@@ -288,7 +280,6 @@ class _SuccessView extends StatelessWidget {
 
         SizedBox(height: height * 0.03),
 
-        // ── Sent-to email ────────────────────────────────────────
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
@@ -334,7 +325,6 @@ class _SuccessView extends StatelessWidget {
 
         SizedBox(height: height * 0.05),
 
-        // ── Back to login button ──────────────────────────────────
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: SizedBox(
@@ -348,7 +338,6 @@ class _SuccessView extends StatelessWidget {
 
         const SizedBox(height: Tsize.spaceBtwItems),
 
-        // ── Resend hint ──────────────────────────────────────────
         Text(
           'Didn\'t receive the email? Check your spam folder.',
           textAlign: TextAlign.center,

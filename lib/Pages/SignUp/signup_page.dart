@@ -103,7 +103,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: height*0.001,
               ),
 
-              //Logo, Title, SubTitle
               const TSignUpHeader(),
 
               //Form
@@ -117,13 +116,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 onSignup: signup,
               ),
 
-              //Divider
-              //TDivider(dividerText: Ttexts.orSignUpWith.capitalize! ),
 
               const SizedBox( height: Tsize.spaceBtwSections,),
 
-              //Footer
-             // const TSocialButton()
              TAuthInfo(isLogin: false),
 
             ],
@@ -134,7 +129,7 @@ class _SignUpPageState extends State<SignUpPage> {
 }
 
 
-class TForm extends StatelessWidget {
+class TForm extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController fNameController;
   final TextEditingController lNameController;
@@ -155,16 +150,23 @@ class TForm extends StatelessWidget {
   });
 
   @override
+  State<TForm> createState() => _TFormState();
+}
+
+class _TFormState extends State<TForm> {
+  bool _obscurePassword = true;
+
+  @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: widget.formKey,
       child:
       Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
           children: [
             TextFormField(
-              controller: fNameController,
+              controller: widget.fNameController,
                 validator: (value) => TValidator.validateEmptyText('First Name', value),
                 decoration: InputDecoration(
                     prefixIcon : Icon(Icons.person_outline_rounded),
@@ -176,7 +178,7 @@ class TForm extends StatelessWidget {
                 )),
             const SizedBox( height: Tsize.spaceBtwinputfield,),
             TextFormField(
-                controller: lNameController,
+                controller: widget.lNameController,
                 validator: (value) => TValidator.validateEmptyText('Last Name', value),
                 decoration: InputDecoration(
                     prefixIcon : Icon(Icons.person_outline_rounded),
@@ -188,7 +190,7 @@ class TForm extends StatelessWidget {
                 )),
             const SizedBox( height: Tsize.spaceBtwinputfield,),
             TextFormField(
-                controller: emailController,
+                controller: widget.emailController,
                 validator: (value) => TValidator.validateEmail(value),
                 decoration: InputDecoration(
                     prefixIcon : Icon(Icons.mail_outline_rounded),
@@ -201,7 +203,7 @@ class TForm extends StatelessWidget {
 
             const SizedBox( height: Tsize.spaceBtwinputfield,),
             TextFormField(
-                controller: phoneController,
+                controller: widget.phoneController,
                 validator: (value) => TValidator.validatePhoneNumber(value),
                 decoration: InputDecoration(
                     prefixIcon : Icon(Icons.call_end_outlined), labelText: Ttexts.phoneNo,
@@ -211,10 +213,15 @@ class TForm extends StatelessWidget {
             ),
             const SizedBox( height: Tsize.spaceBtwinputfield,),
             TextFormField(
-                controller: passwordController,
+                controller: widget.passwordController,
+                obscureText: _obscurePassword,
                 validator: (value) => TValidator.validatePassword(value),
                 decoration: InputDecoration(
-                    prefixIcon : Icon(Icons.lock_outline_rounded), labelText: Ttexts.password,  suffixIcon: Icon(Iconsax.eye_slash),
+                    prefixIcon : Icon(Icons.lock_outline_rounded), labelText: Ttexts.password,
+                    suffixIcon: IconButton(
+                      icon: Icon(_obscurePassword ? Iconsax.eye_slash : Iconsax.eye),
+                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                    ),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20))
                 )
@@ -223,7 +230,7 @@ class TForm extends StatelessWidget {
 
             SizedBox(width: double.infinity, child: ElevatedButton(
                 onPressed: (){
-                  onSignup();
+                  widget.onSignup();
                 },
                 child: Text(Ttexts.signUp))),
           ],
