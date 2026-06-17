@@ -59,33 +59,30 @@ class _CreateJobFormState extends State<CreateJobForm> {
     setState(() => _loading = true);
 
     try {
-      final types = [
-        {'name': _jobType},
-        if (_jobType2 != null) {'name': _jobType2},
-      ];
+      final city = _cityCtrl.text.trim();
+      final country = _countryCtrl.text.trim();
 
       await JobsDatabaseService.createJob({
-        'title':            _titleCtrl.text.trim(),
-        'company': {
-          'name':        _companyCtrl.text.trim(),
-          'logo':        _logoCtrl.text.trim().isEmpty    ? null : _logoCtrl.text.trim(),
-          'website_url': _websiteCtrl.text.trim().isEmpty ? null : _websiteCtrl.text.trim(),
-          'linkedin_url':_linkedinCtrl.text.trim().isEmpty? null : _linkedinCtrl.text.trim(),
-          'is_agency':   _isAgency,
-        },
-        'location':         _locationCtrl.text.trim().isEmpty ? null : _locationCtrl.text.trim(),
-        'cities':           _cityCtrl.text.trim().isEmpty
-            ? []
-            : [{'name': _cityCtrl.text.trim(), 'asciiname': _cityCtrl.text.trim(), 'country': {'name': _countryCtrl.text.trim()}}],
-        'types':            types,
-        'experience_level': _expLevel,
-        'application_url':  _appUrlCtrl.text.trim(),
-        'language':         _languageCtrl.text.trim().isEmpty ? null : _languageCtrl.text.trim(),
-        'salary_currency':  _currencyCtrl.text.trim().isEmpty ? null : _currencyCtrl.text.trim(),
-        'description_md':   _descCtrl.text.trim().isEmpty     ? null : _descCtrl.text.trim(),
-        'has_remote':       _hasRemote,
-        'is_trending':      _isTrending,
-        'published':        DateTime.now().toIso8601String(),
+        'title':                  _titleCtrl.text.trim(),
+        'company/name':           _companyCtrl.text.trim(),
+        'company/logo':           _logoCtrl.text.trim().isEmpty     ? null : _logoCtrl.text.trim(),
+        'company/website_url':    _websiteCtrl.text.trim().isEmpty  ? null : _websiteCtrl.text.trim(),
+        'company/linkedin_url':   _linkedinCtrl.text.trim().isEmpty ? null : _linkedinCtrl.text.trim(),
+        'company/is_agency':      _isAgency,
+        'location':               _locationCtrl.text.trim().isEmpty ? null : _locationCtrl.text.trim(),
+        'cities/0/name':          city.isEmpty ? null : city,
+        'cities/0/asciiname':     city.isEmpty ? null : city,
+        'cities/0/country/name':  country.isEmpty ? null : country,
+        'types/0/name':           _jobType,
+        'types/1/name':           _jobType2,
+        'experience_level':       _expLevel,
+        'application_url':        _appUrlCtrl.text.trim(),
+        'language':               _languageCtrl.text.trim().isEmpty ? null : _languageCtrl.text.trim(),
+        'salary_currency':        _currencyCtrl.text.trim().isEmpty ? null : _currencyCtrl.text.trim(),
+        'description_md':         _descCtrl.text.trim().isEmpty     ? null : _descCtrl.text.trim(),
+        'has_remote':             _hasRemote,
+        'is_trending':            _isTrending,
+        'published':              DateTime.now().toIso8601String(),
       });
 
       if (mounted) {

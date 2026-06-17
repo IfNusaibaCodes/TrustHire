@@ -51,26 +51,26 @@ class _EditJobFormState extends State<EditJobForm> {
     setState(() => _loading = true);
 
     try {
+      final city = _cityCtrl.text.trim();
+      final country = _countryCtrl.text.trim();
+
       await JobsDatabaseService.updateJob(widget.job.id, {
-        'title':            _titleCtrl.text.trim(),
-        'company': {
-          'name':        _companyCtrl.text.trim(),
-          'logo':        _logoCtrl.text.trim().isEmpty    ? null : _logoCtrl.text.trim(),
-          'website_url': _websiteCtrl.text.trim().isEmpty ? null : _websiteCtrl.text.trim(),
-        },
-        'location': _locationCtrl.text.trim().isEmpty ? null : _locationCtrl.text.trim(),
-        'cities':   _cityCtrl.text.trim().isEmpty
-            ? []
-            : [{'name': _cityCtrl.text.trim(), 'asciiname': _cityCtrl.text.trim(),
-                'country': {'name': _countryCtrl.text.trim()}}],
-        'types':            [{'name': _jobType}],
-        'experience_level': _expLevel,
-        'application_url':  _appUrlCtrl.text.trim(),
-        'language':         _languageCtrl.text.trim().isEmpty ? null : _languageCtrl.text.trim(),
-        'salary_currency':  _currencyCtrl.text.trim().isEmpty ? null : _currencyCtrl.text.trim(),
-        'description_md':   _descCtrl.text.trim().isEmpty     ? null : _descCtrl.text.trim(),
-        'has_remote':       _hasRemote,
-        'is_trending':      _isTrending,
+        'title':                  _titleCtrl.text.trim(),
+        'company/name':           _companyCtrl.text.trim(),
+        'company/logo':           _logoCtrl.text.trim().isEmpty    ? null : _logoCtrl.text.trim(),
+        'company/website_url':    _websiteCtrl.text.trim().isEmpty ? null : _websiteCtrl.text.trim(),
+        'location':               _locationCtrl.text.trim().isEmpty ? null : _locationCtrl.text.trim(),
+        'cities/0/name':          city.isEmpty ? null : city,
+        'cities/0/asciiname':     city.isEmpty ? null : city,
+        'cities/0/country/name':  country.isEmpty ? null : country,
+        'types/0/name':           _jobType,
+        'experience_level':       _expLevel,
+        'application_url':        _appUrlCtrl.text.trim(),
+        'language':               _languageCtrl.text.trim().isEmpty ? null : _languageCtrl.text.trim(),
+        'salary_currency':        _currencyCtrl.text.trim().isEmpty ? null : _currencyCtrl.text.trim(),
+        'description_md':         _descCtrl.text.trim().isEmpty     ? null : _descCtrl.text.trim(),
+        'has_remote':             _hasRemote,
+        'is_trending':            _isTrending,
       });
 
       if (mounted) {
