@@ -41,16 +41,18 @@ class _ProfilePageState extends State<ProfilePage> {
     if ((profile.university ?? '').isNotEmpty) score += 15;
     if ((profile.cvUrl      ?? '').isNotEmpty) score += 20;
     if (skills.isNotEmpty)                     score += 15;
+    if ((profile.bio        ?? '').isNotEmpty) score += 15;
     return score;
   }
 
   double get completeness {
     int filled = 0;
     if ((profile.firstName ?? '').isNotEmpty) filled++;
+    if ((profile.bio ?? '').isNotEmpty)       filled++;
     if (skills.isNotEmpty)                    filled++;
     if ((profile.cvUrl ?? '').isNotEmpty)     filled++;
     if (experiences.isNotEmpty)               filled++;
-    return filled / 4;
+    return filled / 5;
   }
 
   Color get trustColor {
@@ -339,6 +341,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         children: [
                           BackButton(
+                              color: Colors.white,
                               onPressed: (){
                                 Navigator.pop(context);
                               }
@@ -526,6 +529,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           // ← profile.firstName instead of _firstName
                           completenessStep('Basic info added',
                               (profile.firstName ?? '').isNotEmpty),
+                          completenessStep('Bio added',           (profile.bio ?? '').isNotEmpty),
                           completenessStep('Skills added',        skills.isNotEmpty),
                           completenessStep('Upload CV / Resume',  (profile.cvUrl ?? '').isNotEmpty),
                           completenessStep('Add work experience', experiences.isNotEmpty),

@@ -38,15 +38,11 @@ class _JobFeedPageState extends State<JobFeedPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       drawer: const AppDrawer(),
-
-      // ================= APP BAR =================
       appBar: const TrustHireAppBar(
         title: "Trust Hire",
         showLogo: true,
         showDrawer: true,
       ),
-
-      // ================= BODY =================
       body: SafeArea(
         child: RefreshIndicator(
           color: const Color(0xFF4F6EF7),
@@ -62,7 +58,6 @@ class _JobFeedPageState extends State<JobFeedPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                // ================= WELCOME TEXT =================
                 const Text(
                   "Find Your Dream Job",
                   style: TextStyle(
@@ -84,7 +79,6 @@ class _JobFeedPageState extends State<JobFeedPage> {
 
                 const SizedBox(height: 24),
 
-                // ================= JOB BOARD CONTAINER =================
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -170,8 +164,6 @@ class _JobFeedPageState extends State<JobFeedPage> {
                 ),
 
                 const SizedBox(height: 30),
-
-                // ================= TRENDING HEADER =================
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -207,7 +199,6 @@ class _JobFeedPageState extends State<JobFeedPage> {
 
                 const SizedBox(height: 18),
 
-                // ================= TRENDING JOBS =================
                 FutureBuilder<List<JobModel>>(
                   future: trendingJobsFuture,
                   builder: (context, snapshot) {
@@ -227,7 +218,7 @@ class _JobFeedPageState extends State<JobFeedPage> {
                     if (snapshot.hasError) {
                       return const Center(
                         child: Text(
-                          "Failed to load jobs",
+                          "Failed to load jobs. Connect Internet",
                           style: TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.w600,

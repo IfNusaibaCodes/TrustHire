@@ -528,15 +528,26 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
         height: 54,
         child: ElevatedButton(
           onPressed: () async {
-            final uri = Uri.tryParse(job.applicationUrl!);
-            if (uri != null && await canLaunchUrl(uri)) {
-              await launchUrl(uri, mode: LaunchMode.externalApplication);
-            } else {
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Could not open application link')),
-                );
+            final raw = job.applicationUrl!.trim();
+            // Ensure the URL has a scheme; admins sometimes enter "www.x.com".
+            final normalized =
+                raw.startsWith(RegExp(r'https?://', caseSensitive: false))
+                    ? raw
+                    : 'https://$raw';
+            final uri = Uri.tryParse(normalized);
+            var launched = false;
+            if (uri != null) {
+              try {
+                launched =
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
+              } catch (_) {
+                launched = false;
               }
+            }
+            if (!launched && context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Could not open application link')),
+              );
             }
           },
           style: ElevatedButton.styleFrom(
@@ -660,9 +671,26 @@ class _LinkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        final uri = Uri.tryParse(url);
-        if (uri != null && await canLaunchUrl(uri)) {
-          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        final raw = url.trim();
+        // Ensure the URL has a scheme; admins sometimes enter "www.x.com".
+        final normalized =
+            raw.startsWith(RegExp(r'https?://', caseSensitive: false))
+                ? raw
+                : 'https://$raw';
+        final uri = Uri.tryParse(normalized);
+        var launched = false;
+        if (uri != null) {
+          try {
+            launched =
+                await launchUrl(uri, mode: LaunchMode.externalApplication);
+          } catch (_) {
+            launched = false;
+          }
+        }
+        if (!launched && context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Could not open link')),
+          );
         }
       },
       borderRadius: BorderRadius.circular(10),

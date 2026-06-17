@@ -203,10 +203,9 @@ class JobModel {
   @override
   int get hashCode => id.hashCode;
 
-  // ── helpers ──────────────────────────────────────────────────────────────
 
   static int? _parseInt(dynamic v) =>
-      v == null ? null : int.tryParse(v.toString());
+      v == null ? null : int.tryParse(v.toString());   //helper help korbe
 
   static String? _parseStr(dynamic v) => v?.toString();
 }

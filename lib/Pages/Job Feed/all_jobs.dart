@@ -118,6 +118,7 @@ class _AllJobsState extends State<AllJobs> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF1A1F36),
         elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           'Job Feed',
           style: TextStyle(

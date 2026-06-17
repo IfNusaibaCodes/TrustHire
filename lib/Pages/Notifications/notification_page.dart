@@ -63,6 +63,7 @@ class _NotificationPageState extends State<NotificationPage> {
       appBar: AppBar(
         backgroundColor: TColors.appNavy,
         elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           'Notifications',
           style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700),
