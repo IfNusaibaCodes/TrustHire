@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/trust_hire_app_bar.dart';
-
 import '../../Model/job_model.dart';
 import '../../admin/admin_service.dart';
 import '../../admin/manage_trending_page.dart';
@@ -58,7 +57,6 @@ class _JobFeedPageState extends State<JobFeedPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 const Text(
                   "Find Your Dream Job",
                   style: TextStyle(

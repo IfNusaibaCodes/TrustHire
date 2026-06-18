@@ -159,37 +159,30 @@ class _CreateJobFormState extends State<CreateJobForm> {
               _field(_languageCtrl,'Language (e.g. English)'),
               _field(_currencyCtrl,'Salary Currency (e.g. USD)'),
 
-              // Primary job type
               _sectionLabel('Primary Job Type'),
               _dropdown(_jobType, _jobTypes, (v) => setState(() => _jobType = v!)),
 
-              // Secondary job type
               _sectionLabel('Secondary Job Type (optional)'),
               _dropdownNullable(_jobType2, _jobTypes, (v) => setState(() => _jobType2 = v)),
 
-              // Experience level
               _sectionLabel('Experience Level'),
               _dropdown(_expLevel, _expLevels, (v) => setState(() => _expLevel = v!)),
 
-              // Location 
               _sectionLabel('City & Country'),
               _field(_cityCtrl,    'City'),
               _field(_countryCtrl, 'Country'),
 
-              // Company info 
               _sectionLabel('Company Info'),
               _field(_companyCtrl,  'Company Name',       required: true),
               _field(_logoCtrl,     'Company Logo URL'),
               _field(_websiteCtrl,  'Company Website URL'),
               _field(_linkedinCtrl, 'Company LinkedIn URL'),
 
-              // Toggles 
               _sectionLabel('Options'),
               _toggle('Remote available',   _hasRemote,  (v) => setState(() => _hasRemote  = v)),
               _toggle('Mark as Trending',   _isTrending, (v) => setState(() => _isTrending = v)),
               _toggle('Company is Agency',  _isAgency,   (v) => setState(() => _isAgency   = v)),
 
-              // Description 
               _sectionLabel('Description'),
               _field(_descCtrl, 'Job description (optional)', maxLines: 4),
 

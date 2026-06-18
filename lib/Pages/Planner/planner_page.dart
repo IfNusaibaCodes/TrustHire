@@ -329,24 +329,38 @@ class _PlannerPageState extends State<PlannerPage> {
                     ),
                     const SizedBox(height: 10),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ProgressChip('${c.completedCount} Done',
-                            Icons.check_circle_outline),
-                        const SizedBox(width: 10),
-                        ProgressChip('${c.pendingCount} Pending',
-                            Icons.radio_button_unchecked),
-                        const Spacer(),
-                        const Text('🔥',
-                            style: TextStyle(fontSize: 16)),
-                        const SizedBox(width: 4),
                         Flexible(
-                          child: Text('${c.streakDays.value} day streak',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12)),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(
+                                child: ProgressChip('${c.completedCount} Done',
+                                    Icons.check_circle_outline),
+                              ),
+                              const SizedBox(width: 10),
+                              Flexible(
+                                child: ProgressChip('${c.pendingCount} Pending',
+                                    Icons.radio_button_unchecked),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text('🔥',
+                                style: TextStyle(fontSize: 16)),
+                            const SizedBox(width: 4),
+                            Text('${c.streakDays.value} day streak',
+                                maxLines: 1,
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12)),
+                          ],
                         ),
                       ],
                     ),
