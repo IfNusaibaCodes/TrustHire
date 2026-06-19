@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../Pages/Login/login_page.dart';
-import 'package:trust_hire_app/profile/profile_page.dart';
-
+import 'package:trust_hire_app/Navigation/bottom_navigator.dart';
+import 'package:trust_hire_app/Pages/onboarding_page.dart';
 
 class AuthGate extends StatelessWidget {
-  const AuthGate({Key? key}) : super(key: key);
+  const AuthGate({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +20,9 @@ class AuthGate extends StatelessWidget {
           final session = snapshot.hasData ? snapshot.data!.session : null;
 
           if (session != null) {
-            return ProfilePage();
+            return const BottomNavBar();
           } else {
-            return LoginPage();
+            return const OnBoardingPage();
           }
         });
   }

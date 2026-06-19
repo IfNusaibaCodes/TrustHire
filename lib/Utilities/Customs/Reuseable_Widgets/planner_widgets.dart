@@ -16,8 +16,12 @@ class ProgressChip extends StatelessWidget {
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         Icon(icon, size: 13, color: Colors.white),
         const SizedBox(width: 4),
-        Text(label, style: const TextStyle(
-            color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
+        Flexible(
+          child: Text(label,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
+        ),
       ]),
     );
   }

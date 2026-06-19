@@ -5,18 +5,21 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/image_strings.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
-
 import '../Authentication/controllers/onboarding_controller.dart';
+
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    final double screenwidth = MediaQuery.of(Get.context!).size.width;
-    final double screenheight = MediaQuery.of(Get.context!).size.height;
+    final double screenwidth = MediaQuery.of(context).size.width;
+    final double screenheight = MediaQuery.of(context).size.height;
 
-    final p_controller = Get.put(OnBoardingController());
+    if (!Get.isRegistered<OnBoardingController>()) {
+      Get.put(OnBoardingController());
+    }
+    final p_controller = OnBoardingController.instance;
     final d_controller = OnBoardingController.instance;
 
 

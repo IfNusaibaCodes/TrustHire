@@ -69,7 +69,11 @@ class NotificationController extends GetxController {
   }
 
   void _startRealtime() {
-    _channel = NotificationService.subscribeToInserts(load);
+    try {
+      _channel = NotificationService.subscribeToInserts(load);
+    } catch (_) {
+      
+    }
   }
 
   void setFilter(String? type) {

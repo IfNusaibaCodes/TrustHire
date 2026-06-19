@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:trust_hire_app/Pages/Job%20Feed/job_feed_page.dart';
 import 'package:trust_hire_app/Pages/scam_detection/scam_detection_page.dart';
 import 'package:trust_hire_app/Pages/Planner/planner_page.dart';
 import 'package:trust_hire_app/Pages/Growth/growth_page.dart';
-import 'package:trust_hire_app/Authentication/Controllers/notification_controller.dart';
 
 import '../Utilities/Constants/colors.dart';
 
@@ -20,12 +18,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int selectedIndex = 0;
 
   final _growthKey = GlobalKey<GrowthPageState>();
-
-  @override
-  void initState() {
-    super.initState();
-    Get.put(NotificationController());
-  }
 
   late final pageData = [
     JobFeedPage(),

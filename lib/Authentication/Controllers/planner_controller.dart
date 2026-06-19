@@ -61,37 +61,69 @@ class PlannerController extends GetxController {
 
   Future<void> loadTasks() async {
     isLoading.value = true;
-    tasks.value = await _db.loadTasks(_uid, todayDate);
-    isLoading.value = false;
+    try {
+      tasks.value = await _db.loadTasks(_uid, todayDate);
+    } catch (_) {
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future<void> loadStreak() async {
-    streakDays.value = await _db.loadStreak(_uid);
+    try {
+      streakDays.value = await _db.loadStreak(_uid);
+    } catch (_) {
+
+    }
   }
 
-  void toggleTask(String taskId, bool current) {
+  Future<void> toggleTask(String taskId, bool current) async {
     final i = tasks.indexWhere((t) => t.id == taskId);
     if (i != -1) {
       tasks[i].isDone = !current;
       tasks.refresh();
     }
-    _db.toggleTask(taskId, !current);
+    try {
+      await _db.toggleTask(taskId, !current);
 
-    final markingDone = !current;
-    if (markingDone && completedCount == 1) {
-      _db.recordActivityAndGetStreak(_uid, todayDate).then((newStreak) {
-        streakDays.value = newStreak;
-      });
+      final markingDone = !current;
+      if (markingDone && completedCount == 1) {
+        streakDays.value =
+            await _db.recordActivityAndGetStreak(_uid, todayDate);
+      }
+    } catch (e) {
+      if (i != -1) {
+        tasks[i].isDone = current;
+        tasks.refresh();
+      }
+      Get.snackbar('Could not update task', e.toString(),
+          snackPosition: SnackPosition.BOTTOM);
     }
   }
 
-  Future<void> addTask(String title, String priority) async {
-    final task = await _db.addTask(_uid, title, priority, todayDate);
-    if (task != null) tasks.add(task);
+  Future<bool> addTask(String title, String priority) async {
+    try {
+      final task = await _db.addTask(_uid, title, priority, todayDate);
+      if (task != null) tasks.add(task);
+      return true;
+    } catch (e) {
+      Get.snackbar('Could not add task', e.toString(),
+          snackPosition: SnackPosition.BOTTOM);
+      return false;
+    }
   }
 
-  void deleteTask(String taskId) {
-    tasks.removeWhere((t) => t.id == taskId);
-    _db.deleteTask(taskId);
+  Future<void> deleteTask(String taskId) async {
+    final index = tasks.indexWhere((t) => t.id == taskId);
+    if (index == -1) return;
+    final removed = tasks[index];
+    tasks.removeAt(index);
+    try {
+      await _db.deleteTask(taskId);
+    } catch (e) {
+      tasks.insert(index, removed);
+      Get.snackbar('Could not delete task', e.toString(),
+          snackPosition: SnackPosition.BOTTOM);
+    }
   }
 }

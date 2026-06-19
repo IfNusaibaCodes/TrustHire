@@ -28,6 +28,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -50,6 +51,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
     if(!_formKey.currentState!.validate()) return;
 
+    setState(() => _isLoading = true);
     try{
       if (Supabase.instance.client.auth.currentSession != null) {
         await authService.signOut();
@@ -67,14 +69,15 @@ class _SignUpPageState extends State<SignUpPage> {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => const LoginPage()));
       } else {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => BottomNavBar()));
+        Get.offAll(() => const BottomNavBar());
       }
     } catch(e){
       if(mounted){
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Error: ${e.toString()}"),
           backgroundColor: Colors.red,));
       }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -114,6 +117,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 phoneController: _phoneController,
                 passwordController: _passwordController,
                 onSignup: signup,
+                isLoading: _isLoading,
               ),
 
 
@@ -137,6 +141,7 @@ class TForm extends StatefulWidget {
   final TextEditingController phoneController;
   final TextEditingController passwordController;
   final VoidCallback onSignup;
+  final bool isLoading;
 
   const TForm({
     super.key,
@@ -147,6 +152,7 @@ class TForm extends StatefulWidget {
     required this.phoneController,
     required this.passwordController,
     required this.onSignup,
+    required this.isLoading,
   });
 
   @override
@@ -229,10 +235,15 @@ class _TFormState extends State<TForm> {
             const SizedBox( height: Tsize.spaceBtwinputfield),
 
             SizedBox(width: double.infinity, child: ElevatedButton(
-                onPressed: (){
-                  widget.onSignup();
-                },
-                child: Text(Ttexts.signUp))),
+                onPressed: widget.isLoading ? null : widget.onSignup,
+                child: widget.isLoading
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: Colors.white),
+                      )
+                    : Text(Ttexts.signUp))),
           ],
         ),
       ),

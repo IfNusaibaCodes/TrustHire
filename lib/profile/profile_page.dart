@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/Pages/landing_page.dart';
 import 'package:trust_hire_app/Authentication/Controllers/notification_controller.dart';
+import 'package:trust_hire_app/Authentication/Controllers/planner_controller.dart';
 import 'package:trust_hire_app/Pages/Notifications/notification_page.dart';
 import 'package:trust_hire_app/profile/profile_database.dart';
 import 'package:trust_hire_app/Model/profile_models.dart';
@@ -126,10 +127,13 @@ class _ProfilePageState extends State<ProfilePage> {
   void _logout() async {
     try {
       await _authService.signOut();
-      if (mounted) {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (_) => const LandingPage()));
+      if (Get.isRegistered<PlannerController>()) {
+        await Get.delete<PlannerController>();
       }
+      if (Get.isRegistered<NotificationController>()) {
+        await Get.delete<NotificationController>();
+      }
+      Get.offAll(() => const LandingPage());
     } catch (e) {
       _showSnack('Error signing out: $e', isError: true);
     }
@@ -275,6 +279,7 @@ class _ProfilePageState extends State<ProfilePage> {
             TextButton(
               onPressed: () async {
                 await _service.updateProfile({'cv_url': ''});
+                if (!mounted) return;
                 setState(() => profile = profile.copyWith({'cv_url': ''}));
                 Navigator.pop(context);
                 _showSnack('CV link removed');
@@ -290,6 +295,7 @@ class _ProfilePageState extends State<ProfilePage> {
               final url = controller.text.trim();
               if (url.isEmpty) return;
               await _service.updateProfile({'cv_url': url});
+              if (!mounted) return;
               setState(() => profile = profile.copyWith({'cv_url': url}));
               Navigator.pop(context);
               _showSnack('CV link saved ✅');

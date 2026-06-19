@@ -54,8 +54,7 @@ class _LoginPageState extends State<LoginPage> {
       await authService.signInWithEmailAndPassword(email, password);
       if (mounted) {
         showAppSnackBar(context, "Login Successful");
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => BottomNavBar()));
+        Get.offAll(() => const BottomNavBar());
       }
     } on AuthException catch(e){
       if(mounted){
@@ -110,6 +109,7 @@ class _LoginPageState extends State<LoginPage> {
               emailController: _emailController,
               passwordController: _passwordController,
               onLogin: login,
+              isLoading: _isLoading,
             ),
             SizedBox( height: height*0.01,),
 
@@ -131,6 +131,7 @@ class TForm extends StatefulWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final VoidCallback onLogin;
+  final bool isLoading;
 
 
   const TForm({
@@ -139,6 +140,7 @@ class TForm extends StatefulWidget {
     required this.emailController,
     required this.passwordController,
     required this.onLogin,
+    required this.isLoading,
   });
 
   @override
@@ -207,10 +209,15 @@ class _TFormState extends State<TForm> {
             const SizedBox(height:  Tsize.spaceBtwSections,),
 
             SizedBox(width: double.infinity, child: ElevatedButton(
-                onPressed: (){
-                  widget.onLogin();
-                },
-                child: Text(Ttexts.login))),
+                onPressed: widget.isLoading ? null : widget.onLogin,
+                child: widget.isLoading
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: Colors.white),
+                      )
+                    : Text(Ttexts.login))),
             const SizedBox(height:  Tsize.spaceBtwItems,),
 
             SizedBox(width: double.infinity, child: OutlinedButton(onPressed: (){

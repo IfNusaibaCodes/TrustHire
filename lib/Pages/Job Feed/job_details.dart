@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
-
 import '../../Model/job_model.dart';
 import '../../admin/admin_service.dart';
 import '../../admin/edit_job_form.dart';
@@ -274,7 +273,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
   }
 
   Widget _buildDescription() {
-    // Strip markdown symbols for a clean readable view
     final cleaned = job.descriptionMd!
         .replaceAll(RegExp(r'#{1,6}\s*'), '')
         .replaceAll(RegExp(r'\*\*(.*?)\*\*'), r'#')
@@ -529,7 +527,6 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
         child: ElevatedButton(
           onPressed: () async {
             final raw = job.applicationUrl!.trim();
-            // Ensure the URL has a scheme; admins sometimes enter "www.x.com".
             final normalized =
                 raw.startsWith(RegExp(r'https?://', caseSensitive: false))
                     ? raw
@@ -672,7 +669,6 @@ class _LinkButton extends StatelessWidget {
     return InkWell(
       onTap: () async {
         final raw = url.trim();
-        // Ensure the URL has a scheme; admins sometimes enter "www.x.com".
         final normalized =
             raw.startsWith(RegExp(r'https?://', caseSensitive: false))
                 ? raw

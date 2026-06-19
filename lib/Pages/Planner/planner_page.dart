@@ -16,12 +16,20 @@ class PlannerPage extends StatefulWidget {
 }
 
 class _PlannerPageState extends State<PlannerPage> {
+  final _taskCtrl = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     if (!Get.isRegistered<PlannerController>()) {
       Get.put(PlannerController());
     }
+  }
+
+  @override
+  void dispose() {
+    _taskCtrl.dispose();
+    super.dispose();
   }
 
   final List<String> priorities = const [
@@ -42,8 +50,8 @@ class _PlannerPageState extends State<PlannerPage> {
   }
 
   void _showAddTask(BuildContext context) {
-    final c    = Get.find<PlannerController>();
-    final ctrl = TextEditingController();
+    final c = Get.find<PlannerController>();
+    _taskCtrl.clear();
     String selectedPriority = 'Normal';
 
 
@@ -81,7 +89,7 @@ class _PlannerPageState extends State<PlannerPage> {
                   style: TextStyle(fontSize: 13, color: TColors.appTextGrey)),
               const SizedBox(height: 16),
               TextField(
-                controller: ctrl,
+                controller: _taskCtrl,
                 autofocus: true,
                 decoration: InputDecoration(
                   hintText: 'e.g. Apply to 2 jobs',
@@ -157,10 +165,11 @@ class _PlannerPageState extends State<PlannerPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (ctrl.text.trim().isEmpty) return;
+                    if (_taskCtrl.text.trim().isEmpty) return;
                     final messenger = ScaffoldMessenger.of(context);
                     Navigator.pop(ctx);
-                    await c.addTask(ctrl.text.trim(), selectedPriority);
+                    final ok = await c.addTask(_taskCtrl.text.trim(), selectedPriority);
+                    if (!ok) return;
                     messenger.showSnackBar(SnackBar(
                       content: const Text('Task added ✅',
                           style: TextStyle(fontWeight: FontWeight.w600)),
@@ -187,7 +196,7 @@ class _PlannerPageState extends State<PlannerPage> {
           ),
         ),
       ),
-    ).whenComplete(() => ctrl.dispose()); // FIX 1: dispose here
+    );
   }
 
 
@@ -329,39 +338,13 @@ class _PlannerPageState extends State<PlannerPage> {
                     ),
                     const SizedBox(height: 10),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Flexible(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Flexible(
-                                child: ProgressChip('${c.completedCount} Done',
-                                    Icons.check_circle_outline),
-                              ),
-                              const SizedBox(width: 10),
-                              Flexible(
-                                child: ProgressChip('${c.pendingCount} Pending',
-                                    Icons.radio_button_unchecked),
-                              ),
-                            ],
-                          ),
-                        ),
+                        ProgressChip('${c.completedCount} Done',
+                            Icons.check_circle_outline),
                         const SizedBox(width: 10),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Text('🔥',
-                                style: TextStyle(fontSize: 16)),
-                            const SizedBox(width: 4),
-                            Text('${c.streakDays.value} day streak',
-                                maxLines: 1,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12)),
-                          ],
-                        ),
+                        ProgressChip('${c.pendingCount} Pending',
+                            Icons.radio_button_unchecked),
                       ],
                     ),
                   ],
@@ -535,7 +518,7 @@ class _PlannerPageState extends State<PlannerPage> {
                             ),
                           ),
                           const SizedBox(width: 6),
-                          // FIX 2: delete now shows confirmation dialog
+                         
                           GestureDetector(
                             onTap: () => _confirmDelete(context, task.id),
                             child: Container(

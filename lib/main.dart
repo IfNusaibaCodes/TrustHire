@@ -21,6 +21,8 @@ void main() async {
     ),
   );
 
+  Get.lazyPut<NotificationController>(() => NotificationController(), fenix: true);
+
   runApp(const MyApp());
   WidgetsBinding.instance.addPostFrameCallback((_) async {
     try {

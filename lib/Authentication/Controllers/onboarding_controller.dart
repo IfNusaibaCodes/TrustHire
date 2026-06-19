@@ -21,7 +21,7 @@ class OnBoardingController extends GetxController{
   
   void nextPage(){
     if(currentPageIndex.value==2){
-      Get.offAll(const LandingPage());
+      Get.offAll(() => const LandingPage());
     }
     else{
       int page = currentPageIndex.value + 1;

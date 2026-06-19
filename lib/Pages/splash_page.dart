@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trust_hire_app/Pages/onboarding_page.dart';
+import 'package:trust_hire_app/Authentication/Services/auth_gate.dart';
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'package:trust_hire_app/Utilities/Constants/responsive.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
@@ -32,8 +32,9 @@ class _SplashPageState extends State<SplashPage>
   Future<void> _goNext() async {
     await Future.delayed(const Duration(seconds: 2));
     if (!mounted) return;
+
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const OnBoardingPage()),
+      MaterialPageRoute(builder: (_) => const AuthGate()),
     );
   }
 
