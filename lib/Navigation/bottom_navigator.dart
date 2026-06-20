@@ -45,7 +45,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         unselectedItemColor: TColors.appTextGrey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.work_outline),   label: 'Jobs'),
-          BottomNavigationBarItem(icon: Icon(Icons.scanner), label: 'Detect Scam'),
+          BottomNavigationBarItem(icon: Icon(Icons.scanner), label: 'Detect'),
           BottomNavigationBarItem(icon: Icon(Icons.calendar_month_outlined), label: 'Planner'),
           BottomNavigationBarItem(icon: Icon(Icons.trending_up_rounded), label: 'Growth'),
         ],
