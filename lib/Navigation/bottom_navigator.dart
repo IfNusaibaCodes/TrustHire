@@ -38,8 +38,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: TColors.white,
         elevation: 8,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: TColors.appPrimary,
         unselectedItemColor: TColors.appTextGrey,

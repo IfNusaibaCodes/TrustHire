@@ -22,14 +22,14 @@ class NotificationController extends GetxController {
   RealtimeChannel? _channel;
 
   List<NotificationModel> get filtered {
-    _tick.value; // subscribe
+    _tick.value; 
     final f = activeFilter.value;
     if (f == null) return List.from(_all);
     return _all.where((n) => n.type == f).toList();
   }
 
   int get unreadCount {
-    _tick.value; // subscribe
+    _tick.value; 
     return _all.where((n) => !n.isRead).length;
   }
 
@@ -72,7 +72,7 @@ class NotificationController extends GetxController {
     try {
       _channel = NotificationService.subscribeToInserts(load);
     } catch (_) {
-      
+
     }
   }
 
@@ -91,7 +91,7 @@ class NotificationController extends GetxController {
     try {
       await NotificationService.markAsRead(_uid, id);
     } catch (_) {
-      _all[i].isRead = false; // rollback
+      _all[i].isRead = false; 
       _tick.value++;
     }
   }
@@ -107,7 +107,7 @@ class NotificationController extends GetxController {
       await NotificationService.markAllAsRead(_uid, unreadIds);
     } catch (_) {
       for (final n in _all.where((n) => unreadIds.contains(n.id))) {
-        n.isRead = false; // rollback
+        n.isRead = false; 
       }
       _tick.value++;
     }
