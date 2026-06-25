@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+
 class AuthService {
   final SupabaseClient _supabase = Supabase.instance.client;
 
@@ -55,6 +56,7 @@ class AuthService {
     return user?.userMetadata?['phone'];
 
   }
+  
   String? getCurrentUid() {
     final session = _supabase.auth.currentSession;
     final user = session?.user;

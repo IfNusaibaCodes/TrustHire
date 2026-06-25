@@ -10,6 +10,7 @@ import 'package:trust_hire_app/common/styles/spacing_styles.dart';
 
 import 'Login/login_page.dart';
 
+
 class ForgetPasswordPage extends StatefulWidget {
   const ForgetPasswordPage({super.key});
 

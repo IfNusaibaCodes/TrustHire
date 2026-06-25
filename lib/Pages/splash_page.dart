@@ -29,6 +29,7 @@ class _SplashPageState extends State<SplashPage>
     _goNext();
   }
 
+
   Future<void> _goNext() async {
     await Future.delayed(const Duration(seconds: 2));
     if (!mounted) return;

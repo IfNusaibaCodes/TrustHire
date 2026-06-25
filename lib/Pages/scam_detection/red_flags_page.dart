@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/reusable_widgets.dart';
 
 class RedFlagsPage extends StatelessWidget {
+
   const RedFlagsPage({super.key});
 
   static const _navy    = Color(0xFF1A1F36);
@@ -70,6 +71,7 @@ class RedFlagsPage extends StatelessWidget {
     ),
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,12 +83,12 @@ class RedFlagsPage extends StatelessWidget {
         title: const Text('Red Flags Guide',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, letterSpacing: 0.4)),
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             GradientBannerCard(
               padding: const EdgeInsets.all(20),
               borderRadius: 20,
@@ -134,20 +136,27 @@ class RedFlagsPage extends StatelessWidget {
   }
 }
 
+
 class _RedFlag {
+
   final IconData icon;
   final Color    color;
   final String   title;
   final String   desc;
+
   const _RedFlag({required this.icon, required this.color,
       required this.title, required this.desc});
 }
 
+
 class _FlagCard extends StatelessWidget {
+
+ 
   final int      number;
   final _RedFlag flag;
 
   const _FlagCard({required this.number, required this.flag});
+
 
   @override
   Widget build(BuildContext context) {
@@ -165,8 +174,6 @@ class _FlagCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-          // Icon circle
           Container(
             width: 46, height: 46,
             decoration: BoxDecoration(

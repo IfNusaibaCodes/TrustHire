@@ -17,6 +17,7 @@ import '../../Utilities/Constants/size.dart';
 import '../../Utilities/Validation/validation.dart';
 import '../SignUp/signup_page.dart';
 
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -40,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     _passwordController.dispose();
     super.dispose();
   }
+
 
   void login() async {
     final email = _emailController.text;
@@ -187,25 +189,6 @@ class _TFormState extends State<TForm> {
                 )
             ),
             const SizedBox( height: Tsize.spaceBtwinputfield/2 ,),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => ForgetPasswordPage()),
-                  );
-                },
-                child: Text(
-                  'Forgot Password?',
-                  style: GoogleFonts.inter(
-                    color:  TColors.appNavy,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
             const SizedBox(height:  Tsize.spaceBtwSections,),
 
             SizedBox(width: double.infinity, child: ElevatedButton(

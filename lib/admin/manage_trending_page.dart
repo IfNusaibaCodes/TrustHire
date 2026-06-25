@@ -73,8 +73,6 @@ class _ManageTrendingPageState extends State<ManageTrendingPage> {
             itemCount: jobs.length,
             itemBuilder: (context, index) {
               final job = jobs[index];
-              // read is_trending from DB — we need it in the model fetch
-              // For now we use a workaround: track via the raw fetch
               return _TrendingJobTile(job: job, onToggle: _toggle);
             },
           );

@@ -23,6 +23,7 @@ class AppliedJobsService {
     return response != null;
   }
 
+
   Future<List<JobModel>> fetchAppliedJobs() async {
     final uid      = _getUid();
     final response = await _client

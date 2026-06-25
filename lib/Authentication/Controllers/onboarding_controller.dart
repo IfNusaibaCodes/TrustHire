@@ -12,13 +12,12 @@ class OnBoardingController extends GetxController{
 
   void updatePageIndicator(index) => currentPageIndex.value = index;
 
-  
   void dotNavigatorClick(index){
     currentPageIndex.value = index;
     pageController.jumpToPage(index);
   }
 
-  
+ 
   void nextPage(){
     if(currentPageIndex.value==2){
       Get.offAll(() => const LandingPage());
@@ -29,7 +28,6 @@ class OnBoardingController extends GetxController{
     }
   }
 
- 
   void skipPage(){
     currentPageIndex.value = 2;
     pageController.jumpToPage(2);

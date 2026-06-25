@@ -1,3 +1,4 @@
+
 class NotificationModel {
   final String  id;
   final String  type;
@@ -23,6 +24,7 @@ class NotificationModel {
     required this.isRead,
   });
 
+
   factory NotificationModel.fromMap(
     Map<String, dynamic> map, {
     required bool isRead,
@@ -40,6 +42,7 @@ class NotificationModel {
       isRead:           isRead,
     );
   }
+
 
   bool matchesAudience({
     String? userRole,

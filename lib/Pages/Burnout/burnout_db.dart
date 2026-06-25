@@ -2,6 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../Authentication/Services/auth_service.dart';
 import '../../Model/burnout_model.dart';
 
+
 class BurnoutRepository {
   final client = Supabase.instance.client;
   final authService = AuthService();

@@ -6,9 +6,11 @@ import 'package:trust_hire_app/Navigation/bottom_navigator.dart';
 import 'package:trust_hire_app/Pages/reset_password_page.dart';
 import 'package:trust_hire_app/Authentication/Services/push_service.dart';
 
+
 class DeepLinkService {
   static StreamSubscription? _linkSub;
   static StreamSubscription? _authSub;
+  
   static bool _fromDeepLink = false;
 
   static void init() {
@@ -42,6 +44,7 @@ class DeepLinkService {
     });
   }
 
+  
   static bool _isAuthUri(Uri uri) =>
       uri.queryParameters.containsKey('code') ||
       uri.queryParameters.containsKey('token_hash') ||

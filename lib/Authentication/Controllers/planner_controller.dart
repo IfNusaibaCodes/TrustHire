@@ -77,6 +77,7 @@ class PlannerController extends GetxController {
     }
   }
 
+  
   Future<void> toggleTask(String taskId, bool current) async {
     final i = tasks.indexWhere((t) => t.id == taskId);
     if (i != -1) {
@@ -101,6 +102,7 @@ class PlannerController extends GetxController {
     }
   }
 
+
   Future<bool> addTask(String title, String priority) async {
     try {
       final task = await _db.addTask(_uid, title, priority, todayDate);
@@ -112,6 +114,7 @@ class PlannerController extends GetxController {
       return false;
     }
   }
+
 
   Future<void> deleteTask(String taskId) async {
     final index = tasks.indexWhere((t) => t.id == taskId);

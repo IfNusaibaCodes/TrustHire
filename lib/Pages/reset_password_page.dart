@@ -7,6 +7,7 @@ import 'package:trust_hire_app/Utilities/Constants/size.dart';
 import 'package:trust_hire_app/Utilities/Validation/validation.dart';
 import 'package:trust_hire_app/common/styles/spacing_styles.dart';
 
+
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
 
@@ -29,6 +30,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     super.dispose();
   }
 
+  
   Future<void> _updatePassword() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isLoading = true);

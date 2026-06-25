@@ -1,3 +1,4 @@
+
 class ProfileModel {
   final String?   id;
   final String?   firstName;
@@ -59,6 +60,7 @@ class ProfileModel {
     return map;
   }
 
+  
   ProfileModel copyWith(Map<String, dynamic> updates) {
     return ProfileModel(
       id:                   id,
@@ -103,6 +105,7 @@ class SkillModel {
     this.createdAt,
   });
 
+
   factory SkillModel.fromMap(Map<String, dynamic> map) {
     return SkillModel(
       id:        map['id']      as String,
@@ -114,6 +117,7 @@ class SkillModel {
     );
   }
 
+
   Map<String, dynamic> toMap() {
     final map = <String, dynamic>{
       'id':      id,
@@ -124,6 +128,7 @@ class SkillModel {
     return map;
   }
 }
+
 
 
 class ExperienceModel {
@@ -147,6 +152,7 @@ class ExperienceModel {
     this.createdAt,
   });
 
+ 
   factory ExperienceModel.fromMap(Map<String, dynamic> map) {
     return ExperienceModel(
       id:        map['id']         as String,
@@ -161,6 +167,7 @@ class ExperienceModel {
           : null,
     );
   }
+
 
   Map<String, dynamic> toMap() {
     final map = <String, dynamic>{
@@ -178,6 +185,7 @@ class ExperienceModel {
 }
 
 
+
 class ProfileStats {
   final String? userId;
   final int     appliedCount;
@@ -189,6 +197,7 @@ class ProfileStats {
     this.savedCount   = 0,
   });
 
+
   factory ProfileStats.fromMap(Map<String, dynamic> map) {
     return ProfileStats(
       userId:       map['user_id']       as String?,
@@ -196,6 +205,7 @@ class ProfileStats {
       savedCount:  (map['saved_count']   as int?) ?? 0,
     );
   }
+
 
   Map<String, dynamic> toMap() {
     final map = <String, dynamic>{

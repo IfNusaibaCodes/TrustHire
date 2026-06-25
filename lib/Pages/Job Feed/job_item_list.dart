@@ -5,6 +5,7 @@ import 'Saved Jobs/saved_jobs_database.dart';
 import 'job_details.dart';
 
 class JobItemList extends StatelessWidget {
+
   final List<JobModel> jobs;
   final bool isLoading;
 
@@ -68,9 +69,8 @@ class _JobCard extends StatefulWidget {
 
 class _JobCardState extends State<_JobCard> {
 
-  
-
   final _savedService = SavedJobsService();
+
   bool _isSaved   = false;
   bool _isLoading = false;
 
@@ -142,7 +142,6 @@ class _JobCardState extends State<_JobCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Top row: logo + company + remote badge
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -236,7 +235,6 @@ class _JobCardState extends State<_JobCard> {
             const Divider(height: 1, color: Color(0xFFF0F0F0)),
             const SizedBox(height: 14),
 
-            // Meta chips row
             Wrap(
               spacing: 8,
               runSpacing: 8,
@@ -269,7 +267,7 @@ class _JobCardState extends State<_JobCard> {
 
             const SizedBox(height: 16),
 
-            // Description preview
+            // Description
             if (widget.job.descriptionMd != null && widget.job.descriptionMd!.isNotEmpty)
               Text(
                 widget.job.descriptionMd!.replaceAll(RegExp(r'[#*`\[\]()>_~]'), '').trim(),
@@ -309,7 +307,7 @@ class _JobCardState extends State<_JobCard> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF1A1F36),
                       foregroundColor: Colors.white,
-                      elevation: 0,
+                      elevation: 0, 
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),

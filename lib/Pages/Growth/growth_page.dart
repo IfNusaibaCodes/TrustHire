@@ -7,6 +7,7 @@ import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/trust_hire_ap
 import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'growth_database.dart';
 
+
 class GrowthPage extends StatefulWidget {
   const GrowthPage({super.key});
 
@@ -52,6 +53,7 @@ class GrowthPageState extends State<GrowthPage> {
       weeklyActivity:  results[7] as List<int>,
     );
   }
+
 
   int _completion(_GrowthData d) {
     int s = 0;
@@ -474,6 +476,7 @@ class _GrowthData {
     required this.weeklyActivity,
   });
 }
+
 
 class _Badge {
   final String    label;

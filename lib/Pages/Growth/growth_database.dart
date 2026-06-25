@@ -96,7 +96,6 @@ class GrowthDatabase {
     return (response as List).length;
   }
 
-  // Returns List of 7 ints [Mon..Sun] = applications per day this week
   static Future<List<int>> loadWeeklyActivity() async {
     final uid    = _uid();
     final now    = DateTime.now();

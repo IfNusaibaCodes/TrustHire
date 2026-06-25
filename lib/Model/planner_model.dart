@@ -1,3 +1,4 @@
+
 class TaskModel {
   final String id;
   final String userId;
@@ -15,6 +16,7 @@ class TaskModel {
     required this.date,
   });
 
+
   factory TaskModel.fromMap(Map<String, dynamic> map) => TaskModel(
     id:       map['id']       as String,
     userId:   map['user_id']  as String,
@@ -24,6 +26,7 @@ class TaskModel {
     date:     map['date']     as String? ?? '',
   );
 
+ 
   Map<String, dynamic> toInsertMap() => {
     'user_id':  userId,
     'title':    title,

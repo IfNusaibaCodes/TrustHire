@@ -424,7 +424,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    profile.initials, // ← from ProfileModel
+                                    profile.initials, 
                                     style: const TextStyle(
                                         fontSize: 26,
                                         fontWeight: FontWeight.bold,
@@ -442,7 +442,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Text(
                                   profile.fullName.isEmpty
                                       ? 'Your Name'
-                                      : profile.fullName, // ← from ProfileModel
+                                      : profile.fullName, 
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,

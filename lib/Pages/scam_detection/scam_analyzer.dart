@@ -1,23 +1,25 @@
 class ScamResult {
-  final int score;
-  final String riskLevel;
-  final List<String> issues;
-  final List<String> positives;
+  final int score;            
+  final String riskLevel;     
+  final List<String> issues;  
+  final List<String> positives; 
+
 
   const ScamResult(this.score, this.riskLevel, this.issues, this.positives);
 }
 
 class ScamAnalyzer {
+
   static ScamResult analyze(String input) {
-    final text = input.toLowerCase();
-    final issues = <String>[];
-    final positives = <String>[];
-    int score = 100;
+    final text = input.toLowerCase();  
+    final issues = <String>[];          
+    final positives = <String>[];       
+    int score = 100;                    
 
     void flag(bool match, String issue, int penalty) {
       if (match) {
-        issues.add(issue);
-        score -= penalty;
+        issues.add(issue);   
+        score -= penalty;  
       }
     }
 
@@ -29,6 +31,7 @@ class ScamAnalyzer {
 
     final wordCount =
         text.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
+
     final looksLikeJobPost = has([
       'job',
       'hiring',
@@ -63,6 +66,7 @@ class ScamAnalyzer {
 
     flag(has(['urgent', 'immediate', 'act now', 'limited slots', 'hurry']),
         'Urgent hiring pressure', 15);
+
     flag(has(['apply now', 'don\'t miss', 'last chance']),
         'High-pressure call to action', 10);
 
@@ -81,6 +85,7 @@ class ScamAnalyzer {
       'Requests upfront payment',
       35,
     );
+    
     flag(
       has(['gift card', 'bitcoin', 'crypto', 'usdt', 'wire transfer', 'western union']),
       'Asks for untraceable payment method',
@@ -105,6 +110,7 @@ class ScamAnalyzer {
 
     flag(has(['gmail', 'yahoo', 'hotmail', 'outlook.com']),
         'Uses free email domain', 12);
+    
     flag(has(['whatsapp', 'telegram', 'signal', 'wechat']),
         'Contact via unofficial messaging channel', 12);
 
@@ -118,17 +124,20 @@ class ScamAnalyzer {
             'become rich',
             'unlimited earning',
           ]) ||
+        
           RegExp(r'\$?\d{4,}\s*(per day|/day|a day|per week|/week)')
               .hasMatch(text),
       'Unrealistic income promise',
       20,
     );
+   
     flag(
       RegExp(r'(salary|pay|earn).{0,15}\$?\s?\d{5,}').hasMatch(text),
       'Salary looks too good to be true',
       15,
     );
 
+  
     flag(
       RegExp(r'(congratulation|you have been selected|you are shortlisted)')
               .hasMatch(text) &&
@@ -136,11 +145,13 @@ class ScamAnalyzer {
       'Selected without any interview/application',
       20,
     );
+  
     flag(
       RegExp(r'[A-Z]{6,}').hasMatch(input),
       'Excessive use of capital letters',
       8,
     );
+
     flag(
       (RegExp(r'[!]{2,}').hasMatch(text)) ||
           RegExp(r'\$\$+').hasMatch(text),
@@ -148,7 +159,9 @@ class ScamAnalyzer {
       8,
     );
 
+
     sign(has(['website', '.com', 'www.', 'http']), 'Includes a company website');
+
     sign(has(['experience', 'qualification', 'requirements', 'responsibilities']),
         'Proper job description');
     sign(has(['interview', 'cv', 'resume', 'application']),
@@ -157,7 +170,9 @@ class ScamAnalyzer {
         'Names a registered company');
     sign(has(['office', 'address', 'location']), 'Provides a physical location');
 
+    
     score = score.clamp(0, 100);
+
 
     if (issues.isEmpty && positives.isEmpty) {
       issues.add('Not enough detail to verify legitimacy');

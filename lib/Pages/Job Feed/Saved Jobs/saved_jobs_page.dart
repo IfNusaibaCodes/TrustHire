@@ -14,7 +14,9 @@ class SavedJobsPage extends StatefulWidget {
 class _SavedJobsPageState extends State<SavedJobsPage> {
   final _service = SavedJobsService();
 
-  List<JobModel> _jobs      = [];   
+  
+  List<JobModel> _jobs      = [];
+  
   bool           _isLoading = true;
 
   @override
@@ -33,6 +35,7 @@ class _SavedJobsPageState extends State<SavedJobsPage> {
     }
   }
 
+ 
   Future<void> _unsave(int jobId) async {
     try {
       await _service.unsaveJob(jobId);

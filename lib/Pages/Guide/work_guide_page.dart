@@ -8,6 +8,7 @@ import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/gradient_banner_card.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/trust_hire_app_bar.dart';
 
+
 class RemoteWorkGuidePage extends StatefulWidget {
   const RemoteWorkGuidePage({super.key});
 
@@ -143,6 +144,7 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
     );
   }
 
+
   Widget _buildSectionCard(int index) {
     final section = GuideSections.all[index];
     final isRead  = _isReadMap[section.key] ?? false;
@@ -159,13 +161,11 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
         child: Column(
           children: [
 
-            /// HEADER ROW
             Padding(
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
 
-                  // Left color bar
                   Container(
                     width: 4, height: 46,
                     decoration: BoxDecoration(
@@ -176,7 +176,6 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
 
                   const SizedBox(width: 12),
 
-                  // Icon box
                   Container(
                     width: 42, height: 42,
                     decoration: BoxDecoration(
@@ -188,7 +187,7 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
 
                   const SizedBox(width: 12),
 
-                  // Title
+              
                   Expanded(
                     child: Text(
                       section.title,
@@ -201,7 +200,6 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
 
                   GestureDetector(
                     onTap: () async {
-                      //final uid = authService.getCurrentUid();
                       final section = GuideSections.all[index];
                       final newValue = !(isRead);
 
@@ -338,6 +336,7 @@ class _RemoteWorkGuidePageState extends State<RemoteWorkGuidePage> {
       ],
     );
   }
+
 
   Widget _tip(IconData icon, String bold, String rest) {
     return Row(

@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../Model/planner_model.dart';
 
+
 class PlannerDatabase {
   static final _client = Supabase.instance.client;
 
@@ -45,6 +46,7 @@ class PlannerDatabase {
         .maybeSingle();
     return (response?['streak_days'] as int?) ?? 0;
   }
+
 
   Future<int> recordActivityAndGetStreak(String userId, String today) async {
     final row = await _client

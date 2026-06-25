@@ -11,6 +11,7 @@ import 'package:trust_hire_app/firebase_options.dart';
 import 'package:trust_hire_app/Pages/splash_page.dart';
 import 'package:trust_hire_app/Utilities/Customs/theme.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
@@ -43,6 +44,7 @@ void main() async {
   });
 }
 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -50,6 +52,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       home:  SplashPage(),
+      debugShowCheckedModeBanner: false,
       theme: TCustomApp.customTheme,
     );
   }

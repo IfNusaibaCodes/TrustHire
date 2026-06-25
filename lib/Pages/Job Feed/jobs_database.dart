@@ -4,6 +4,7 @@ import '../../Model/job_model.dart';
 class JobsDatabaseService {
   static final _client = Supabase.instance.client;
 
+
   static Future<List<JobModel>> fetchData() async {
     List<JobModel> listOfJobs = [];
     try {

@@ -1,6 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 
+
 class WorkGuideDatabase {
   final client = Supabase.instance.client;
   final authService = AuthService();

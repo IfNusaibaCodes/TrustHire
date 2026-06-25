@@ -6,6 +6,7 @@ import '../../admin/admin_service.dart';
 import '../../admin/create_job_form.dart';
 import 'jobs_database.dart';
 
+
 class AllJobs extends StatefulWidget {
   const AllJobs({super.key});
 
@@ -16,28 +17,34 @@ class AllJobs extends StatefulWidget {
 class _AllJobsState extends State<AllJobs> {
 
   List<JobModel> _allJobs      = [];
+
   String         _searchQuery  = '';
+
   String         _selectedType = 'All';
+
   bool           _isLoading    = true;
+
   String?        _error;
+
   bool           _isAdmin      = false;
 
   final _searchController = TextEditingController();
 
+
   static const _filters = ['All', 'Full-time', 'Part-time', 'Remote', 'Recent'];
+
 
 
   List<JobModel> get _filteredJobs {
     var list = _allJobs;
-
 
     if (_selectedType == 'Remote') {
       list = list.where((j) => j.hasRemote == true).toList();
     } else if (_selectedType == 'Recent') {
       final cutoff = DateTime.now().subtract(const Duration(days: 7));
       list = list.where((j) => j.published != null && j.published!.isAfter(cutoff)).toList();
-    } else if (_selectedType != 'All') {
-
+    } 
+    else if (_selectedType != 'All') {
 
       String normalize(String s) =>
           s.toLowerCase().replaceAll(RegExp(r'[-_\s]'), '');
@@ -89,6 +96,7 @@ class _AllJobsState extends State<AllJobs> {
     final admin = await AdminService.isAdmin();
     if (mounted) setState(() => _isAdmin = admin);
   }
+
 
   void _openCreateForm() {
     showModalBottomSheet(
@@ -170,13 +178,11 @@ class _AllJobsState extends State<AllJobs> {
     );
   }
 
-
   Widget _filterChips() => FilterChipsRow<String>(
         values: _filters,
         selected: _selectedType,
         onSelected: (f) => setState(() => _selectedType = f),
       );
-
 
   Widget _body() {
     if (_isLoading) {

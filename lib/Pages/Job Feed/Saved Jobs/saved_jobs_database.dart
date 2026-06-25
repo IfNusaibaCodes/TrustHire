@@ -2,6 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Authentication/Services/auth_service.dart';
 import 'package:trust_hire_app/Model/job_model.dart';
 
+
 class SavedJobsService {
   final _client      = Supabase.instance.client;
   final _authService = AuthService();
@@ -20,6 +21,7 @@ class SavedJobsService {
         .eq('user_id', uid);
     return (response as List).map((e) => e['job_id'] as int).toSet();
   }
+
 
   Future<List<JobModel>> fetchSavedJobs() async {
     final uid      = _getUid();
@@ -70,6 +72,7 @@ class SavedJobsService {
       return true;
     }
   }
+
 
 
   Future<void> _updateSavedCount(int delta) async {

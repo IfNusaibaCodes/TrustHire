@@ -16,9 +16,13 @@ class JobDetailsPage extends StatefulWidget {
 }
 
 class _JobDetailsPageState extends State<JobDetailsPage> {
+
   final _appliedService = AppliedJobsService();
+
   bool _isApplied = false;
+
   bool _loading   = true;
+
   bool _isAdmin   = false;
 
   JobModel get job => widget.job;
@@ -247,7 +251,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
       children: chips.map((item) => _InfoCard(item: item)).toList(),
     );
   }
-
+// about this role
   Widget _buildSectionTitle(String title) {
     return Row(
       children: [
@@ -261,7 +265,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
         ),
         const SizedBox(width: 10),
         Text(
-          title,
+          title,  
           style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -272,6 +276,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
     );
   }
 
+  
   Widget _buildDescription() {
     final cleaned = job.descriptionMd!
         .replaceAll(RegExp(r'#{1,6}\s*'), '')
@@ -518,6 +523,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
     );
   }
 
+
   Widget _buildApplyButton(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -575,6 +581,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
       ),
     );
   }
+
 
   String _formatDate(DateTime date) {
     const months = [

@@ -43,7 +43,7 @@ class BurnoutSuggestion {
 }
 
 class BurnoutRecord {
-  final String? id;          
+  final String? id;
   final String userId;
   final int questionNumber;
   final String questionText;
@@ -59,6 +59,7 @@ class BurnoutRecord {
     this.createdAt,
   });
 
+
   Map<String, dynamic> toJson() => {
     'user_id': userId,
     'question_number': questionNumber,
@@ -66,6 +67,7 @@ class BurnoutRecord {
     'answer': answer,
   };
 
+ 
   factory BurnoutRecord.fromJson(Map<String, dynamic> json) => BurnoutRecord(
     id: json['id'] as String?,
     userId: json['user_id'] as String,
@@ -79,8 +81,9 @@ class BurnoutRecord {
 }
 
 
+
 class BurnoutData {
-  BurnoutData._(); 
+  BurnoutData._();
 
   static const List<BurnoutQuestion> questions = [
     BurnoutQuestion(
@@ -168,6 +171,7 @@ class BurnoutData {
       ],
     ),
   ];
+
 
   static const List<BurnoutSuggestion> suggestions = [
     BurnoutSuggestion(

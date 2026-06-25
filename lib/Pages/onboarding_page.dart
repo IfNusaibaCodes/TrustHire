@@ -7,6 +7,7 @@ import 'package:trust_hire_app/Utilities/Constants/image_strings.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import '../Authentication/controllers/onboarding_controller.dart';
 
+
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({super.key});
 
@@ -62,6 +63,7 @@ class OnBoardingPage extends StatelessWidget {
     );
   }
 }
+
 
 class On_Boarding_Page extends StatelessWidget {
   const On_Boarding_Page({

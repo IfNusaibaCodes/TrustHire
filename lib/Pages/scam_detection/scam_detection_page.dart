@@ -5,6 +5,7 @@ import 'package:trust_hire_app/Utilities/Constants/colors.dart';
 import 'red_flags_page.dart';
 import 'scam_analyzer.dart';
 
+
 class ScamDetectorPage extends StatefulWidget {
   const ScamDetectorPage({super.key});
 

@@ -86,25 +86,25 @@ class _AppContent {
       icon: Icons.verified_outlined,
       title: 'Integrity',
       subtitle: 'Upholding honesty in every decision we make',
-      color: Color(0xFF4F6EF7),          // brand blue
+      color: Color(0xFF4F6EF7),         
     ),
     _ValueItem(
       icon: Icons.lightbulb_outline_rounded,
       title: 'Transparency',
       subtitle: 'Showing you exactly what you need to know',
-      color: Color(0xFF1A1F36),          // brand navy
+      color: Color(0xFF1A1F36),         
     ),
     _ValueItem(
       icon: Icons.shield_outlined,
       title: 'Trust',
       subtitle: 'Verifying every listing so you can apply safely',
-      color: Color(0xFF0EA5E9),          // sky blue accent
+      color: Color(0xFF0EA5E9),         
     ),
     _ValueItem(
       icon: Icons.trending_up_rounded,
       title: 'Empowerment',
       subtitle: 'Equipping you with tools for career success',
-      color: Color(0xFF0B2555),          // purple accent
+      color: Color(0xFF0B2555),         
     ),
   ];
 

@@ -12,6 +12,7 @@ class AppliedJobsPage extends StatefulWidget {
 }
 
 class _AppliedJobsPageState extends State<AppliedJobsPage> {
+
   final _service = AppliedJobsService();
   late Future<List<JobModel>> _appliedFuture;
 
@@ -20,6 +21,7 @@ class _AppliedJobsPageState extends State<AppliedJobsPage> {
     super.initState();
     _appliedFuture = _service.fetchAppliedJobs();
   }
+
 
   Future<void> _remove(int jobId) async {
     await _service.removeApplied(jobId);

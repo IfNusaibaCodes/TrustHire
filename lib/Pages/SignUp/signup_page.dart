@@ -8,9 +8,9 @@ import 'package:trust_hire_app/Pages/Login/login_page.dart';
 import 'package:trust_hire_app/Utilities/Constants/text_strings.dart';
 import 'package:trust_hire_app/Utilities/Customs/Reuseable_Widgets/app_logo.dart';
 import 'package:trust_hire_app/Utilities/Validation/validation.dart';
-
 import '../../Authentication/Services/auth_service.dart';
 import '../../Utilities/Constants/size.dart';
+
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -41,7 +41,6 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
 
-// sign up method
   void signup() async {
     final fName = _fNameController.text.trim();
     final lName = _lNameController.text.trim();

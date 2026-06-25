@@ -16,8 +16,8 @@ class NotificationController extends GetxController {
 
   var isLoading    = false.obs;
   var hasError     = false.obs;
-  var activeFilter = Rxn<String>(); 
-  var _tick        = 0.obs;         
+  var activeFilter = Rxn<String>();
+  var _tick        = 0.obs;
 
   RealtimeChannel? _channel;
 
@@ -46,6 +46,7 @@ class NotificationController extends GetxController {
     super.onClose();
   }
 
+  
   Future<void> load() async {
     isLoading.value = true;
     hasError.value  = false;

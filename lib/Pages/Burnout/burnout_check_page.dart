@@ -5,6 +5,7 @@ import '../../Model/burnout_model.dart';
 
 import 'burnout_db.dart';
 
+
 class BurnoutPage extends StatefulWidget {
   const BurnoutPage({super.key});
 
@@ -29,6 +30,7 @@ class _BurnoutPageState extends State<BurnoutPage> {
   static const Color bgColor  = TColors.appBackground;
   static const Color textDark = TColors.appTextDark;
   static const Color textGrey = TColors.appTextGrey;
+
 
   Future<void> _saveAllAnswers() async {
     if (selectedAnswers.length < _questions.length) {
@@ -224,7 +226,6 @@ class _BurnoutPageState extends State<BurnoutPage> {
 }
 
 
-
 class _QuestionCard extends StatelessWidget {
   final BurnoutQuestion question;
   final int pageIndex;
@@ -385,6 +386,7 @@ class _OptionChip extends StatelessWidget {
     );
   }
 }
+
 
 class _ActionButton extends StatelessWidget {
   final bool answered;
@@ -616,6 +618,7 @@ class _ResultsScreen extends StatelessWidget {
     return '${days[now.weekday - 1]}, ${months[now.month - 1]} ${now.day}';
   }
 }
+
 
 class _SuggestionCard extends StatelessWidget {
   final BurnoutSuggestion suggestion;

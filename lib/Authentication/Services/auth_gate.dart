@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:trust_hire_app/Navigation/bottom_navigator.dart';
 import 'package:trust_hire_app/Pages/onboarding_page.dart';
 
+
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
 
@@ -20,9 +21,9 @@ class AuthGate extends StatelessWidget {
           final session = snapshot.hasData ? snapshot.data!.session : null;
 
           if (session != null) {
-            return const BottomNavBar();
+            return const BottomNavBar();   
           } else {
-            return const OnBoardingPage();
+            return const OnBoardingPage(); 
           }
         });
   }

@@ -135,6 +135,7 @@ class JobModel {
     return map;
   }
 
+
   JobModel copyWith({
     int? id,
     String? extId,
@@ -193,9 +194,11 @@ class JobModel {
     );
   }
 
+
   @override
   String toString() => 'JobModel(id: $id, title: $title, company: $companyName)';
 
+ 
   @override
   bool operator ==(Object other) =>
       identical(this, other) || other is JobModel && other.id == id;
@@ -205,7 +208,7 @@ class JobModel {
 
 
   static int? _parseInt(dynamic v) =>
-      v == null ? null : int.tryParse(v.toString()); 
+      v == null ? null : int.tryParse(v.toString());
 
   static String? _parseStr(dynamic v) => v?.toString();
 }

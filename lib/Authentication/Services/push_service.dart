@@ -1,20 +1,22 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
+
 
 class PushService {
   PushService._();
 
   static final _client = Supabase.instance.client;
+
   static final FlutterLocalNotificationsPlugin _local =
       FlutterLocalNotificationsPlugin();
 
@@ -24,9 +26,13 @@ class PushService {
       'Used for important TrustHire alerts and announcements.';
 
 
+
   static void Function(Map<String, dynamic> data)? onNotificationTap;
 
   static StreamSubscription<String>? _tokenRefreshSub;
+
+  
+
   static Future<void> init() async {
     const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
     const initSettings = InitializationSettings(android: androidInit);
@@ -63,6 +69,7 @@ class PushService {
     }
   }
 
+
   static void _showLocal(RemoteMessage message) {
     final notification = message.notification;
     if (notification == null) return;
@@ -84,7 +91,9 @@ class PushService {
     );
   }
 
+
   static void _route(Map<String, dynamic> data) => onNotificationTap?.call(data);
+
 
   static Map<String, dynamic> _decode(String payload) {
     try {
@@ -94,6 +103,7 @@ class PushService {
       return <String, dynamic>{};
     }
   }
+
 
   static Future<void> registerToken(String userId) async {
     try {
@@ -111,6 +121,7 @@ class PushService {
     }
   }
 
+ 
   static Future<void> _upsertToken(String userId, String token) async {
     await _client.from('device_tokens').upsert(
       {
@@ -122,6 +133,7 @@ class PushService {
       onConflict: 'token',
     );
   }
+
 
   static Future<void> unregisterToken() async {
     await _tokenRefreshSub?.cancel();
