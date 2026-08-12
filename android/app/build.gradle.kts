@@ -39,6 +39,12 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+            // Disable R8 code shrinking: Google ML Kit references optional
+            // language recognizers (Chinese/Japanese/Korean/Devanagari) we don't
+            // use, which R8 reports as missing classes and fails the build.
+            // Disabling keeps the build reliable; APK is a bit larger (fine here).
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 }

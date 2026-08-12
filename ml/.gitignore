@@ -1,0 +1,16 @@
+# Do not commit the dataset (large; redistribute via Kaggle link instead) ...
+data/
+
+# ... or trained model artifacts (large binaries; regenerate via training scripts).
+models/
+
+# Generated evaluation outputs are reproducible, but keep the repo light.
+# Comment the next line out if you WANT to commit the metrics/plots for your report.
+reports/
+
+# Python noise
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/

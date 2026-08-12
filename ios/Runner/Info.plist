@@ -4,6 +4,11 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<!-- Required by image_picker for the scam-detector screenshot OCR feature. -->
+	<key>NSCameraUsageDescription</key>
+	<string>Trust Hire uses the camera so you can capture a job offer to scan it for scams.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Trust Hire needs photo access so you can pick a job-offer screenshot to scan it for scams.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

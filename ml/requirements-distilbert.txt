@@ -1,0 +1,18 @@
+# TrustHire ML — OPTIONAL dependencies for the DistilBERT upgrade (milestone M7).
+# These are LARGE (PyTorch alone is ~200 MB). Install ONLY when you reach M7:
+#   pip install -r requirements-distilbert.txt
+#
+# Training DistilBERT on a CPU is slow but possible on this dataset if we
+# downsample and keep epochs low. If it is too slow, we skip M7 and keep the
+# classical model as the shipped model (this is a documented, valid outcome).
+
+# NOTE: PyTorch is often the LAST package to support a brand-new Python. On
+# Python 3.14 a CPU torch wheel may not exist yet. If `pip install` below fails
+# to find torch, that is the documented trigger to skip the DistilBERT milestone
+# (M7) and keep the classical model as the shipped model. We'll confirm when we
+# get there.
+
+torch>=2.4
+transformers>=4.44
+datasets>=2.20
+accelerate>=0.33

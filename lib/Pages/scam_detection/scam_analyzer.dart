@@ -32,20 +32,18 @@ class ScamAnalyzer {
     final wordCount =
         text.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
 
+    // Kept broad on purpose: real scams avoid formal job vocabulary, so a narrow
+    // list would wrongly reject genuine scam messages. This guard only exists to
+    // bounce clearly-unrelated text. (Mirrors _JOB_WORDS in ml/api/main.py.)
     final looksLikeJobPost = has([
-      'job',
-      'hiring',
-      'salary',
-      'position',
-      'vacancy',
-      'apply',
-      'work',
-      'employ',
-      'candidate',
-      'recruit',
-      'company',
-      'role',
-      'opportunity',
+      // formal job vocabulary
+      'job', 'hiring', 'hire', 'salary', 'position', 'vacancy', 'apply',
+      'application', 'work', 'employ', 'candidate', 'recruit', 'company',
+      'role', 'opportunity', 'interview', 'cv', 'resume', 'staff', 'career',
+      'wage',
+      // money / offer / scam vocabulary common in job scams
+      'earn', 'earning', 'income', 'pay', 'payment', 'fee', 'deposit', 'offer',
+      'selected', 'shortlisted', 'remote', 'bonus', 'commission',
     ]);
 
     if (text.trim().isEmpty) {
